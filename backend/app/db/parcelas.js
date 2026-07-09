@@ -24,7 +24,7 @@ export async function updateParcela(id,nombre,latitud,longitud) {
 
 export async function deleteParcela(id) {
     const res = await db.query(
-        "DELETE FROM pokemons WHERE id = $1",[id]);
+        "DELETE FROM parcelas WHERE id = $1",[id]);
     return res.rowCount == 1;
     
 }
