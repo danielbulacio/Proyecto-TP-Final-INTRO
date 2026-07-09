@@ -3,7 +3,7 @@ import{
     createParcela,
     getALLParcelas,
     getParcela,
-    removeParcela,
+    deleteParcela,
     updateParcela,
 } from "../db/parcelas.js";
 
@@ -83,7 +83,7 @@ endpointsParcelas.get("/:id", async (req, res) => {
       res.sendStatus(500);
       return;
     }
-    
+
     res.sendStatus(200);
  });
 
@@ -97,7 +97,7 @@ endpointsParcelas.get("/:id", async (req, res) => {
     return;
   }
   
-  const eliminado = await removeParcela(id);
+  const eliminado = await deleteParcela(id);
   if(!eliminado){
     res.sendStatus(500);
     return;
