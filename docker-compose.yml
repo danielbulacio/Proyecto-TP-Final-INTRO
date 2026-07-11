@@ -1,0 +1,17 @@
+services:
+  equipoapi:
+    build: .
+    image: backend
+    command: npm nodemon app.js
+    ports: 
+      - "3001:3001"
+    
+  db:
+    image: postgres 
+    ports:
+      - "5001:5001"
+    environment: 
+      POSTGRES_USER: "backend_user"
+      POSTGRES_PASSWORD: "backend_password"
+      POSTGRES_DB: "backend_db"
+
