@@ -13,7 +13,9 @@ CREATE TABLE cultivos (
 
 CREATE TABLE parcelas (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL
+    nombre VARCHAR(100) NOT NULL,
+    latitud DECIMAL(9,6),
+    longitud DECIMAL(9,6)
 );
 
 
@@ -21,4 +23,11 @@ CREATE TABLE parcelas_cultivos (
     parcela_id INT NOT NULL REFERENCES parcelas(id) ON DELETE CASCADE,
     cultivo_id INT NOT NULL REFERENCES cultivos(id) ON DELETE CASCADE,
     PRIMARY KEY (parcela_id, cultivo_id)
+);
+
+CREATE TABLE tareas (
+    id SERIAL PRIMARY KEY,
+    parcela_id INT NOT NULL REFERENCES parcelas,
+    tarea VARCHAR(255) NOT NULL,
+    hecho BOOLEAN NOT NULL DEFAULT FALSE
 );
