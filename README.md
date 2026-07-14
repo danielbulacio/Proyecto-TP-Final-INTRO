@@ -7,6 +7,18 @@ Main-Docker-Tareas: Ezequiel
 ## ESQUEMA PARTES
 [\[a\](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)
 
+# COMO LEVANTAR PROYECTO
+1. TENER docker destop abierto
+2. cd Proyecto-TP-Final-INTRO/backend/
+3. Levantar los contenedores:
+La primera vez
+docker compose up --build
+
+Las demás veces:
+docker compose up
+4. Verificar que anda 
+curl http://localhost:8000/health  
+
 ## Parcela:
 id
 cultivo_id 
