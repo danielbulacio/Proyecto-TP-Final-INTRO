@@ -10,14 +10,8 @@ Main-Docker-Tareas: Ezequiel
 # COMO LEVANTAR PROYECTO
 1. TENER docker destop abierto
 2. cd Proyecto-TP-Final-INTRO/backend/
-3. Levantar los contenedores:
-La primera vez
-docker compose up --build
-
-Las demás veces:
-docker compose up
-4. Verificar que anda 
-curl http://localhost:8000/health  
+3. Levantar los contenedores: 1era vez - docker compose up --build (demas veces) docker compose up
+4. Verificar que anda : curl http://localhost:8000/health  
 
 ## Parcela:
 id
