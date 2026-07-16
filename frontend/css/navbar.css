@@ -1,0 +1,34 @@
+.navbar {
+  background-color: rgb(255, 255, 255);
+  border-bottom: 2px solid #393939;
+  color: #000000;
+  font-weight: 500;
+}
+.navbar-box-shadow-color {
+  background-color: green;
+  color: green;
+}
+.navbar,
+.navbar-item,
+.button {
+  color: #000000;
+}
+.navbar-item:hover {
+  transition: 0.3s;
+  background-color: rgb(110, 219, 110);;
+}
+.navbar-background-color {
+  background-color: white;
+}
+.body {
+  background-color: white;
+}
+html {
+  background-color: white;
+}
+.is-primary {
+  background-color: rgb(110, 219, 110);
+}
+.is-secondary {
+  background-color: rgb(161, 144, 144);
+}

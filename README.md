@@ -1,13 +1,49 @@
-# Proyecto-TP-Final-INTRO
-División:
-Main-Parcela: Rodri
-Interact-Clima: Marcos
-Interact-Cultivo: Tomi
+
+División: Parcela: Rodri
+Detalle de parcela: Marcos
+Cultivos: Tomi
 Main-Docker-Tareas: Ezequiel
 
-MySQL:
-Schemas:Parcela-Tareas
-Seeds: Clima-Cultivo
+## ESQUEMA PARTES
+[\[a\](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)
+
+# COMO LEVANTAR PROYECTO
+1. TENER docker destop abierto
+2. cd Proyecto-TP-Final-INTRO/backend/
+3. Levantar los contenedores: 1era vez - docker compose up --build (demas veces) docker compose up
+4. Verificar que anda : curl http://localhost:8000/health  
+
+## Parcela:
+id
+cultivo_id 
+clima_id
+nombre
+latitud
+longitud
+
+## Cultivo: (opciones predefinidas)
+id
+nombre_cultivo
+id_parcela
+tipo
+temperatura_optima
+dias_de_cosecha
+mililitros_necesarios
+
+## detalle parcela:
+id
+id_parcela
+temperatura_actual
+precipitacion_actual
+humedad_suelo
+evapotranspiracion
+
+Tareas:
+id
+id_parcela
+tarea
+hecho
+...
 
 Estructuración:
 Directorios:
@@ -32,36 +68,3 @@ Carpetas:
 #.env: solo para definir el puerto
 #.eslintrc.json: lo podriamos usar para evitar errores y mantener una misma logica en el uso de variables(osea asignacion de nombres a variables, como estructurar las funciones,etc)
 #README.md: documentacion del proyecto
-
-Parcela:
-id
-cultivo_id 
-clima_id
-nombre
-latitud
-longitud
-
-Cultivo:(Se podria poner algun valor default en los dias de cosecha dependiendo de tipo de cultivo)
-id
-nombre
-id_parcela
-variedad
-temperatura_optima
-dias_de_cosecha
-mililitros
-
-Clima:
-id
-id_parcela
-temperatura_actual
-precipitacion_actual
-humedad_suelo
-evapotranspiracion
-
-Tareas:
-id
-id_parcela
-tarea
-hecho
-...
-

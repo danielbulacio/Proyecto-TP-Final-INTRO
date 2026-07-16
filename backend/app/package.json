@@ -1,5 +1,19 @@
 {
+  "name": "agro-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
   "dependencies": {
-    "pg": "^8.22.0"
+    "cors": "^2.8.5",
+    "express": "^5.2.1", 
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
