@@ -23,9 +23,9 @@ endpointsCultivos.get("/:id", async (req, res) => {
 
 endpointsCultivos.post("/", async (req, res) => {
     // Desestructuramos el body para que el código quede más limpio
-    const { nombre, variedad, temperatura_optima, temperatura_maxima, dias_cosecha, mililitros_requeridos } = req.body;
+    const { nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios } = req.body;
 
-    const created = await createCultivo(nombre, variedad, temperatura_optima, temperatura_maxima, dias_cosecha, mililitros_requeridos);
+    const created = await createCultivo(nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios);
 
     if (!created) {
         res.sendStatus(500);

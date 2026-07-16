@@ -13,10 +13,10 @@ export async function getOneCultivo(id) {
 }
 
 // Crear un nuevo cultivo en la base de datos
-export async function createCultivo(nombre, variedad, temperatura_optima, temperatura_maxima, dias_cosecha, mililitros_requeridos) {
+export async function createCultivo(nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios) {
   const res = await db.query(
-    "INSERT INTO cultivos (nombre, variedad, temperatura_optima, temperatura_maxima, dias_cosecha, mililitros_requeridos) VALUES ($1, $2, $3, $4, $5, $6)",
-    [nombre, variedad, temperatura_optima, temperatura_maxima, dias_cosecha, mililitros_requeridos],
+    "INSERT INTO cultivos (nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios) VALUES ($1, $2, $3, $4, $5, $6)",
+    [nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios],
   );
 
   return res.rowCount == 1;
