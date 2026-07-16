@@ -15,7 +15,7 @@
 }
 .navbar-item:hover {
   transition: 0.3s;
-  background-color: rgb(110, 219, 110);;
+  background-color: var(--color-principal);
 }
 .navbar-background-color {
   background-color: white;
@@ -27,7 +27,7 @@ html {
   background-color: white;
 }
 .is-primary {
-  background-color: rgb(110, 219, 110);
+  background-color: var(--color-principal);
 }
 .is-secondary {
   background-color: rgb(161, 144, 144);

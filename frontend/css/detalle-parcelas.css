@@ -1,0 +1,30 @@
+@import "var-globales.css";
+.container {
+  background-color: white;
+  width: 85%;
+  border: 2px solid #393939;
+  border-radius: 10px;
+}
+.notification {
+  background-color: white;
+}
+.header h1 {
+  font-size: 30px;
+  font-weight: 500;
+  color: black;
+}
+.cell {
+  background-color: var(--color-principal);
+  width: 220px;
+  text-align: center;
+  height: 90px;
+}
+.header {
+  display: flex;
+  align-items: top;
+  gap: 50px;
+}
+
+.header > * {
+  min-width: 0;
+}
