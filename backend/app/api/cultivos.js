@@ -31,43 +31,67 @@ endpointsCultivos.get("/:id", async (req, res) => {
 });
 
 endpointsCultivos.post("/", async (req, res) => {
-    // Desestructuramos el body para que el código quede más limpio
+    // Desestructuramos el body
     const { nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios } = req.body;
 
-    // Validamos que todos los campos requeridos estén presentes
-    if (!nombre || !parcela_id || !tipo || !temperatura_optima || !dias_cosecha || !mililitros_necesarios) {
-        res.status(400).json({ message: "Faltan campos requeridos" });
+    // 1. Validamos ÚNICAMENTE los campos estrictamente requeridos
+    if (!nombre || !parcela_id) {
+        res.status(400).json({ message: "Faltan campos requeridos: nombre y parcela_id son obligatorios" });
         return;
     }
 
-    // Validamos que el cultivo no exista ya en la base de datos
+    // 2. Validamos que el cultivo no exista ya en la base de datos
     const existingCultivo = await getOneCultivo(nombre);
     if (existingCultivo) {
         res.status(400).json({ message: "El cultivo ya existe" });
         return;
     }
 
-    // Validamos que los campos numéricos sean números válidos
-    if (isNaN(parcela_id) || isNaN(temperatura_optima) || isNaN(dias_cosecha) || isNaN(mililitros_necesarios)) {
-        res.status(400).json({ message: "Los campos numéricos deben ser números válidos" });
+    // 3. Validamos parcela_id (ya que ahora sabemos con certeza que existe)
+    if (isNaN(parcela_id) || parcela_id <= 0) {
+        res.status(400).json({ message: "El campo parcela_id debe ser un número positivo válido" });
         return;
     }
 
-    // Validamos que los campos numéricos sean positivos
-    if (parcela_id <= 0 || temperatura_optima <= 0 || dias_cosecha <= 0 || mililitros_necesarios <= 0) {
-        res.status(400).json({ message: "Los campos numéricos deben ser positivos" });
-        return;
+    // 4. Validaciones condicionales: SOLO si se envían los campos opcionales
+    // (Validamos que temperatura_optima, dias_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
+    if (temperatura_optima !== undefined) {
+        if (isNaN(temperatura_optima) || temperatura_optima <= 0) {
+            res.status(400).json({ message: "La temperatura óptima debe ser un número positivo" });
+            return;
+        }
     }
 
-    // Intentamos crear el cultivo en la base de datos
-    const created = await createCultivo(nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios);
+    if (dias_cosecha !== undefined) {
+        if (isNaN(dias_cosecha) || dias_cosecha <= 0) {
+            res.status(400).json({ message: "Los días de cosecha deben ser un número positivo" });
+            return;
+        }
+    }
+
+    if (mililitros_necesarios !== undefined) {
+        if (isNaN(mililitros_necesarios) || mililitros_necesarios <= 0) {
+            res.status(400).json({ message: "Los mililitros necesarios deben ser un número positivo" });
+            return;
+        }
+    }
+
+    // Intentamos crear el cultivo en la base de datos (pasando null o undefined en lo que no venga)
+    const created = await createCultivo(
+        nombre, 
+        parcela_id, 
+        tipo || null, 
+        temperatura_optima !== undefined ? temperatura_optima : null, 
+        dias_cosecha !== undefined ? dias_cosecha : null, 
+        mililitros_necesarios !== undefined ? mililitros_necesarios : null
+    );
 
     if (!created) {
         res.status(500).json({ message: "Error al crear el cultivo" });
         return;
     }
 
-    res.status(201).json({message: "Cultivo creado"});
+    res.status(201).json({ message: "Cultivo creado con éxito" });
 });
 
 endpointsCultivos.delete("/:id", async (req, res) => {
