@@ -29,4 +29,4 @@ CREATE TABLE tareas (
     parcela_id INT NOT NULL REFERENCES parcelas,
     tarea VARCHAR(255) NOT NULL,
     hecho BOOLEAN NOT NULL DEFAULT FALSE
-    )
+);
