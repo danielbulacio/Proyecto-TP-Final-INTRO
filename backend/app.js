@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import{ endpointsParcelas } from ".app/api/parcelas.js";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 
