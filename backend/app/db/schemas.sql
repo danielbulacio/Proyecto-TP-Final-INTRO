@@ -18,8 +18,9 @@ CREATE TABLE cultivos (
 CREATE TABLE detalle_parcela (
     id SERIAL PRIMARY KEY,
     parcela_id INT NOT NULL REFERENCES parcelas,
-    temperatura_actual DECIMAL(5,2),
-    precipitacion_actual DECIMAL(5,2),
+    fecha DATE NOT NULL,
+    temperatura DECIMAL(5,2),
+    precipitacion DECIMAL(5,2),
     humedad_suelo DECIMAL(5,2),
     evapotranspiracion DECIMAL(5,2)
 );
