@@ -27,3 +27,13 @@ export async function deleteCultivo(id) {
   const res = await db.query("DELETE FROM cultivos WHERE id = ($1)", [id]);
   return res.rowCount == 1;
 }
+
+// Actualizar un cultivo existente por su ID
+export async function updateCultivo(id, nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios) {
+  const res = await db.query(
+    "UPDATE cultivos SET nombre = $1, parcela_id = $2, tipo = $3, temperatura_optima = $4, dias_cosecha = $5, mililitros_necesarios = $6 WHERE id = $7",
+    [nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios, id]
+  );  
+
+  return res.rowCount == 1;
+}
