@@ -1,0 +1,56 @@
+@import "var-globales.css";
+.container {
+  background-color: white;
+  width: 85%;
+  border: 2px solid #c7c7c7;
+  border-radius: 10px;
+}
+.notification {
+  background-color: white;
+}
+.header h1 {
+  font-size: 30px;
+  font-weight: 500;
+  color: black;
+}
+.cell {
+  background-color: rgb(145, 145, 145);
+  border-radius: 10px;
+  padding: 9px;
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  height: 90px;
+}
+
+.fixed-grid .grid {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+.fixed-grid {
+  width: 100%;
+}
+.grafico {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  height: 350px;
+}
+
+.grafico canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.header > * {
+  min-width: 0;
+}
