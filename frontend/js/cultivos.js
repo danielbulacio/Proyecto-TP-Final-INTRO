@@ -57,7 +57,7 @@
                 <span class="material-icons has-text-grey-light" style="font-size: 64px;">eco</span>
                 <p class="title is-4 has-text-grey mt-3">Base de datos de cultivos vacía</p>
                 <p class="subtitle is-6">Agrega un nuevo cultivo desde el panel de control técnico.</p>
-                <a class="button is-success mt-2" href="gestion_cultivos.html">Agregar Primer Cultivo</a>
+                <a class="button is-success mt-2" href="crud_cultivos.html">Agregar Primer Cultivo</a>
               </div>
             `;
             return;
@@ -101,7 +101,7 @@
                       <span class="material-icons has-text-success mr-2" style="font-size: 2.5rem;">${cardIcon}</span>
                     </div>
                     <div class="media-content">
-                      <p class="title is-4 mb-1">${cultivo.nombre_cultivo}</p>
+                      <p class="title is-4 mb-1 has-text-dark">${cultivo.nombre_cultivo}</p>
                       <p class="subtitle is-6 has-text-grey-dark mb-0">
                         Ubicación: <strong class="has-text-success">${nombreParcela}</strong>
                       </p>
@@ -114,15 +114,15 @@
                     <div class="columns is-mobile is-multiline">
                       <div class="column is-6 pb-1">
                         <span class="has-text-grey">Temp. Óptima</span><br>
-                        <strong>${cultivo.temperatura_optima}°C</strong>
+                        <strong class="has-text-dark">${cultivo.temperatura_optima}°C</strong>
                       </div>
                       <div class="column is-6 pb-1">
                         <span class="has-text-grey">Días de Cosecha</span><br>
-                        <strong>${cultivo.dias_de_cosecha} días</strong>
+                        <strong class="has-text-dark">${cultivo.dias_de_cosecha} días</strong>
                       </div>
                       <div class="column is-12 pt-1">
                         <span class="has-text-grey">Volumen Hidrológico</span><br>
-                        <strong>💧 ${cultivo.mililitros_necesarios} ml diarios</strong>
+                        <strong class="has-text-dark">💧 ${cultivo.mililitros_necesarios} ml diarios</strong>
                       </div>
                     </div>
                   </div>

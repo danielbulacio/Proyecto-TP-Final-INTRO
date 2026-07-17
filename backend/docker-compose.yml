@@ -25,4 +25,5 @@ services:
       POSTGRES_DB: "agro_db" 
     volumes:
       - ./data:/var/lib/postgresql #Guarda los datos en la carpeta data/ que se te crea en /backend/data
-      - ./app/db/schemas.sql:/docker-entrypoint-initdb.d/schemas.sql:ro #agarra lo que esta adentro de schemas.sql y lo carga
+      - ./app/db/schemas.sql:/docker-entrypoint-initdb.d/1-schemas.sql:ro #agarra lo que esta adentro de schemas.sql y lo carga
+      - ./app/db/seeds.sql:/docker-entrypoint-initdb.d/2-seeds.sql:ro #INYECTA datos a la base de schemas.sql
