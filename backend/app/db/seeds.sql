@@ -33,3 +33,4 @@ INSERT INTO tareas (parcela_id, tarea, hecho) VALUES
   (1, 'Revisar plaga en hojas', true),
   (2, 'Fertilizar',             false),
   (3, 'Control de malezas',     false);
+
