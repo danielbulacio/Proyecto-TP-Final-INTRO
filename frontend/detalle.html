@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,9 +11,9 @@
     />
     <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
     <link rel="stylesheet" href="./css/navbar.css" />
-
     <link rel="stylesheet" href="./css/detalle-parcelas.css" />
   </head>
+  
   <body>
     <!-- NAVBAR -->
     <nav class="navbar is-white">
@@ -60,11 +60,11 @@
     <br>
     
     <div class="container">
+      
     <div class="notification">
+      
       <div class="header">
-        <h1>
-        Nombre de la parcela
-        </h1>
+        
 
         <div class="fixed-grid has-3-cols">
           <div class="grid">
@@ -74,6 +74,32 @@
           </div>
         </div>
       </div>
+      <br>
+      <div class="fixed-grid has-8-cols">
+          <div class="grid">
+            <div class="cell">Temperatura</div>
+            <div class="cell">Precipitación</div>
+            <div class="cell">Humeedad-suelo</div>
+            <div class="cell">Evapotransp</div>
+            <div class="cell">Cultivo</div>
+           
+            
+          </div>
+      </div>
+      <div class="fixed-grid has-1-cols">
+        <div class="grafico">
+          <canvas id="grafico-temp"></canvas>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+     
+
+    </div>
+
+        
+      </div>
       
       </div>
     </div>
@@ -81,5 +107,7 @@
 
 
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/detalle-parcela.js"></script>
   </body>
 </html>
