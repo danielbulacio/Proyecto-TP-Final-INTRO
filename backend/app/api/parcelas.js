@@ -1,7 +1,7 @@
 import {Router} from "express";
 import{
     createParcela,
-    getALLParcelas,
+    getAllParcelas,
     getParcela,
     deleteParcela,
     updateParcela,
@@ -54,7 +54,7 @@ endpointsParcelas.get("/:id", async (req, res) => {
  });
 
  //actualizar campo especifico
- endpointsParcelas.path("/:id", async (req,res) => {
+ endpointsParcelas.patch("/:id", async (req,res) => {
     let id = req.params.id;
 
     if (req.body.latitud !== undefined && typeof req.body.latitud !== "number") {
@@ -102,7 +102,7 @@ endpointsParcelas.get("/:id", async (req, res) => {
     res.sendStatus(500);
     return;
   }
-  res.jason(parcela);
+  res.json(parcela);
 });
 
 // create parcelas
