@@ -102,7 +102,7 @@ endpointsParcelas.get("/:id", async (req, res) => {
     res.sendStatus(500);
     return;
   }
-  res.jason(parcela);
+  res.json(parcela);
 });
 
 // create parcelas
