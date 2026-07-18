@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio - AgroTech</title>
+    <!-- Bulma CSS Framework -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+    <!-- CSS del navbar original -->
+    <link rel="stylesheet" href="./css/navbar.css" />
+
+    <!-- Estilos adicionales limpios para pulir la interfaz -->
+    <link rel="stylesheet" href="./css/index.css" />
+
+    <!-- Iconografía Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,-25&icon_names=agriculture"
+    />
+
+    <!-- Google Fonts - Inter para diseño moderno -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+   
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+        <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
+        </a>
+        <div
+          class="navbar-burger js-burger"
+          data-target="navbarExampleTransparentExample"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- LINKS DEL NAVBAR -->
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+          <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+          <a class="navbar-item" href="tareas.html"> Tareas </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            
+              <p class="control">
+                <a
+                  class="button is-primary"
+                  href="https://github.com/jgthms/bulma/releases/download/1.0.4/bulma-1.0.4.zip"
+                >
+
+                  <span>Boton</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><!-- FIN DEL NAVBAR -->
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section">
+      <div class="container">
+        
+        <!-- Cabecera de Bienvenida (Hero) -->
+        <div class="crop-hero">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <span class="tag is-white is-light mb-3" style="font-weight: 600; color: #a07711 !important;">VERSIÓN 1.0</span>
+              <h1 class="title is-2 has-text-white mb-2" style="font-weight: 800; letter-spacing: -0.03em;">Panel de Control Agrícola</h1>
+              <h2 class="subtitle is-5 has-text-white mb-0" style="opacity: 0.9; font-weight: 400;">
+                Bienvenido de nuevo. Accede de forma directa a cada uno de los módulos de control espacial y biológico de tus tierras.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 SECCIONES DEL PANEL (ACCESOS DIRECTOS MODULARES) -->
+        <div class="columns is-multiline">
+          
+          <!-- SECCIÓN 1: PARCELAS (ACCESO DIRECTO) -->
+          <div class="column is-12-mobile is-4-tablet">
+            <div class="card crop-card">
+              <div class="card-header-custom">
+                <span class="tag tag-parcelas">Ubicaciones</span>
+                <span class="material-icons" style="color: #d97706;">place</span>
+              </div>
+              
+              <div class="card-content is-flex is-flex-direction-column" style="flex-grow: 1; padding: 1.75rem;">
+                <div class="media is-align-items-center mb-4">
+                  <div class="media-left" style="background-color: #fffbeb; padding: 0.75rem; border-radius: 12px; display: flex;">
+                    <span class="material-icons" style="font-size: 2.25rem; color: #d97706;">map</span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4 mb-1">Parcelas</p>
+                    <p class="subtitle is-6 mb-0">Ubicación y Georreferencia</p>
+                  </div>
+                </div>
+                
+                <div class="content card-description" style="flex-grow: 1;">
+                  <p>Registra, visualiza e interactúa con las coordenadas de latitud y longitud correspondientes a tus lotes agrícolas para llevar un control espacial absoluto.</p>
+                </div>
+              </div>
+
+              <div class="card-footer-custom">
+                <a href="parcelas.html" class="footer-link link-parcelas">
+                  <span class="icon mr-1"><i class="material-icons">add_location_alt</i></span>
+                  Ingresar Parcelas
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECCIÓN 2: CULTIVOS (ACCESO DIRECTO) -->
+          <div class="column is-12-mobile is-4-tablet">
+            <div class="card crop-card">
+              <div class="card-header-custom">
+                <span class="tag tag-cultivos">Producción</span>
+                <span class="material-icons" style="color: #059669;">eco</span>
+              </div>
+              
+              <div class="card-content is-flex is-flex-direction-column" style="flex-grow: 1; padding: 1.75rem;">
+                <div class="media is-align-items-center mb-4">
+                  <div class="media-left" style="background-color: #ecfdf5; padding: 0.75rem; border-radius: 12px; display: flex;">
+                    <span class="material-icons" style="font-size: 2.25rem; color: #059669;">agriculture</span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4 mb-1">Cultivos</p>
+                    <p class="subtitle is-6 mb-0">Monitoreo de Siembras</p>
+                  </div>
+                </div>
+                
+                <div class="content card-description" style="flex-grow: 1;">
+                  <p>Administra las variedades cultivadas en cada sector, define los parámetros hídricos críticos y controla los tiempos estimados de cosecha.</p>
+                </div>
+              </div>
+
+              <div class="card-footer-custom">
+                <a href="cultivos.html" class="footer-link link-cultivos">
+                  <span class="icon mr-1"><i class="material-icons">grass</i></span>
+                  Gestionar Cultivos
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECCIÓN 3: TAREAS (ACCESO DIRECTO) -->
+          <div class="column is-12-mobile is-4-tablet">
+            <div class="card crop-card">
+              <div class="card-header-custom">
+                <span class="tag tag-tareas">Planificación</span>
+                <span class="material-icons" style="color: #2563eb;">assignment</span>
+              </div>
+              
+              <div class="card-content is-flex is-flex-direction-column" style="flex-grow: 1; padding: 1.75rem;">
+                <div class="media is-align-items-center mb-4">
+                  <div class="media-left" style="background-color: #eff6ff; padding: 0.75rem; border-radius: 12px; display: flex;">
+                    <span class="material-icons" style="font-size: 2.25rem; color: #2563eb;">task_alt</span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4 mb-1">Tareas</p>
+                    <p class="subtitle is-6 mb-0">Labores Diarias del Campo</p>
+                  </div>
+                </div>
+                
+                <div class="content card-description" style="flex-grow: 1;">
+                  <p>Organiza, asigna y da seguimiento a las actividades diarias cruciales como el riego, control de malezas, fertilización y cosechas programadas.</p>
+                </div>
+              </div>
+
+              <div class="card-footer-custom">
+                <a href="tareas.html" class="footer-link link-tareas">
+                  <span class="icon mr-1"><i class="material-icons">playlist_add_check</i></span>
+                  Ver Agenda de Tareas
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- Fin de las columnas -->
+
+      </div>
+    </main>
+  </body>
+</html>

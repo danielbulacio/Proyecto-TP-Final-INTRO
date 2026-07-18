@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use("/api/v1/cultivos", endpointsCultivos);
+app.use("/api/v1/parcelas", endpointsParcelas);
 
 const port = 8000;
 

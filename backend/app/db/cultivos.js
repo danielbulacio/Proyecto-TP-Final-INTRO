@@ -13,10 +13,10 @@ export async function getOneCultivo(id) {
 }
 
 // Crear un nuevo cultivo en la base de datos
-export async function createCultivo(nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios) {
+export async function createCultivo(nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios) {
   const res = await db.query(
-    "INSERT INTO cultivos (nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios) VALUES ($1, $2, $3, $4, $5, $6)",
-    [nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios],
+    "INSERT INTO cultivos (nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios) VALUES ($1, $2, $3, $4, $5, $6)",
+    [nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios],
   );
 
   return res.rowCount == 1;
@@ -29,10 +29,10 @@ export async function deleteCultivo(id) {
 }
 
 // Actualizar un cultivo existente por su ID
-export async function updateCultivo(id, nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios) {
+export async function updateCultivo(id, nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios) {
   const res = await db.query(
-    "UPDATE cultivos SET nombre = $1, parcela_id = $2, tipo = $3, temperatura_optima = $4, dias_cosecha = $5, mililitros_necesarios = $6 WHERE id = $7",
-    [nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios, id]
+    "UPDATE cultivos SET nombre_cultivo = $1, parcela_id = $2, tipo = $3, temperatura_optima = $4, dias_de_cosecha = $5, mililitros_necesarios = $6 WHERE id = $7",
+    [nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios, id]
   );  
 
   return res.rowCount == 1;

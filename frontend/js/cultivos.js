@@ -16,7 +16,7 @@
           const parcelas = await response.json();
           const mapa = {};
           parcelas.forEach(p => {
-            mapa[p.id] = p.nombre; // Asume que la tabla parcelas tiene id y nombre
+            mapa[p.id] = p.nombre;
           });
           return mapa;
         } catch (err) {

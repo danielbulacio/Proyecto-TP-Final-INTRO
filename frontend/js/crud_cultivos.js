@@ -21,6 +21,9 @@
           select.innerHTML = `<option value="">-- Selecciona una Parcela --</option>`;
           
           parcelas.forEach(parcela => {
+
+            console.log("Revisando parcela de la API -> ID:", parcela.id, "Nombre:", parcela.nombre);
+
             // Guardar en caché para resolución inmediata de nombres en tabla
             parcelasCache[parcela.id] = parcela.nombre || `Parcela (ID: ${parcela.id})`;
             
@@ -30,10 +33,13 @@
             option.textContent = parcela.nombre || `Parcela ${parcela.id}`;
             select.appendChild(option);
           });
+
+          return true;
           
         } catch (err) {
           showNotification("error", `Error de Conexión de Parcelas: ${err.message}`);
           select.innerHTML = `<option value="">Error al cargar parcelas</option>`;
+          return false;
         }
       }
 
@@ -123,6 +129,9 @@
         const dias_de_cosecha = document.getElementById("dias_de_cosecha").value;
         const mililitros_necesarios = document.getElementById("mililitros_necesarios").value;
 
+        // Agrega esto temporalmente para espiar los valores:
+        console.log("Nombre:", nombre_cultivo, " | Parcela ID:", parcela_id);
+
         if (!nombre_cultivo || isNaN(parcela_id)) {
           showNotification("error", "Los campos Nombre y Parcela son obligatorios.");
           return;
@@ -195,12 +204,19 @@
       /**
        * Carga un cultivo seleccionado en el formulario para proceder con la edición
        */
-      function editCultivo(cultivo) {
+      async function editCultivo(cultivo) {
         hideNotifications();
         
+        // Asegurarnos de que las opciones del select existan antes de asignar el valor
+        const select = document.getElementById("parcela_id");
+        if (select.options.length <= 1) { 
+        // Si solo está la opción por defecto, volvemos a cargar las parcelas y esperamos
+          await loadParcelas(); 
+        }
+
         document.getElementById("cultivo-id").value = cultivo.id;
         document.getElementById("nombre_cultivo").value = cultivo.nombre_cultivo || "";
-        document.getElementById("parcela_id").value = cultivo.parcela_id || "";
+        select.value = cultivo.parcela_id ? String(cultivo.parcela_id) : "";
         document.getElementById("tipo").value = cultivo.tipo || "";
         document.getElementById("temperatura_optima").value = cultivo.temperatura_optima !== null ? cultivo.temperatura_optima : "";
         document.getElementById("dias_de_cosecha").value = cultivo.dias_de_cosecha !== null ? cultivo.dias_de_cosecha : "";
