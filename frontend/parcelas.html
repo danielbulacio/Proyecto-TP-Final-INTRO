@@ -106,7 +106,6 @@
 
             <div class="content">
               <p class="has-text-grey">
-               .
               </p>
               
               <!-- Agrupamos tus botones para que se acomoden bien si la pantalla es chica -->
@@ -126,6 +125,13 @@
 
   </div> <!-- FIN DEL CONTAINER -->
 </section>
+  <dialog id="modal-confirmacion" class="modal-personalizado">
+  <p id="texto-confirmacion">¿Estás seguro?</p>
+  <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+    <button id="btn-cancelar-modal" class="button">Cancelar</button>
+    <button id="btn-aceptar-modal" class="button is-danger">Eliminar</button>
+  </div>
+</dialog>
     <script src="js/parcela.js"></script>
   </body>
 </html>

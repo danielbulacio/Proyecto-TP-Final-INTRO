@@ -59,7 +59,7 @@ parcelas.forEach(parcela => {
     // --- GRUPO DE BOTONES (ACCIONES CRUD) ---
     
 
-    // --- GRUPO DE BOTONES (ACCIONES CRUD) ---
+   // --- GRUPO DE BOTONES (ACCIONES CRUD) ---
     const grupoBotones = document.createElement("div");
     grupoBotones.className = "buttons mt-4";
 
@@ -71,12 +71,33 @@ parcelas.forEach(parcela => {
         verDetalle(parcela.id);
     });
 
-    // Botón Eliminar
+    // Botón Eliminar con tu Modal Personalizado
     const botonEliminar = document.createElement("button");
     botonEliminar.className = "button is-danger is-small";
     botonEliminar.textContent = "Eliminar";
+    
     botonEliminar.addEventListener('click', () => {
-        eliminarParcela(parcela.id);
+        // 1. Buscamos los elementos del modal en el HTML
+        const modal = document.getElementById('modal-confirmacion');
+        const textoModal = document.getElementById('texto-confirmacion');
+        const btnAceptarModal = document.getElementById('btn-aceptar-modal');
+        const btnCancelarModal = document.getElementById('btn-cancelar-modal');
+
+        // 2. Seteamos el texto dinámico
+        textoModal.textContent = `¿Estás seguro de que deseas eliminar la parcela "${parcela.nombre}"?`;
+        
+        // 3. Abrimos el modal (aplica el difuminado)
+        modal.showModal();
+
+        // 4. IMPORTANTE: Usamos un onclick directo para LIMPIAR cualquier ID anterior de la memoria
+        btnAceptarModal.onclick = async () => {
+            modal.close(); // Cerramos el modal primero
+            await deleteParcela(parcela.id); // Llama a tu función de abajo pasándole el ID limpio
+        };
+
+        btnCancelarModal.onclick = () => {
+            modal.close();
+        };
     });
 
     // Botón Editar
@@ -96,7 +117,7 @@ parcelas.forEach(parcela => {
     });
 
 
-    // --- ENSAMBLAJE DE LA ESTRUCTURA (De adentro hacia afuera) ---
+    // ENSAMBLAJE DE LA ESTRUCTURA 
     grupoBotones.appendChild(botonVer);
     grupoBotones.appendChild(botonEliminar);
     grupoBotones.appendChild(botonEditar);
@@ -117,3 +138,16 @@ parcelas.forEach(parcela => {
   });
 }
 getAllParcelas();
+
+async function deleteParcela(id){
+    const response = await fetch(`http://localhost:8000/api/parcelas/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.status == 200) {
+        await getAllParcelas();
+    } else {
+        const error = document.getElementById("error");
+        error.textContent = response.statusText;
+    }
+} // Llamada de prueba para eliminar la parcela con ID 1
