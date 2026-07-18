@@ -1,0 +1,162 @@
+/* Estilos del sistema de diseño para fondo blanco limpio */
+:root {
+--color-primary-rgb: 16, 185, 129; /* Emerald 500 */
+--bg-pure-white: #ffffff;
+--border-soft: #f1f5f9;
+--text-dark: #0f172a;
+--text-muted: #64748b;
+}
+
+html, body {
+background-color: var(--bg-pure-white) !important;
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+color: var(--text-dark);
+min-height: 100vh;
+}
+
+.section {
+background-color: var(--bg-pure-white) !important;
+padding: 3rem 1.5rem;
+}
+
+/* Héroe mejorado con degradado agrícola premium de alto contraste */
+.crop-hero {
+background: linear-gradient(135deg, #a07711 0%, #deb347 100%) !important;
+border-radius: 16px;
+padding: 3rem;
+box-shadow: 0 10px 25px -5px rgba(169, 146, 12, 0.15), 0 8px 10px -6px rgba(185, 176, 16, 0.15);
+margin-bottom: 3rem;
+}
+
+/* Tarjetas premium diseñadas específicamente para destacar suavemente en blanco */
+.crop-card {
+background-color: var(--bg-pure-white) !important;
+border: 1px solid var(--border-soft) !important;
+border-radius: 16px !important;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -2px rgba(0, 0, 0, 0.02) !important;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+height: 100%;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+}
+
+.crop-card:hover {
+transform: translateY(-6px);
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03) !important;
+border-color: #e2e8f0 !important;
+}
+
+/* Cabeceras de tarjetas optimizadas */
+.card-header-custom {
+background-color: #f8fafc;
+border-bottom: 1px solid var(--border-soft);
+padding: 1rem 1.25rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+/* Badges/Etiquetas con opacidades suaves para evitar saturación de color */
+.tag-cultivos {
+background-color: #ecfdf5 !important;
+color: #065f46 !important;
+font-weight: 600;
+}
+
+.tag-parcelas {
+background-color: #fffbeb !important;
+color: #92400e !important;
+font-weight: 600;
+}
+
+.tag-tareas {
+background-color: #eff6ff !important;
+color: #1e40af !important;
+font-weight: 600;
+}
+
+/* Tipografía y textos auxiliares */
+.title.is-4 {
+color: var(--text-dark) !important;
+font-weight: 700;
+letter-spacing: -0.025em;
+}
+
+.subtitle.is-6 {
+color: var(--text-muted) !important;
+}
+
+.card-description {
+color: #475569;
+font-size: 0.95rem;
+line-height: 1.6;
+}
+
+/* Footers de tarjeta interactivos con diseño limpio */
+.card-footer-custom {
+background-color: #fafafa;
+border-top: 1px solid var(--border-soft);
+padding: 1rem;
+text-align: center;
+margin-top: auto;
+}
+
+.footer-link {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+padding: 0.75rem 1rem;
+border-radius: 8px;
+font-weight: 600;
+font-size: 0.9rem;
+transition: all 0.2s ease;
+}
+
+.link-cultivos {
+color: #059669;
+background-color: #f0fdf4;
+}
+.link-cultivos:hover {
+background-color: #dcfce7;
+color: #047857;
+}
+
+.link-parcelas {
+color: #d97706;
+background-color: #fffbeb;
+}
+.link-parcelas:hover {
+background-color: #fef3c7;
+color: #b45309;
+}
+
+.link-tareas {
+color: #2563eb;
+background-color: #eff6ff;
+}
+.link-tareas:hover {
+background-color: #dbeafe;
+color: #1d4ed8;
+}
+
+/* Métrica / Indicador rápido de estado en Dashboard */
+.stats-badge {
+font-size: 0.8rem;
+font-weight: 500;
+color: var(--text-muted);
+background-color: #f1f5f9;
+padding: 0.25rem 0.6rem;
+border-radius: 20px;
+display: inline-flex;
+align-items: center;
+}
+
+.stats-badge span {
+width: 6px;
+height: 6px;
+background-color: #10b981;
+border-radius: 50%;
+margin-right: 6px;
+}
