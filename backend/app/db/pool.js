@@ -1,4 +1,5 @@
 import { Pool } from "pg";
+
 //Esto sirve para que puedas hacer 
 // en Los otros js que hay en /db mirar camejo
 // import { db } from "./pool.js";
