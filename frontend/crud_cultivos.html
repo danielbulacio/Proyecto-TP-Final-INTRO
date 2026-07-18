@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Cultivos - AgroTech</title>
+    <!-- Bulma CSS Framework -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+
+    <!-- CSS del navbar original -->
+    <link rel="stylesheet" href="./css/navbar.css" />
+
+    <!-- Estilos adicionales limpios para pulir la interfaz -->
+    <link rel="stylesheet" href="./css/crud_cultivos.css" />
+
+    <!-- Iconografía Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,-25&icon_names=agriculture"
+    />
+
+
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+        <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
+        </a>
+        <div
+          class="navbar-burger js-burger"
+          data-target="navbarExampleTransparentExample"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- LINKS DEL NAVBAR -->
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+          <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+          <a class="navbar-item" href="tareas.html"> Tareas </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            
+              <p class="control">
+                <a
+                  class="button is-primary"
+                  href="https://github.com/jgthms/bulma/releases/download/1.0.4/bulma-1.0.4.zip"
+                >
+
+                  <span>Boton</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><!-- FIN DEL NAVBAR -->
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section">
+      <div class="container">
+        
+        <!-- Cabecera del Panel Técnico -->
+        <div class="hero-crud">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h1 class="title is-3 has-text-white mb-2">Panel de Control de Cultivos</h1>
+              <h2 class="subtitle is-6 has-text-white-ter mb-0">Alta, baja y modificación directa sobre base de datos Postgres</h2>
+            </div>
+            <div class="column is-narrow">
+              <a class="button is-white is-outlined is-rounded" href="cultivos.html">
+                <span class="icon mr-1"><i class="material-icons">arrow_back</i></span>
+                <span>Volver al Catálogo</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedor Único para Mensajes de Error de Backend -->
+        <div id="error" class="notification is-danger is-light is-hidden mb-5"></div>
+        <div id="success" class="notification is-success is-light is-hidden mb-5"></div>
+
+        <!-- Layout de Columnas: Formulario (Izquierda) y Tabla de Cultivos (Derecha) -->
+        <div class="columns">
+          
+          <!-- SECCIÓN FORMULARIO (Creación e Inicio de Edición) -->
+          <div class="column is-12-tablet is-4-desktop">
+            <div class="card form-container">
+              <header class="card-header has-background-light" id="form-header" style="border-bottom: 1px solid #f0f0f0;">
+                <p class="card-header-title" id="form-title">
+                  <span class="icon mr-2 has-text-success"><i class="material-icons">add_box</i></span>
+                  <span class="has-text-dark">Registrar Cultivo</span>
+                </p>
+              </header>
+              
+              <div class="card-content">
+                <form id="form-cultivo" onsubmit="saveCultivo(event)">
+                  <!-- Campo oculto para almacenar el ID en caso de estar editando -->
+                  <input type="hidden" id="cultivo-id" value="">
+
+                  <!-- Campo: Nombre del Cultivo -->
+                  <div class="field">
+                    <label class="label has-text-dark">Nombre del Cultivo *</label>
+                    <div class="control">
+                      <input class="input" type="text" id="nombre_cultivo" placeholder="Ej. Maíz Híbrido, Arándano" required>
+                    </div>
+                  </div>
+
+                  <!-- Campo: Parcela Relacionada (FETCH DINÁMICO) -->
+                  <div class="field">
+                    <label class="label has-text-dark">Asignar Parcela *</label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select id="parcela_id" required>
+                          <option value="">Cargando parcelas disponibles...</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p class="help">Se registrará usando su clave foránea (parcela_id)</p>
+                  </div>
+
+                  <!-- Campo: Tipo de Cultivo -->
+                  <div class="field">
+                    <label class="label has-text-dark">Tipo de Cultivo</label>
+                    <div class="control">
+                      <input class="input" type="text" id="tipo" placeholder="Ej. Cereal, Fruta, Tubérculo">
+                    </div>
+                  </div>
+
+                  <!-- Campo: Temperatura Óptima (°C) -->
+                  <div class="field">
+                    <label class="label has-text-dark">Temperatura Óptima (°C)</label>
+                    <div class="control">
+                      <input class="input" type="number" id="temperatura_optima" placeholder="Ej. 24">
+                    </div>
+                  </div>
+
+                  <!-- Campo: Días de Cosecha -->
+                  <div class="field">
+                    <label class="label has-text-dark">Ciclo / Días de Cosecha</label>
+                    <div class="control">
+                      <input class="input" type="number" id="dias_de_cosecha" placeholder="Ej. 90">
+                    </div>
+                  </div>
+
+                  <!-- Campo: Volumen de Agua (Mililitros necesarios diarios) -->
+                  <div class="field">
+                    <label class="label has-text-dark">Mililitros Necesarios Diarios (ml)</label>
+                    <div class="control">
+                      <input class="input" type="number" id="mililitros_necesarios" placeholder="Ej. 1200">
+                    </div>
+                  </div>
+
+                  <!-- Botones de Acción de Envío -->
+                  <div class="field pt-3">
+                    <div class="control">
+                      <button type="submit" class="button is-success is-fullwidth" id="btn-submit">
+                        <span class="icon mr-1"><i class="material-icons">save</i></span>
+                        <span id="text-submit">Registrar Cultivo</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="field is-hidden" id="control-cancelar">
+                    <div class="control">
+                      <button type="button" class="button is-light is-fullwidth" onclick="resetForm()">
+                        Cancelar Edición
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECCIÓN TABLA DE DATOS (Lista, Modifica y Elimina cultivos) -->
+          <div class="column is-12-tablet is-8-desktop">
+            <div class="table-container p-4">
+              <div class="is-flex is-justify-content-between is-align-items-center mb-4">
+                <h3 class="title is-4 mb-0 has-text-dark">Base de Datos Actual</h3>
+                <span class="tag is-info is-light font-semibold" id="total-registros">Cargando base de datos...</span>
+              </div>
+
+              <div class="table-container">
+                <table class="table is-fullwidth is-hoverable is-striped">
+                  <thead>
+                    <tr>
+                      <th style="width: 80px;">ID</th>
+                      <th>Nombre</th>
+                      <th>Parcela</th>
+                      <th>Tipo</th>
+                      <th>Temp. (°C)</th>
+                      <th>Días</th>
+                      <th>Riego (ml)</th>
+                      <th class="has-text-right">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-cultivos">
+                    <!-- Filas generadas de forma asíncrona -->
+                    <tr>
+                      <td colspan="8" class="has-text-centered py-6">
+                        <button class="button is-loading is-white">Conectando al servidor...</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+      <!-- VINCULACIÓN DEL ARCHIVO JAVASCRIPT EXTERNO -->
+    <script src="./js/crud_cultivos.js"></script>
+  </body>
+</html>

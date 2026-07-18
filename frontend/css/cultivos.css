@@ -1,0 +1,22 @@
+/* Estilos adicionales limpios para pulir la interfaz */
+.crop-card {
+border-radius: 12px;
+transition: transform 0.25s ease, box-shadow 0.25s ease;
+border: 1px solid #e1e8ed;
+height: 100%;
+display: flex;
+flex-direction: column;
+background-color: #ffffff;
+overflow: hidden;
+}
+.crop-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.crop-hero {
+background: linear-gradient(135deg, #11998e, #38ef7d);
+color: white;
+border-radius: 12px;
+margin-bottom: 2rem;
+padding: 2.5rem;
+}
