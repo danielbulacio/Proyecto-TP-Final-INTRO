@@ -33,7 +33,7 @@ endpointsCultivos.get("/:id", async (req, res) => {
 
 endpointsCultivos.put("/:id", async (req, res) => {
     let id = req.params.id;
-    const { nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios } = req.body;
+    const { nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios } = req.body;
 
     // Validamos que el ID sea un número válido
     if (isNaN(id)) {
@@ -50,7 +50,7 @@ endpointsCultivos.put("/:id", async (req, res) => {
     }
 
     // Validaciones condicionales: SOLO si se envían los campos opcionales
-    // (Validamos que temperatura_optima, dias_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
+    // (Validamos que temperatura_optima, dias_de_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
     if (temperatura_optima !== undefined) {
         if (isNaN(temperatura_optima) || temperatura_optima <= 0) {
             res.status(400).json({ message: "La temperatura óptima debe ser un número positivo" });
@@ -58,8 +58,8 @@ endpointsCultivos.put("/:id", async (req, res) => {
         }
     }
 
-    if (dias_cosecha !== undefined) {
-        if (isNaN(dias_cosecha) || dias_cosecha <= 0) {
+    if (dias_de_cosecha !== undefined) {
+        if (isNaN(dias_de_cosecha) || dias_de_cosecha <= 0) {
             res.status(400).json({ message: "Los días de cosecha deben ser un número positivo" });
             return;
         }
@@ -73,7 +73,7 @@ endpointsCultivos.put("/:id", async (req, res) => {
     }
 
     // Intentamos actualizar el cultivo en la base de datos
-    const updated = await updateCultivo(id, nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios);
+    const updated = await updateCultivo(id, nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios);
 
     if (!updated) {
         res.status(500).json({ message: "Error al actualizar el cultivo" });
@@ -85,29 +85,22 @@ endpointsCultivos.put("/:id", async (req, res) => {
 
 endpointsCultivos.post("/", async (req, res) => {
     // Desestructuramos el body
-    const { nombre, parcela_id, tipo, temperatura_optima, dias_cosecha, mililitros_necesarios } = req.body;
+    const { nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios } = req.body;
 
     // 1. Validamos ÚNICAMENTE los campos estrictamente requeridos
-    if (!nombre || !parcela_id) {
-        res.status(400).json({ message: "Faltan campos requeridos: nombre y parcela_id son obligatorios" });
+    if (!nombre_cultivo || !parcela_id) {
+        res.status(400).json({ message: "Faltan campos requeridos: nombre_cultivo y parcela_id son obligatorios" });
         return;
     }
 
-    // 2. Validamos que el cultivo no exista ya en la base de datos
-    const existingCultivo = await getOneCultivo(nombre);
-    if (existingCultivo) {
-        res.status(400).json({ message: "El cultivo ya existe" });
-        return;
-    }
-
-    // 3. Validamos parcela_id (ya que ahora sabemos con certeza que existe)
+    // 2. Validamos parcela_id (ya que ahora sabemos con certeza que existe)
     if (isNaN(parcela_id) || parcela_id <= 0) {
         res.status(400).json({ message: "El campo parcela_id debe ser un número positivo válido" });
         return;
     }
 
-    // 4. Validaciones condicionales: SOLO si se envían los campos opcionales
-    // (Validamos que temperatura_optima, dias_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
+    // 3. Validaciones condicionales: SOLO si se envían los campos opcionales
+    // (Validamos que temperatura_optima, dias_de_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
     if (temperatura_optima !== undefined) {
         if (isNaN(temperatura_optima) || temperatura_optima <= 0) {
             res.status(400).json({ message: "La temperatura óptima debe ser un número positivo" });
@@ -115,8 +108,8 @@ endpointsCultivos.post("/", async (req, res) => {
         }
     }
 
-    if (dias_cosecha !== undefined) {
-        if (isNaN(dias_cosecha) || dias_cosecha <= 0) {
+    if (dias_de_cosecha !== undefined) {
+        if (isNaN(dias_de_cosecha) || dias_de_cosecha <= 0) {
             res.status(400).json({ message: "Los días de cosecha deben ser un número positivo" });
             return;
         }
@@ -131,11 +124,11 @@ endpointsCultivos.post("/", async (req, res) => {
 
     // Intentamos crear el cultivo en la base de datos (pasando null o undefined en lo que no venga)
     const created = await createCultivo(
-        nombre, 
+        nombre_cultivo, 
         parcela_id, 
         tipo || null, 
         temperatura_optima !== undefined ? temperatura_optima : null, 
-        dias_cosecha !== undefined ? dias_cosecha : null, 
+        dias_de_cosecha !== undefined ? dias_de_cosecha : null, 
         mililitros_necesarios !== undefined ? mililitros_necesarios : null
     );
 

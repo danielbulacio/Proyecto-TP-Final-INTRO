@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import { endpointsCultivos } from "./api/cultivos.js";
-
+import { endpointsParcelas } from "./api/parcelas.js";
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use("/api/v1/cultivos", endpointsCultivos);
+app.use("/api/v1/parcelas", endpointsParcelas);
 
 const port = 8000;
 
