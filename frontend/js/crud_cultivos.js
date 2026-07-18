@@ -292,10 +292,37 @@
         }
       }
 
+
       // Lanzador de eventos asíncronos al inicio
       window.onload = async function() {
-        // Cargar primero las parcelas para poder mapear sus IDs a nombres
+        // 1. Cargar primero las parcelas para poder mapear sus IDs a nombres
         await loadParcelas();
-        // Cargar cultivos de la tabla Postgres
+        
+        // 2. Cargar cultivos de la tabla Postgres
         await getAllCultivos();
+
+        // 3. CAPTURAR EL ID DE LA URL SI EXISTE
+        const urlParams = new URLSearchParams(window.location.search);
+        const cultivoId = urlParams.get('id');
+
+        if (cultivoId) {
+          try {
+            // Hacer un fetch directo a la API para traer solo ese cultivo
+            const response = await fetch(`${API_CULTIVOS_URL}/${cultivoId}`);
+            
+            if (response.ok) {
+              const cultivo = await response.json();
+              
+              // Reutilizamos tu función existente para cargar el formulario
+              await editCultivo(cultivo); 
+              
+              // Hacer scroll suave hasta el formulario para mejor experiencia visual
+              document.getElementById("form-cultivo").scrollIntoView({ behavior: 'smooth' });
+            } else {
+              console.error("No se pudo obtener el cultivo con ID:", cultivoId);
+            }
+          } catch (err) {
+            console.error("Error al cargar el cultivo desde la URL:", err);
+          }
+        }
       };

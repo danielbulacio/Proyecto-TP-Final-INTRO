@@ -130,9 +130,9 @@
 
                 <!-- Enlace al detalle específico del cultivo en otra página -->
                 <footer class="card-footer" style="border-top: 1px solid #f0f0f0; background: #fafafa;">
-                  <a href="cultivo.html?id=${cultivo.id}" class="card-footer-item has-text-success font-semibold py-3" style="font-size: 0.95rem;">
+                  <a href="crud_cultivos.html?id=${cultivo.id}" class="card-footer-item has-text-success font-semibold py-3" style="font-size: 0.95rem;">
                     <span class="icon mr-1"><i class="material-icons">visibility</i></span>
-                    Ver Ficha Técnica
+                    Editar datos del cultivo
                   </a>
                 </footer>
               </div>
