@@ -1,5 +1,10 @@
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+
 async function dibujarGrafico() {
-  const res = await fetch("http://localhost:8000/api/v1/parcelas/1/historial");
+  const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}/historial`);;
   const historial = await res.json();
   const fechas = historial.map((fila) => fila.fecha);
   const temperaturas = historial.map((fila) => Number(fila.temperatura));
@@ -34,11 +39,15 @@ async function dibujarGrafico() {
 }
 
 async function mostrarDatosActuales() {
-  const res = await fetch("http://localhost:8000/api/v1/parcelas/1");
+  const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}`);
   const parcela = await res.json();
 
+  document.getElementById("parcela-nombre").textContent =
+    parcela.nombre;
+  
   document.getElementById("parcela_nombre_breadcumb").textContent =
     parcela.nombre;
+  
   document.getElementById("temp").textContent = parcela.temperatura;
   document.getElementById("humedad").textContent = parcela.humedad_suelo;
   document.getElementById("precipitacion").textContent = parcela.precipitacion;
