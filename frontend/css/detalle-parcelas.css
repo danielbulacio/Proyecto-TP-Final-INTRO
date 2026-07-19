@@ -212,3 +212,7 @@
   font-size: 36px !important;
   font-weight: 500 !important;
 }
+#map {
+  height: 180px;
+  border-radius: 20px;
+}
