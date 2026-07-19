@@ -6,3 +6,6 @@ run-back:
 	cd backend && docker compose up
 
 run: run-back run-front
+
+stop:
+	cd backend && docker compose down
