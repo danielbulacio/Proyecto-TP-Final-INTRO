@@ -72,3 +72,39 @@ export async function actualizarClima(parcelaId) {
   await guardarClima(parcelaId, registros); // Llamo a esta funcion y los inserto en la base 
   return registros.length;
 }
+
+export async function calcularscores(parcelaId) {
+  const parcela = await getDatosParcela(parcelaId);
+
+  // El query suma la suma de precipitaciones, evapo y humedad.
+  const res = await db.query(
+    `SELECT SUM(precipitacion) AS lluvia,
+            SUM(evapotranspiracion) AS evapo,
+            AVG(humedad_suelo) AS humedad
+     FROM detalle_parcela WHERE parcela_id = $1`,
+    [parcelaId],
+  );
+
+  const lluvia = Number(res.rows[0].lluvia); // esto que es
+  const evapo = Number(res.rows[0].evapo);
+  const humedad = Number(res.rows[0].humedad);
+
+  // FACTOR 1 — Temperatura: qué tan cerca de la óptima del cultivo
+  const difTemp = Math.abs(Number(parcela.temperatura) - parcela.temperatura_optima);
+  const scoreTemp = Math.max(0, 100 - difTemp * 5);
+
+  // FACTOR 2 — Agua: balance hídrico (lluvia − evapo) + humedad del suelo
+  const balance = lluvia - evapo;
+  const scoreBalance = Math.min(100, Math.max(0, (balance / parcela.mililitros_necesarios) * 100));
+  const scoreHumedad = Math.min(100, humedad * 100);   // humedad 0-1 → 0-100
+  const scoreAgua = (scoreBalance + scoreHumedad) / 2;
+
+  // GENERAL: engloba los dos
+  const general = (scoreTemp + scoreAgua) / 2;
+
+  return {
+    general: Math.round(general),
+    temperatura: Math.round(scoreTemp),
+    agua: Math.round(scoreAgua),
+  };
+}
