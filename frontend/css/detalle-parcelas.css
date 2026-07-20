@@ -3,44 +3,56 @@
 .header {
   background-color: white;
   border-bottom: 1px solid #e0e0e0;
-  padding: 0;
-  margin: 0;
+}
+
+.breadcrumb-row {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
 }
 
 .header .breadcrumb {
-  padding: 12px 20px;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #e0e0e0;
-}
-.breadcrumb-inside {
-  margin: auto;
   width: 85%;
+  margin: 0 auto;
+  padding: 0;
 }
+
 .header .breadcrumb ul {
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .header .breadcrumb a {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   font-weight: 600;
-  color: #666;
+  color: #999;
 }
 
 .header .breadcrumb li.is-active a {
   color: #333;
+  font-weight: 700;
 }
 
 .header-content {
   width: 85%;
-  margin: auto;
-  padding-bottom: 20px;
+  margin: 0 auto;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header-title-group {
+.header-left {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .back-link {
@@ -64,7 +76,7 @@
 
 .title-info h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #2c3e50;
 }
@@ -73,6 +85,46 @@
   margin: 4px 0 0 0;
   font-size: 14px;
   color: #999;
+}
+
+/* BOTONES DEL HEADER */
+.btn-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.btn-header:hover {
+  border-color: #999;
+  background-color: #f9f9f9;
+}
+
+.btn-exportar .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.btn-alerta {
+  background-color: var(--color-principal, #2d5016);
+  color: white;
+  border: none;
+}
+
+.btn-alerta:hover {
+  background-color: #1f3810;
+  opacity: 0.9;
+}
+
+.btn-alerta .material-symbols-outlined {
+  font-size: 18px;
 }
 
 .container {
