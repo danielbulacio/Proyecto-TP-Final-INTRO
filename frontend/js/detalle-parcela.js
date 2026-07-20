@@ -49,9 +49,20 @@ async function dibujarGrafico() {
     },
     options: {
       plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          ticks: {
+            callback: function (value, index) {
+              // muestra la fecha solo en los índices pares (cada 2 días)
+              return index % 2 === 0 ? this.getLabelForValue(value) : "";
+            },
+          },
+        },
+      },
     },
   });
 }
+
 
 async function mostrarDatosActuales() {
   const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}`);
