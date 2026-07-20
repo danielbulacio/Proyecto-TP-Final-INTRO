@@ -3,12 +3,12 @@ import { db } from "./pool.js";
 // Trae todas las mediciones de una parcela, ordenadas por fecha. (es temporal)
 export async function getHistorialParcela(id) {
   const res = await db.query(
-    "SELECT fecha, temperatura FROM detalle_parcela WHERE parcela_id = $1 ORDER BY fecha",
+    `SELECT fecha, temperatura, precipitacion, humedad_suelo, evapotranspiracion
+     FROM detalle_parcela WHERE parcela_id = $1 ORDER BY fecha`,
     [id],
   );
   return res.rows;
 }
-
 //Trae los datos de clima actuales
 export async function getDatosParcela(id) {
   const res = await db.query(
