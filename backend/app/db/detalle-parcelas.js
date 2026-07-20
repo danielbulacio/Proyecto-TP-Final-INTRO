@@ -24,3 +24,49 @@ export async function getDatosParcela(id) {
   );
   return res.rows[0];
 }
+export async function traerClima(lat, lng) {
+  const variables = "temperature_2m,precipitation,soil_moisture_0_to_1cm,evapotranspiration";
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=${variables}&past_days=7&forecast_days=1&timezone=auto`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const horas = data.hourly.time;
+  const registros = [];
+
+  for (let i = 0; i < horas.length; i++) {
+    if (horas[i].endsWith("12:00")) {  // solo agarra los datos de las 12 del mediodia de cada dia 
+      registros.push({
+        fecha: horas[i].split("T")[0],
+        temperatura: data.hourly.temperature_2m[i],
+        precipitacion: data.hourly.precipitation[i],
+        humedad_suelo: data.hourly.soil_moisture_0_to_1cm[i],
+        evapotranspiracion: data.hourly.evapotranspiration[i],
+      });
+    }
+  }
+
+  return registros;
+}
+
+export async function guardarClima(parcelaId, registros) {
+  // Borro el clima viejo 
+  await db.query("DELETE FROM detalle_parcela WHERE parcela_id = $1", [parcelaId]);
+
+  // Inserto los registros nuevos, uno por día
+  for (const r of registros) {
+    await db.query(
+      `INSERT INTO detalle_parcela
+         (parcela_id, fecha, temperatura, precipitacion, humedad_suelo, evapotranspiracion)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [parcelaId, r.fecha, r.temperatura, r.precipitacion, r.humedad_suelo, r.evapotranspiracion]
+    );
+  }
+}
+export async function actualizarClima(parcelaId) {
+  const parcela = await getDatosParcela(parcelaId);// recibo datos de la parcela
+  const registros = await traerClima(parcela.latitud, parcela.longitud); //recibo los datos del clima (de open meteo)
+  
+  await guardarClima(parcelaId, registros); // Llamo a esta funcion y los inserto en la base 
+  return registros.length;
+}
