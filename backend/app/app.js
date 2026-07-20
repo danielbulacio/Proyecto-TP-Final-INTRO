@@ -22,8 +22,6 @@ app.use("/api/v1/tareas", endpointsTareas);
 
 const port = 8000;
 
-app.use("/api/parcelas", endpointsParcelas);
-
 app.get("/health", (req, res) => res.send("OK"));
 
 app.listen(port, () => {
