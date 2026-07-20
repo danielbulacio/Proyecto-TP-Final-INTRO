@@ -168,11 +168,48 @@
       <!-- fin  datos actuales --> 
       
       <div class="small-container">
-        <div class="fixed-grid has-1-cols">
+        
+        
+        <div class="fixed-grid">
           <div class="grafico">
+            <div class="grafico-header">
+              <div class="header-top">
+                <div class="header-left">
+                  <h2>Clima Histórico</h2>
+                </div>
+                <div class="header-right">
+                  <div class="time-buttons">
+                    <button class="time-btn">1S</button>
+                    <button class="time-btn">1M</button>
+                    <button class="time-btn">1A</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tabs-container">
+                <button class="tab active" data-metric="temperatura">
+                  <span class="material-symbols-outlined">thermostat</span>
+                  Temperatura
+                </button>
+                <button class="tab" data-metric="precipitacion">
+                  <span class="material-symbols-outlined">water_drop</span>
+                  Precipitación
+                </button>
+                <button class="tab" data-metric="humedad">
+                  <span class="material-symbols-outlined">water</span>
+                  Humedad Suelo
+                </button>
+                <button class="tab" data-metric="evapotranspiracion">
+                  <span class="material-symbols-outlined">cloud</span>
+                  Evapotranspiración
+                </button>
+              </div>
+            </div>
            <canvas id="grafico-temp"></canvas>
           </div>
         </div>
+        
+        
         <div class="map-container">
           <h3 class="map-title">Ubicación de la parcela</h3>
           <div id="map"></div>
