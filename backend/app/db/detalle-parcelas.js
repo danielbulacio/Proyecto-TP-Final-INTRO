@@ -26,7 +26,7 @@ export async function getDatosParcela(id) {
 }
 export async function traerClima(lat, lng) {
   const variables = "temperature_2m,precipitation,soil_moisture_0_to_1cm,evapotranspiration";
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=${variables}&past_days=7&forecast_days=1&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=${variables}&past_days=30&forecast_days=1&timezone=auto`;
 
   const res = await fetch(url);
   const data = await res.json();
