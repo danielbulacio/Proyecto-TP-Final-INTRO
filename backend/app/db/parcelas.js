@@ -5,7 +5,7 @@ export async function getAllParcelas() {
 
     const res = await db.query(
         "SELECT id,nombre,latitud,longitud FROM parcelas"
-
+    );
     return res.rows;
 }
 
