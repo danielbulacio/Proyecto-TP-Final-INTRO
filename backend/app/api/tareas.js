@@ -1,253 +1,239 @@
-const pool = require('../data/pool');
-const manejarErrorSQL = require('../utils/manejarErrorSQL');
-const {
-  validarCreacion,
-  validarActualizacion,
-  validarCambioEstado,
-  validarReasignacion
-} = require('../utils/validarTarea');
+import { Router } from "express";
+import {
+    getAllTareas,
+    getOneTarea,
+    getParcela,
+    createTarea,
+    updateTarea,
+    deleteTarea,
+    reassignTarea,
+    changeStateTarea,
+    getHistorialTarea
+} from "../db/tareas.js";
 
-//crear Tarea
+export const endpointsTareas = Router();
 
-async function crearTarea(req, res) {
-  const { valido, errores } = validarCreacion(req.body);
-  if (!valido) {
-    return res.status(400).json({ error: 'Datos inválidos', detalles: errores });
-  }
- 
-  const { parcela_id, tarea, prioridad, fecha_limite } = req.body;
-  const cliente = await pool.connect();
- 
-  try {
-    await cliente.query('BEGIN');
-    
-    const parcela = await cliente.query('SELECT id FROM parcelas WHERE id = $1', [parcela_id]);
-    if (parcela.rowCount === 0) {
-      await cliente.query('ROLLBACK');
-      return res.status(404).json({ error: 'La parcela indicada no existe' });
+const PRIORIDADES = ["Baja", "Media", "Alta", "Urgente"];
+const ESTADOS = ["pendiente", "en_progreso", "completada", "cancelada"];
+
+endpointsTareas.get("/", async (req, res) => {
+    const tareas = await getAllTareas();
+    res.json(tareas);
+});
+
+endpointsTareas.get("/:id", async (req, res) => {
+    let id = req.params.id;
+
+    if (isNaN(id)) {
+        res.status(400).json({ message: "El ID debe ser un número válido" });
+        return;
     }
 
-    const resultado = await cliente.query(
-      `INSERT INTO tareas (parcela_id, tarea, prioridad, fecha_limite)
-       VALUES ($1, $2, COALESCE($3, 'Media'), $4)
-       RETURNING *`,
-      [parcela_id, tarea.trim(), prioridad || null, fecha_limite || null]
-    );
-    const tareaCreada = resultado.rows[0];
- 
-    await cliente.query(
-      `INSERT INTO tareas_historial (tarea_id, accion, detalle)
-       VALUES ($1, 'creacion', $2)`,
-      [tareaCreada.id, `Tarea creada con prioridad "${tareaCreada.prioridad}" en la parcela ${parcela_id}`]
-    );
- 
-    await cliente.query('COMMIT');
-    res.status(201).json(tareaCreada);
-  } catch (error) {
-    await cliente.query('ROLLBACK');
-    manejarErrorSQL(error, res);
-  } finally {
-    cliente.release();
-  }
-}
+    const tarea = await getOneTarea(id);
 
-async function obtenerTareas(req, res) {
-  const { parcela_id, estado, prioridad } = req.query;
-  const condiciones = [];
-  const valores = [];
- 
-  if (parcela_id) {
-    valores.push(parcela_id);
-    condiciones.push(`parcela_id = $${valores.length}`);
-  }
-  if (estado) {
-    valores.push(estado);
-    condiciones.push(`estado = $${valores.length}`);
-  }
-  if (prioridad) {
-    valores.push(prioridad);
-    condiciones.push(`prioridad = $${valores.length}`);
-  }
- 
-  const where = condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '';
- 
-  try {
-    const resultado = await pool.query(
-      `SELECT * FROM tareas ${where} ORDER BY fecha_creacion DESC`,
-      valores
-    );
-    res.json(resultado.rows);
-  } catch (error) {
-    manejarErrorSQL(error, res);
-  }
-}
-
-async function obtenerTareaPorId(req, res) {
-  try {
-    const resultado = await pool.query('SELECT * FROM tareas WHERE id = $1', [req.params.id]);
-    if (resultado.rowCount === 0) return res.status(404).json({ error: 'Tarea no encontrada' });
-    res.json(resultado.rows[0]);
-  } catch (error) {
-    manejarErrorSQL(error, res);
-  }
-}
-
-async function actualizarTarea(req, res) {
-  const { valido, errores } = validarActualizacion(req.body);
-  if (!valido) {
-    return res.status(400).json({ error: 'Datos inválidos', detalles: errores });
-  }
- 
-  const { tarea, prioridad, fecha_limite } = req.body;
-  const cliente = await pool.connect();
- 
-  try {
-    await cliente.query('BEGIN');
- 
-    const existente = await cliente.query('SELECT * FROM tareas WHERE id = $1', [req.params.id]);
-    if (existente.rowCount === 0) {
-      await cliente.query('ROLLBACK');
-      return res.status(404).json({ error: 'Tarea no encontrada' });
+    if (tarea === undefined) {
+        res.status(404).json({ message: "Tarea no encontrada" });
+        return;
     }
- 
-    const resultado = await cliente.query(
-      `UPDATE tareas SET
-         tarea = COALESCE($1, tarea),
-         prioridad = COALESCE($2, prioridad),
-         fecha_limite = COALESCE($3, fecha_limite)
-       WHERE id = $4
-       RETURNING *`,
-      [tarea ?? null, prioridad ?? null, fecha_limite ?? null, req.params.id]
-    );
- 
-    await cliente.query(
-      `INSERT INTO tareas_historial (tarea_id, accion, detalle)
-       VALUES ($1, 'actualizacion', 'Datos de la tarea actualizados')`,
-      [req.params.id]
-    );
- 
-    await cliente.query('COMMIT');
-    res.json(resultado.rows[0]);
-  } catch (error) {
-    await cliente.query('ROLLBACK');
-    manejarErrorSQL(error, res);
-  } finally {
-    cliente.release();
-  }
-}
-
-async function eliminarTarea(req, res) {
-  try {
-    const resultado = await pool.query('DELETE FROM tareas WHERE id = $1 RETURNING id', [req.params.id]);
-    if (resultado.rowCount === 0) return res.status(404).json({ error: 'Tarea no encontrada' });
-    res.status(204).send();
-  } catch (error) {
-    manejarErrorSQL(error, res);
-  }
-}
+    res.json(tarea);
+});
 
 
-async function asignarTareaAParcela(req, res) {
-  const { valido, errores } = validarReasignacion(req.body);
-  if (!valido) {
-    return res.status(400).json({ error: 'Datos inválidos', detalles: errores });
-  }
- 
-  const { nueva_parcela_id } = req.body;
-  const cliente = await pool.connect();
- 
-  try {
-    await cliente.query('BEGIN');
- 
-    const tarea = await cliente.query('SELECT * FROM tareas WHERE id = $1', [req.params.id]);
-    if (tarea.rowCount === 0) {
-      await cliente.query('ROLLBACK');
-      return res.status(404).json({ error: 'Tarea no encontrada' });
+endpointsTareas.put("/:id", async (req, res) => {
+    let id = req.params.id;
+    const { tarea, prioridad, fecha_limite } = req.body;
+
+    if (isNaN(id)) {
+        res.status(400).json({ message: "El ID debe ser un número válido" });
+        return;
     }
- 
-    const parcelaDestino = await cliente.query('SELECT id FROM parcelas WHERE id = $1', [nueva_parcela_id]);
-    if (parcelaDestino.rowCount === 0) {
-      await cliente.query('ROLLBACK');
-      return res.status(404).json({ error: 'La parcela destino no existe' });
+
+    const tareaExistente = await getOneTarea(id);
+
+    if (!tareaExistente) {
+        res.status(404).json({ message: "Tarea no encontrada" });
+        return;
     }
- 
-    const parcelaAnterior = tarea.rows[0].parcela_id;
- 
-    const resultado = await cliente.query(
-      'UPDATE tareas SET parcela_id = $1 WHERE id = $2 RETURNING *',
-      [nueva_parcela_id, req.params.id]
-    );
- 
-    await cliente.query(
-      `INSERT INTO tareas_historial (tarea_id, accion, detalle, parcela_anterior_id, parcela_nueva_id)
-       VALUES ($1, 'reasignacion', $2, $3, $4)`,
-      [
-        req.params.id,
-        `Tarea reasignada de la parcela ${parcelaAnterior} a la parcela ${nueva_parcela_id}`,
-        parcelaAnterior,
-        nueva_parcela_id
-      ]
-    );
- 
-    await cliente.query('COMMIT');
-    res.json(resultado.rows[0]);
-  } catch (error) {
-    await cliente.query('ROLLBACK');
-    manejarErrorSQL(error, res);
-  } finally {
-    cliente.release();
-  }
-}
 
-async function cambiarEstadoTarea(req, res) {
-  const { valido, errores } = validarCambioEstado(req.body);
-  if (!valido) {
-    return res.status(400).json({ error: 'Datos inválidos', detalles: errores });
-  }
- 
-  const { estado } = req.body;
-  const cliente = await pool.connect();
- 
-  try {
-    await cliente.query('BEGIN');
- 
-    const tarea = await cliente.query('SELECT * FROM tareas WHERE id = $1', [req.params.id]);
-    if (tarea.rowCount === 0) {
-      await cliente.query('ROLLBACK');
-      return res.status(404).json({ error: 'Tarea no encontrada' });
+    if (tarea !== undefined && tarea.trim().length === 0) {
+        res.status(400).json({ message: "La tarea no puede quedar vacía" });
+        return;
     }
- 
-    const estadoAnterior = tarea.rows[0].estado;
-    const fechaCompletada = estado === 'completada' ? new Date().toISOString() : null;
- 
-    const resultado = await cliente.query(
-      `UPDATE tareas SET estado = $1, fecha_completada = $2 WHERE id = $3 RETURNING *`,
-      [estado, fechaCompletada, req.params.id]
-    );
- 
-    await cliente.query(
-      `INSERT INTO tareas_historial (tarea_id, accion, detalle, estado_anterior, estado_nuevo)
-       VALUES ($1, 'cambio_estado', $2, $3, $4)`,
-      [req.params.id, `Estado cambiado de "${estadoAnterior}" a "${estado}"`, estadoAnterior, estado]
-    );
- 
-    await cliente.query('COMMIT');
-    res.json(resultado.rows[0]);
-  } catch (error) {
-    await cliente.query('ROLLBACK');
-    manejarErrorSQL(error, res);
-  } finally {
-    cliente.release();
-  }
-}
 
-module.exports = {
-  crearTarea,
-  obtenerTareas,
-  obtenerTareaPorId,
-  actualizarTarea,
-  eliminarTarea,
-  asignarTareaAParcela,
-  cambiarEstadoTarea
-};
+    if (prioridad !== undefined && !PRIORIDADES.includes(prioridad)) {
+        res.status(400).json({ message: `La prioridad debe ser una de: ${PRIORIDADES.join(", ")}` });
+        return;
+    }
 
+    if (fecha_limite !== undefined && isNaN(Date.parse(fecha_limite))) {
+        res.status(400).json({ message: "La fecha límite debe ser una fecha válida (YYYY-MM-DD)" });
+        return;
+    }
+
+    // Intentamos actualizar la tarea en la base de datos
+    const updated = await updateTarea(id, tarea, prioridad, fecha_limite);
+
+    if (!updated) {
+        res.status(500).json({ message: "Error al actualizar la tarea" });
+        return;
+    }
+    res.status(200).json({ message: "Tarea actualizada con éxito" });
+});
+
+
+endpointsTareas.post("/", async (req, res) => {
+
+    const { parcela_id, tarea, prioridad, fecha_limite } = req.body;
+
+    // 1. Valida campos/columnas requeridos/as
+    if (!parcela_id || !tarea) {
+        res.status(400).json({ message: "Faltan campos requeridos: parcela_id y tarea son obligatorios" });
+        return;
+    }
+
+    // 2. Valida parcela_id
+    if (isNaN(parcela_id) || parcela_id <= 0) {
+        res.status(400).json({ message: "El campo parcela_id debe ser un número positivo válido" });
+        return;
+    }
+
+    // 3. Valida si la parcela existe antes de crear la tarea
+    const parcela = await getParcela(parcela_id);
+    if (!parcela) {
+        res.status(404).json({ message: "La parcela indicada no existe" });
+        return;
+    }
+
+    if (prioridad !== undefined && !PRIORIDADES.includes(prioridad)) {
+        res.status(400).json({ message: `La prioridad debe ser una de: ${PRIORIDADES.join(", ")}` });
+        return;
+    }
+
+    if (fecha_limite !== undefined && isNaN(Date.parse(fecha_limite))) {
+        res.status(400).json({ message: "La fecha límite debe ser una fecha válida (YYYY-MM-DD)" });
+        return;
+    }
+
+    const created = await createTarea(
+        parcela_id,
+        tarea,
+        prioridad || null,
+        fecha_limite !== undefined ? fecha_limite : null
+    );
+
+    if (!created) {
+        res.status(500).json({ message: "Error al crear la tarea" });
+        return;
+    }
+
+    res.status(201).json({ message: "Tarea creada con éxito" });
+});
+
+endpointsTareas.delete("/:id", async (req, res) => {
+    let id = req.params.id; // Leemos desde los parámetros de la URL
+
+    // Valida que el ID sea valido
+    if (isNaN(id)) {
+        res.status(400).json({ message: "El ID debe ser un número válido" });
+        return;
+    }
+
+    // Chequea que la tarea existe antes de intentar eliminarla
+    const tarea = await getOneTarea(id);
+    if (!tarea) {
+        res.status(404).json({ message: "Tarea no encontrada" });
+        return;
+    }
+
+    // Intentamos eliminar la tarea de la base de datos
+    const deleted = await deleteTarea(id);
+
+    if (!deleted) {
+        res.status(500).json({ message: "Error al eliminar la tarea" });
+        return;
+    }
+
+    res.status(200).json({ message: "Tarea eliminada" });
+});
+
+endpointsTareas.patch("/:id/asignar", async (req, res) => {
+    let id = req.params.id;
+    const { nueva_parcela_id } = req.body;
+
+    if (isNaN(id)) {
+        res.status(400).json({ message: "El ID debe ser un número válido" });
+        return;
+    }
+
+    if (!nueva_parcela_id || isNaN(nueva_parcela_id)) {
+        res.status(400).json({ message: "nueva_parcela_id es obligatorio y debe ser un número válido" });
+        return;
+    }
+
+    const tarea = await getOneTarea(id);
+    if (!tarea) {
+        res.status(404).json({ message: "Tarea no encontrada" });
+        return;
+    }
+
+    const parcelaDestino = await getParcela(nueva_parcela_id);
+    if (!parcelaDestino) {
+        res.status(404).json({ message: "La parcela destino no existe" });
+        return;
+    }
+
+    const reasignada = await reassignTarea(id, nueva_parcela_id, tarea.parcela_id);
+
+    if (!reasignada) {
+        res.status(500).json({ message: "Error al reasignar la tarea" });
+        return;
+    }
+    res.status(200).json({ message: "Tarea reasignada con éxito" });
+});
+
+endpointsTareas.patch("/:id/estado", async (req, res) => {
+    let id = req.params.id;
+    const { estado } = req.body;
+
+    if (isNaN(id)) {
+        res.status(400).json({ message: "El ID debe ser un número válido" });
+        return;
+    }
+
+    if (!estado || !ESTADOS.includes(estado)) {
+        res.status(400).json({ message: `El estado debe ser uno de: ${ESTADOS.join(", ")}` });
+        return;
+    }
+
+    const tarea = await getOneTarea(id);
+    if (!tarea) {
+        res.status(404).json({ message: "Tarea no encontrada" });
+        return;
+    }
+
+    const cambiado = await changeStateTarea(id, estado, tarea.estado);
+
+    if (!cambiado) {
+        res.status(500).json({ message: "Error al cambiar el estado de la tarea" });
+        return;
+    }
+    res.status(200).json({ message: "Estado actualizado con éxito" });
+});
+
+endpointsTareas.get("/:id/historial", async (req, res) => {
+    let id = req.params.id;
+
+    if (isNaN(id)) {
+        res.status(400).json({ message: "El ID debe ser un número válido" });
+        return;
+    }
+
+    const tarea = await getOneTarea(id);
+    if (!tarea) {
+        res.status(404).json({ message: "Tarea no encontrada" });
+        return;
+    }
+
+    const historial = await getHistorialTarea(id);
+    res.json(historial);
+});
