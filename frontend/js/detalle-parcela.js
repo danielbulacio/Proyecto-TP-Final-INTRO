@@ -14,47 +14,78 @@ function dibujarMapa(lat, long, nombre_parcela) {
     .openPopup();
 }
 
-async function dibujarGrafico() {
+let chart; // guardo la instancia del gráfico
+let historialGlobal; // guardo los datos traídos
+let tempOptima; // guardo la temperatura óptima del cultivo (para la línea del gráfico)
+
+async function cargarHistorial() {
   const res = await fetch(
     `http://localhost:8000/api/v1/parcelas/${id}/historial`,
   );
-  const historial = await res.json();
-  const fechas = historial.map((fila) => {
+  historialGlobal = await res.json();
+  dibujarGrafico("temperatura"); // arranca mostrando temperatura
+}
+
+function dibujarGrafico(tipo) {
+  const fechas = historialGlobal.map((fila) => {
     const [anio, mes, dia] = fila.fecha.split("T")[0].split("-");
     return `${dia}/${mes}`;
   });
-  const temperaturas = historial.map((fila) => Number(fila.temperatura));
+  const valores = historialGlobal.map((fila) => Number(fila[tipo]));
 
   const canvas = document.getElementById("grafico-temp");
+
+  if (chart) chart.destroy(); // 👈 destruyo el gráfico anterior
 
   const gradiente = canvas.getContext("2d").createLinearGradient(0, 0, 0, 300);
   gradiente.addColorStop(0, "rgba(136, 132, 216, 0.8)");
   gradiente.addColorStop(1, "rgba(136, 132, 216, 0)");
 
-  new Chart(canvas, {
+  // dataset principal (el dato real)
+  const datasets = [
+    {
+      label: tipo,
+      data: valores,
+      fill: true,
+      backgroundColor: gradiente,
+      borderColor: "#8884d8",
+      tension: 0.4,
+      pointRadius: 3,
+    },
+  ];
+
+  // si es temperatura, agrego la línea de la óptima del cultivo
+  if (tipo === "temperatura" && tempOptima != null) {
+    datasets.push({
+      label: "Óptima del cultivo",
+      data: fechas.map(() => tempOptima), // mismo valor en todas las fechas = línea horizontal
+      borderColor: "#e03131",
+      borderDash: [6, 6], // punteada
+      pointRadius: 0, // sin puntos
+      fill: false,
+    });
+  }
+
+  chart = new Chart(canvas, {
     type: "line",
     data: {
       labels: fechas,
-      datasets: [
-        {
-          label: "Temperatura (°C)",
-          data: temperaturas,
-          fill: true,
-          backgroundColor: gradiente,
-          borderColor: "#8884d8",
-          tension: 0.4,
-          pointRadius: 3,
-        },
-      ],
+      datasets: datasets,
     },
     options: {
-      plugins: { legend: { display: false } },
+      interaction: {
+        mode: "index",
+        intersect: false, // no hace falta que el mouse toque el punto exacto
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { position: "nearest" }, // aparece cerca del cursor, no en el promedio
+      },
       scales: {
         x: {
           ticks: {
-            callback: function (value, index) {
-              // muestra la fecha solo en los índices pares (cada 2 días)
-              return index % 2 === 0 ? this.getLabelForValue(value) : "";
+            callback: function (v, i) {
+              return i % 2 === 0 ? this.getLabelForValue(v) : "";
             },
           },
         },
@@ -63,10 +94,10 @@ async function dibujarGrafico() {
   });
 }
 
-
 async function mostrarDatosActuales() {
   const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}`);
   const parcela = await res.json();
+  tempOptima = parcela.temperatura_optima; // guardo el óptimo para la línea del gráfico
   dibujarMapa(
     Number(parcela.latitud),
     Number(parcela.longitud),
@@ -85,6 +116,37 @@ async function mostrarDatosActuales() {
     `${parcela.latitud}, ${parcela.longitud}`;
 }
 
-mostrarDatosActuales();
+document.querySelectorAll(".tab").forEach((boton) => {
+  boton.addEventListener("click", () => {
+    // saco "active" de todos y se lo pongo al clickeado (estilo visual)
+    document
+      .querySelectorAll(".tab")
+      .forEach((b) => b.classList.remove("active"));
+    boton.classList.add("active");
 
-dibujarGrafico();
+    // dibujo el gráfico con la métrica de ese botón
+    dibujarGrafico(boton.dataset.metric);
+  });
+});
+
+document.querySelectorAll(".tab").forEach((boton) => {
+  boton.addEventListener("click", () => {
+    // saco "active" de todos y se lo pongo al clickeado (estilo visual)
+    document
+      .querySelectorAll(".tab")
+      .forEach((b) => b.classList.remove("active"));
+    boton.classList.add("active");
+
+    // dibujo el gráfico con la métrica de ese botón
+    dibujarGrafico(boton.dataset.metric);
+  });
+});
+
+
+async function init() {
+  await mostrarDatosActuales(); // trae la parcela y setea tempOptima
+  await cargarHistorial(); // dibuja el gráfico (ya con la línea óptima)
+  
+}
+
+init();
