@@ -142,11 +142,42 @@ document.querySelectorAll(".tab").forEach((boton) => {
   });
 });
 
+async function mostrarScore() {
+  const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}/score`);
+  const score = await res.json();
 
+  // los números
+  document.getElementById("score-general").textContent = score.general;
+  document.getElementById("score-temperatura").textContent = score.temperatura;
+  document.getElementById("score-agua").textContent = score.agua;
+
+  // el ancho de las barras de abajo
+  document.getElementById("bar-general").style.width = `${score.general}%`;
+  document.getElementById("bar-temperatura").style.width =
+    `${score.temperatura}%`;
+  document.getElementById("bar-agua").style.width = `${score.agua}%`;
+  
+  function colorPorScore(valor) {
+    if (valor >= 66) return "#2f9e44"; // verde
+    if (valor >= 33) return "#f59f00"; // amarillo
+    return "#e03131"; // rojo
+  }
+
+  // seteamos el color de la barra dependiendo de que tan mal o tan bien este
+  document.getElementById("bar-general").style.background = colorPorScore(
+    score.general,
+  );
+  document.getElementById("bar-temperatura").style.background = colorPorScore(
+    score.temperatura,
+  );
+  document.getElementById("bar-agua").style.background = colorPorScore(
+    score.agua,
+  );
+}
 async function init() {
   await mostrarDatosActuales(); // trae la parcela y setea tempOptima
   await cargarHistorial(); // dibuja el gráfico (ya con la línea óptima)
-  
+  mostrarScore();
 }
 
 init();
