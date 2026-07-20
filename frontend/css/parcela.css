@@ -1,0 +1,28 @@
+.tag-parcelas {
+    background: linear-gradient(135deg, #9a640d, #92400e) !important;
+    color: #fffbeb !important;
+    font-weight: 600;
+}
+
+/* Forzamos a que el título dentro de esta tarjeta también cambie de color */
+.tag-parcelas .title, 
+.tag-parcelas .content strong {
+    color: #fffbeb !important;
+}
+dialog#modal-confirmacion {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto; /* Lo centra perfectamente en la pantalla */
+}
+
+/* Estilos para el fondo que cubre la pantalla cuando se abre */
+dialog#modal-confirmacion::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px); /* Difumina un poco el fondo */
+}
+.modal-redondo {
+  border-radius: 25px;
+  overflow: hidden; /* Asegura que el contenido no se salga de las esquinas */
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Parcela</title>
+    <!-- Esto es para que funcione Bulma -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+    <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
+    <link rel="stylesheet" href="./css/navbar.css" />
+
+    
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+        <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
+        </a>
+        <div
+          class="navbar-burger js-burger"
+          data-target="navbarExampleTransparentExample"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- LINKS DEL NAVBAR -->
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+          <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+          <a class="navbar-item" href="tareas.html"> Tareas </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><!-- FIN DEL NAVBAR -->
+    
+    
+    <!--
+    SEGUIR ACA
+    -->
+            <!-- Ejemplo básico usando clases de Bulma -->
+<form id="form-agregar-parcela">
+    <div class="field">
+        <label class="label">Nombre de la Parcela</label>
+        <div class="control">
+            <input class="input" type="text" id="input-nombre" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Latitud</label>
+        <div class="control">
+            <input class="input" type="text" id="input-latitud" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Longitud</label>
+        <div class="control">
+            <input class="input" type="text" id="input-longitud" required>
+        </div>
+    </div>
+    <!-- Repite para latitud, longitud e imagen... -->
+    
+    <p class="help is-danger" id="mensaje-error"></p>
+
+    <div class="control">
+        <button type="submit" class="button is-primary">Guardar Parcela</button>
+        <!-- Botón para cancelar y volver atrás -->
+        <a href="parcelas.html" class="button is-light">Cancelar</a> 
+    </div>
+</form>
+    <script src="./js/create_parcela.js"></script>
+  </body>
+</html>
