@@ -1,37 +1,40 @@
 @import "var-globales.css";
 
-/* HEADER SECTION */
-.header-section {
+.header {
   background-color: white;
   border-bottom: 1px solid #e0e0e0;
   padding: 0;
   margin: 0;
 }
 
-.header-section .breadcrumb {
+.header .breadcrumb {
   padding: 12px 20px;
-  margin: 0;
   background-color: #f9f9f9;
   border-bottom: 1px solid #e0e0e0;
 }
-
-.header-section .breadcrumb ul {
+.breadcrumb-inside{
+  margin: auto;
+  width: 85%;
+}
+.header .breadcrumb ul {
   margin: 0;
 }
 
-.header-section .breadcrumb a {
+.header .breadcrumb a {
   font-size: 0.9rem;
   text-transform: uppercase;
   font-weight: 600;
   color: #666;
 }
 
-.header-section .breadcrumb li.is-active a {
+.header .breadcrumb li.is-active a {
   color: #333;
 }
 
 .header-content {
-  padding: 20px;
+  Width: 85%;
+  margin: auto;
+  padding-bottom: 20px;
 }
 
 .header-title-group {
@@ -52,6 +55,7 @@
 .back-link .material-symbols-outlined {
   font-size: 28px;
   color: #2c3e50;
+  transition: 0.5s;
 }
 
 .back-link:hover .material-symbols-outlined {
@@ -71,7 +75,6 @@
   color: #999;
 }
 
-/* CONTENEDORES */
 .container {
   margin-top: 0;
 }
@@ -265,16 +268,6 @@
   width: 100% !important;
   height: 100% !important;
   display: block;
-}
-
-.header {
-  display: flex;
-  align-items: flex-start;
-  gap: 50px;
-}
-
-.header > * {
-  min-width: 0;
 }
 
 .material-symbols-outlined {
