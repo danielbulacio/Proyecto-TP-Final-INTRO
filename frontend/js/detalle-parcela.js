@@ -19,7 +19,10 @@ async function dibujarGrafico() {
     `http://localhost:8000/api/v1/parcelas/${id}/historial`,
   );
   const historial = await res.json();
-  const fechas = historial.map((fila) => fila.fecha);
+  const fechas = historial.map((fila) => {
+    const [anio, mes, dia] = fila.fecha.split("T")[0].split("-");
+    return `${dia}/${mes}`;
+  });
   const temperaturas = historial.map((fila) => Number(fila.temperatura));
 
   const canvas = document.getElementById("grafico-temp");
