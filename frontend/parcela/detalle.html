@@ -166,14 +166,30 @@
           </div>
       </div>
       <!-- fin  datos actuales --> 
-
-      <!-- grafico --> 
-      <div class="fixed-grid has-1-cols">
-        <div class="grafico">
-          <canvas id="grafico-temp"></canvas>
-        </div>
-      </div>
       
+      <div class="small-container">
+        <div class="fixed-grid has-1-cols">
+          <div class="grafico">
+           <canvas id="grafico-temp"></canvas>
+          </div>
+        </div>
+        <div class="map-container">
+          <h3 class="map-title">Ubicación de la parcela</h3>
+          <div id="map"></div>
+          <div class="map-info">
+            <div class="info-row">
+              <span class="info-label">Superficie</span>
+              <span class="info-value" id="parcela-superficie">20 hectareas</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Cultivo</span>
+              <span class="info-value" id="parcela-cultivo">Soja 1</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
       </div>
       <div id="map"></div>
     </div>
