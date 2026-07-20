@@ -35,6 +35,7 @@ endpointsDetalleParcela.post("/:id/clima", async (req, res) => {
   res.json({ mensaje: `Se guardaron ${cantidad} días de clima` });
 });
 
+// GET /api/v1/parcelas/:id/score
 endpointsDetalleParcela.get("/:id/score", async (req, res) => {
   const id = req.params.id;
   const cantidad = await calcularscores(id);
