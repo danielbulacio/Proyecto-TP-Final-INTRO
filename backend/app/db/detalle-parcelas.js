@@ -14,9 +14,11 @@ export async function getDatosParcela(id) {
   const res = await db.query(
     `SELECT
        p.id, p.nombre, p.latitud, p.longitud,
-       d.temperatura, d.precipitacion, d.humedad_suelo, d.evapotranspiracion
+       d.temperatura, d.precipitacion, d.humedad_suelo, d.evapotranspiracion,
+       c.nombre_cultivo, c.temperatura_optima, c.mililitros_necesarios
      FROM parcelas p
      LEFT JOIN detalle_parcela d ON d.parcela_id = p.id
+     LEFT JOIN cultivos c        ON c.parcela_id = p.id
      WHERE p.id = $1
      ORDER BY d.fecha DESC
      LIMIT 1`,
