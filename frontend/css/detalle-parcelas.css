@@ -1,5 +1,81 @@
 @import "var-globales.css";
 
+/* HEADER SECTION */
+.header-section {
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0;
+  margin: 0;
+}
+
+.header-section .breadcrumb {
+  padding: 12px 20px;
+  margin: 0;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-section .breadcrumb ul {
+  margin: 0;
+}
+
+.header-section .breadcrumb a {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #666;
+}
+
+.header-section .breadcrumb li.is-active a {
+  color: #333;
+}
+
+.header-content {
+  padding: 20px;
+}
+
+.header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-link .material-symbols-outlined {
+  font-size: 28px;
+  color: #2c3e50;
+}
+
+.back-link:hover .material-symbols-outlined {
+  transform: translateX(-4px);
+}
+
+.title-info h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.title-info p {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #999;
+}
+
+/* CONTENEDORES */
+.container {
+  margin-top: 0;
+}
+
 .child-container {
   padding: 20px;
   background-color: white;
@@ -7,12 +83,14 @@
   border: 2px solid #c7c7c7;
   border-radius: 10px;
 }
+
 .nombre {
   width: 85%;
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 30px;
+  margin-top: 0;
 }
 
 .nombre .material-symbols-outlined {
