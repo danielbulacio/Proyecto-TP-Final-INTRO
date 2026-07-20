@@ -12,7 +12,7 @@
   background-color: #f9f9f9;
   border-bottom: 1px solid #e0e0e0;
 }
-.breadcrumb-inside{
+.breadcrumb-inside {
   margin: auto;
   width: 85%;
 }
@@ -32,7 +32,7 @@
 }
 
 .header-content {
-  Width: 85%;
+  width: 85%;
   margin: auto;
   padding-bottom: 20px;
 }
@@ -82,13 +82,12 @@
 .child-container {
   padding: 20px;
   background-color: white;
-  width: 85%;
-  border: 2px solid #c7c7c7;
+
+  border: 2px solid #ffffff;
   border-radius: 10px;
 }
 
 .nombre {
-  width: 85%;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -286,4 +285,8 @@
 #map {
   height: 180px;
   border-radius: 20px;
+}
+.big-container {
+  width: 85%;
+  margin: auto;
 }
