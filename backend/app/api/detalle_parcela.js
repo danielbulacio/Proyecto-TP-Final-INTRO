@@ -3,6 +3,7 @@ import {
   getHistorialParcela,
   getDatosParcela,
   actualizarClima,
+  calcularscores,
 } from "../db/detalle-parcelas.js";
 
 export const endpointsDetalleParcela = Router();
@@ -29,6 +30,13 @@ endpointsDetalleParcela.get("/:id/historial", async (req, res) => {
 
 // POST /api/v1/parcelas/:id/clima
 endpointsDetalleParcela.post("/:id/clima", async (req, res) => {
-  const cantidad = await actualizarClima(req.params.id);
+  const id = req.params.id;
+  const cantidad = await actualizarClima(id);
   res.json({ mensaje: `Se guardaron ${cantidad} días de clima` });
+});
+
+endpointsDetalleParcela.get("/:id/score", async (req, res) => {
+  const id = req.params.id;
+  const cantidad = await calcularscores(id);
+  res.json(cantidad);
 });
