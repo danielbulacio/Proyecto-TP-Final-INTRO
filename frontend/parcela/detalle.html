@@ -95,9 +95,9 @@
       <div class="row-superior">
         <div class="scores-container">
           <div class="score-card health-index">
-            <div class="card-header"><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="card-header" data-titulo="Ínidice general de salud (IGS)" data-formula="(aptitud_termica + estado_hidrico) / 2" data-desc="Índice general de 0 a 100 que promedia la aptitud térmica y el estado hídrico. Resume qué tan favorables son las condiciones actuales para el cultivo."><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label label-health-index">Ínidice de salud</span>
+              <span class="score-label label-health-index">Ínidice general de salud (IGS)</span>
              
             </div>
             <p class="score-value score-health-index" id="score-general">--</p>
@@ -106,9 +106,9 @@
           </div>
 
           <div class="score-card">
-            <div class="card-header"><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="card-header" data-titulo="Aptitud térmica" data-formula="max(0, 100 - |temp_actual - temp_optima| * 5)" data-desc="Mide qué tan cerca está la temperatura actual de la óptima del cultivo. Cae a medida que la diferencia de grados aumenta."><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label">Aptitud térmica</span>
+              <span class="score-label">Aptitud térmica (AT)</span>
               
             </div>
             <p class="score-value" id="score-temperatura">--</p>
@@ -117,9 +117,9 @@
           </div>
 
           <div class="score-card">
-            <div class="card-header"><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="card-header" data-titulo="Estado hídrico" data-formula="(balance_hidrico + humedad_suelo * 100) / 2" data-desc="Combina el balance hídrico (precipitación menos evapotranspiración) con la humedad del suelo, frente al agua que el cultivo necesita."><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label">Estado hídrico</span>
+              <span class="score-label">Estado hídrico (EH)</span>
              
             </div>
             <p class="score-value" id="score-agua">--</p>
@@ -147,7 +147,7 @@
       <div class="fixed-grid">
           <div class="grid">
             <div class="card-stat">
-              <div class="card-header">
+              <div class="card-header" data-titulo="Temperatura" data-desc="La temperatura es la magnitud física que mide la cantidad de energía térmica (calor) acumulada en el aire o en el suelo.&lt;br&gt;&lt;br&gt;Las plantas necesitan acumular calor para pasar de etapas (ej: de semilla a flor). La temperatura optima suele estar entre 15 y 30 grados. Fuera de esos rangos, la planta crece mas lento o muere.&lt;br&gt;&lt;br&gt;Se mide en grados Celsius (°C) y se obtiene la temperatura de 0 a 2 metros del suelo.">
                 <span class="material-symbols-outlined card-info">info</span>
               </div>
               <div class="card-icon temp-icon">
@@ -166,7 +166,7 @@
             </div>
 
             <div class="card-stat">
-              <div class="card-header">
+              <div class="card-header" data-titulo="Precipitación" data-desc="La recipitation representa la cantidad total de agua que cae desde la atmósfera&lt;br&gt;&lt;br&gt;Es el combustible para absorber nutrientes y regular su temperatura.&lt;br&gt;&lt;br&gt;Su unidad de medida es milímetros (mm)">
                 <span class="material-symbols-outlined card-info">info</span>
               </div>
               <div class="card-icon precip-icon">
@@ -185,7 +185,7 @@
             </div>
 
             <div class="card-stat">
-              <div class="card-header">
+              <div class="card-header" data-bs-html="true" data-titulo="Humedad del suelo" data-desc="Cantidad de agua retenida en la capa superficial de la tierra (particularmente en un rango de 0 a 1 centimetros).&lt;br&gt;&lt;br&gt;Es un factor necesario e importante para que la planta sobreviva los primeros dias luego de ser plantada.&lt;br&gt;&lt;br&gt;Su unidad de medida es o se mide por la &quot;humedad volumetrica&quot; que son m³/m³ (metros cúbicos de agua por metro cúbico de suelo)">
                 <span class="material-symbols-outlined card-info">info</span>
               </div>
               <div class="card-icon humid-icon">
@@ -204,7 +204,7 @@
             </div>
 
             <div  class="card-stat">
-              <div class="card-header">
+              <div class="card-header" data-titulo="Evapotranspiración" data-desc="Pérdida total de humedad de una superficie hacia la atmosfera, es resulatdo de 2 procesos: La evaporación y la transpiración de las plantas (agua que absorben las plantas y liberan al aire en forma de vapor).&lt;br&gt;&lt;br&gt;Es util para mejorar el rendimiento de las plantas, evitando poner agua de mas o de menos. Pero principalmente de más.&lt;br&gt;&lt;br&gt; Su unidad de medida es la suma acumulada de perdida de la hora anterior en milímetros (mm). Se puede considerar que este numero representa la pérdida de agua real proyectada para esa ubicación.">
                 <span class="material-symbols-outlined card-info">info</span>
               </div>
               <div class="card-icon evapot-icon">
@@ -294,6 +294,15 @@
     
 
 
+
+    <div id="modal-info" class="modal-info-overlay">
+      <div class="modal-info-box">
+        <button class="modal-info-close" id="modal-info-close">&times;</button>
+        <h3 id="modal-info-titulo"></h3>
+        <p id="modal-info-texto"></p>
+        <code id="modal-info-formula"></code>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/detalle-parcela.js"></script>

@@ -161,11 +161,6 @@
   position: relative;
 }
 
-.card-stat:hover {
-  transform: translateY(-1px);
-  border-color: #d0d8e8;
-}
-
 .card-icon {
   display: flex;
   align-items: center;
@@ -236,12 +231,69 @@
   height: 28px;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .card-header:hover {
   background-color: #f0f0f0;
-  border-color: #555;
+}
+
+.modal-info-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.089);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-info-overlay.abierto {
+  display: flex;
+}
+.modal-info-box {
+  border: 1px solid #eee;
+  background: white;
+  padding: 23px;
+  border-radius: 14px;
+  max-width: 400px;
+  margin: 20px;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+}
+.modal-info-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  color: #999;
+}
+#modal-info-titulo {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+#modal-info-texto {
+  margin: 0;
+}
+#modal-info-formula {
+  display: block;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #f4f4f5;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #2c3e50;
+  white-space: pre-wrap;
+}
+#modal-info-formula:empty {
+  display: none;
 }
 
 .card-info {

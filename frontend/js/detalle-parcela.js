@@ -190,6 +190,45 @@ async function mostrarScore() {
   document.getElementById("estado-temperatura").textContent = estadoTexto(score.temperatura);
   document.getElementById("estado-agua").textContent = estadoTexto(score.agua);
 }
+
+
+// seccion de popup de info
+
+// obtiene el popup que aparece. Es decir la ubicacion donde va a a aparecer el popup 
+const Info = document.getElementById("modal-info");
+
+// obtemos el texto principal 
+const infotexto = document.getElementById("modal-info-texto");
+
+// obtemos el titulo
+const modalInfoTitulo = document.getElementById("modal-info-titulo");
+
+// obtemos la formula o lo que queremos poner en la formula 
+const modalInfoFormula = document.getElementById("modal-info-formula");
+
+// recorremos todos los botones de info y les decimos que tienen que hacer
+document.querySelectorAll(".card-header[data-titulo]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // basicamente poner la info que tienen en el popup
+    modalInfoTitulo.textContent = btn.dataset.titulo;
+    infotexto.innerHTML = btn.dataset.desc;
+    modalInfoFormula.textContent = btn.dataset.formula || "";
+    Info.classList.add("abierto"); // mostramos el popup
+  });
+});
+
+// si tocan la x se cierra
+document.getElementById("modal-info-close").addEventListener("click", () => {
+  Info.classList.remove("abierto");
+});
+
+// si tocan afuera se cierrta tambien
+Info.addEventListener("click", (e) => {
+  if (e.target === Info) Info.classList.remove("abierto");
+});
+
+// fin de seccion de popup de info
+
 async function init() {
   await mostrarDatosActuales(); // trae la parcela 
   await cargarHistorial(); // dibuja el grafico
@@ -197,3 +236,5 @@ async function init() {
 }
 
 init();
+
+
