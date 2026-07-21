@@ -88,25 +88,28 @@
     </div>
     <!-- FIN DEL HEADER -->
      
-    <!--  -->
+    <!-- Comienzo de pagina principal -->
     <div class="big-container">
-      <div class="fila-superior">
-        
+      
+      <!-- Primera fila de contendores -->
+      <div class="row-superior">
         <div class="scores-container">
-          <div class="score-card">
+          <div class="score-card health-index">
+            <div class="card-header"><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label">Salud general</span>
-              <span class="score-icon"><span class="material-symbols-outlined">eco</span></span>
+              <span class="score-label label-health-index">Ínidice de salud</span>
+             
             </div>
-            <p class="score-value" id="score-general">--</p>
+            <p class="score-value score-health-index" id="score-general">--</p>
             <p class="score-estado" id="estado-general">--</p>
             <div class="score-bar"><div class="score-bar-fill" id="bar-general"></div></div>
           </div>
 
           <div class="score-card">
+            <div class="card-header"><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label">Temperatura</span>
-              <span class="score-icon"><span class="material-symbols-outlined">thermostat</span></span>
+              <span class="score-label">Aptitud térmica</span>
+              
             </div>
             <p class="score-value" id="score-temperatura">--</p>
             <p class="score-estado" id="estado-temperatura">--</p>
@@ -114,9 +117,10 @@
           </div>
 
           <div class="score-card">
+            <div class="card-header"><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label">Agua</span>
-              <span class="score-icon"><span class="material-symbols-outlined">water_drop</span></span>
+              <span class="score-label">Estado hídrico</span>
+             
             </div>
             <p class="score-value" id="score-agua">--</p>
             <p class="score-estado" id="estado-agua">--</p>
@@ -126,7 +130,7 @@
 
         <div class="cultivo-container">
           <div class="cultivo-header">
-            <span class="cultivo-titulo">Cosecha actual</span>
+            <span class="score-label">Cultivo actual</span>
             <span class="cultivo-icono-box"><span class="material-symbols-outlined">potted_plant</span></span>
           </div>
           <div class="cultivo-datos">
@@ -137,12 +141,10 @@
           </div>
         </div>
       </div>
-      <!-- score --> 
-
-      <br>
+      <!-- fin de primeros contenedores --> 
 
       <!-- datos actuales --> 
-      <div class="fixed-grid has-8-cols">
+      <div class="fixed-grid">
           <div class="grid">
             <div class="card-stat">
               <div class="card-header">
@@ -155,7 +157,12 @@
                 <div class="card-value" id="temp">--</div>
                 <div class="card-label">Temperatura</div>
               </div>
-              <div class="card-badge actual">En vivo</div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
             </div>
 
             <div class="card-stat">
@@ -169,7 +176,12 @@
                 <div class="card-value" id="precipitacion">--</div>
                 <div class="card-label">Precipitación</div>
               </div>
-              <div class="card-badge actual">En vivo</div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
             </div>
 
             <div class="card-stat">
@@ -183,7 +195,12 @@
                 <div class="card-value" id="humedad">--</div>
                 <div class="card-label">Humedad Suelo</div>
               </div>
-              <div class="card-badge actual">En vivo</div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
             </div>
 
             <div  class="card-stat">
@@ -197,16 +214,20 @@
                 <div class="card-value" id="evapo">--</div>
                 <div class="card-label">Evapotranspiración</div>
               </div>
-              <div class="card-badge actual">En vivo</div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
             </div>
             
           </div>
       </div>
       <!-- fin  datos actuales --> 
       
+      <!-- Grafico y mapa --> 
       <div class="small-container">
-        
-        
         <div class="fixed-grid">
           <div class="grafico">
             <div class="grafico-header">
@@ -216,9 +237,9 @@
                 </div>
                 <div class="header-right">
                   <div class="time-buttons">
+                    <button class="time-btn">1D</button>
                     <button class="time-btn">1S</button>
                     <button class="time-btn">1M</button>
-                    <button class="time-btn">1A</button>
                   </div>
                 </div>
               </div>
@@ -245,7 +266,6 @@
            <canvas id="grafico-temp"></canvas>
           </div>
         </div>
-        
         
         <div class="map-container">
           <h3 class="map-title">Ubicación de la parcela</h3>
