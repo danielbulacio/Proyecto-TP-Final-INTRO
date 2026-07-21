@@ -87,26 +87,54 @@
       </div>
     </div>
     <!-- FIN DEL HEADER -->
-
+     
+    <!--  -->
     <div class="big-container">
-      <!-- score --> 
-      <div class="scores-container">
-        <div class="score-card">
-          <p class="score-label">Salud general</p>
-          <p class="score-value"><span id="score-general">--</span><span class="score-unit">/100</span></p>
-          <div class="score-bar"><div class="score-bar-fill" id="bar-general"></div></div>
+      <div class="fila-superior">
+        
+        <div class="scores-container">
+          <div class="score-card">
+            <div class="score-header">
+              <span class="score-label">Salud general</span>
+              <span class="score-icon"><span class="material-symbols-outlined">eco</span></span>
+            </div>
+            <p class="score-value" id="score-general">--</p>
+            <p class="score-estado" id="estado-general">--</p>
+            <div class="score-bar"><div class="score-bar-fill" id="bar-general"></div></div>
+          </div>
+
+          <div class="score-card">
+            <div class="score-header">
+              <span class="score-label">Temperatura</span>
+              <span class="score-icon"><span class="material-symbols-outlined">thermostat</span></span>
+            </div>
+            <p class="score-value" id="score-temperatura">--</p>
+            <p class="score-estado" id="estado-temperatura">--</p>
+            <div class="score-bar"><div class="score-bar-fill" id="bar-temperatura"></div></div>
+          </div>
+
+          <div class="score-card">
+            <div class="score-header">
+              <span class="score-label">Agua</span>
+              <span class="score-icon"><span class="material-symbols-outlined">water_drop</span></span>
+            </div>
+            <p class="score-value" id="score-agua">--</p>
+            <p class="score-estado" id="estado-agua">--</p>
+            <div class="score-bar"><div class="score-bar-fill" id="bar-agua"></div></div>
+          </div>
         </div>
 
-        <div class="score-card">
-          <p class="score-label">Temperatura</p>
-          <p class="score-value"><span id="score-temperatura">--</span><span class="score-unit">/100</span></p>
-          <div class="score-bar"><div class="score-bar-fill" id="bar-temperatura"></div></div>
-        </div>
-
-        <div class="score-card">
-          <p class="score-label">Agua</p>
-          <p class="score-value"><span id="score-agua">--</span><span class="score-unit">/100</span></p>
-          <div class="score-bar"><div class="score-bar-fill" id="bar-agua"></div></div>
+        <div class="cultivo-container">
+          <div class="cultivo-header">
+            <span class="cultivo-titulo">Cosecha actual</span>
+            <span class="cultivo-icono-box"><span class="material-symbols-outlined">potted_plant</span></span>
+          </div>
+          <div class="cultivo-datos">
+            <p><span class="cultivo-campo">Cultivo:</span> <span id="cultivo-nombre">--</span></p>
+            <p><span class="cultivo-campo">Tipo:</span> <span id="cultivo-tipo">--</span></p>
+            <p><span class="cultivo-campo">Temp. óptima:</span> <span id="cultivo-temp">--</span></p>
+            <p><span class="cultivo-campo">Agua:</span> <span id="cultivo-agua">--</span></p>
+          </div>
         </div>
       </div>
       <!-- score --> 
