@@ -13,15 +13,15 @@ export async function getHistorialParcela(id) {
 export async function getDatosParcela(id) {
   const res = await db.query(
     `SELECT
-       p.id, p.nombre, p.latitud, p.longitud,
-       d.temperatura, d.precipitacion, d.humedad_suelo, d.evapotranspiracion,
-       c.nombre_cultivo, c.temperatura_optima, c.mililitros_necesarios
-     FROM parcelas p
-     LEFT JOIN detalle_parcela d ON d.parcela_id = p.id
-     LEFT JOIN cultivos c        ON c.parcela_id = p.id
-     WHERE p.id = $1
-     ORDER BY d.fecha DESC
-     LIMIT 1`,
+    p.id, p.nombre, p.latitud, p.longitud,
+    d.temperatura, d.precipitacion, d.humedad_suelo, d.evapotranspiracion,
+    c.nombre_cultivo, c.tipo, c.temperatura_optima, c.dias_de_cosecha, c.mililitros_necesarios
+    FROM parcelas p
+    LEFT JOIN detalle_parcela d ON d.parcela_id = p.id
+    LEFT JOIN cultivos c        ON c.parcela_id = p.id
+    WHERE p.id = $1
+    ORDER BY d.fecha DESC
+    LIMIT 1`,
     [id],
   );
   return res.rows[0];
@@ -37,15 +37,14 @@ export async function traerClima(lat, lng) {
   const registros = [];
 
   for (let i = 0; i < horas.length; i++) {
-    if (horas[i].endsWith("12:00")) {  // solo agarra los datos de las 12 del mediodia de cada dia 
-      registros.push({
-        fecha: horas[i].split("T")[0],
-        temperatura: data.hourly.temperature_2m[i],
-        precipitacion: data.hourly.precipitation[i],
-        humedad_suelo: data.hourly.soil_moisture_0_to_1cm[i],
-        evapotranspiracion: data.hourly.evapotranspiration[i],
-      });
-    }
+    registros.push({
+      fecha: horas[i].split("T")[0],
+      temperatura: data.hourly.temperature_2m[i],
+      precipitacion: data.hourly.precipitation[i],
+      humedad_suelo: data.hourly.soil_moisture_0_to_1cm[i],
+      evapotranspiracion: data.hourly.evapotranspiration[i],
+    });
+
   }
 
   return registros;
