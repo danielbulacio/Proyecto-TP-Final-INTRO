@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preguntas Frecuentes - AgroTech</title>
+    <!-- Bulma CSS Framework -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+
+    <!-- CSS del navbar original -->
+    <link rel="stylesheet" href="./css/navbar.css" />
+
+    <!-- Estilos adicionales limpios para pulir la interfaz -->
+    <link rel="stylesheet" href="./css/ayuda.css" />
+
+    <!-- Iconografía Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    
+  </head>
+  <body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+        <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
+        </a>
+        <div
+          class="navbar-burger js-burger"
+          data-target="navbarExampleTransparentExample"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- LINKS DEL NAVBAR -->
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+          <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+          <a class="navbar-item" href="tareas.html"> Tareas </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            
+              <p class="control">
+                <a
+                  class="button is-primary"
+                  href="ayuda.html"
+                >
+
+                  <span>Ayuda</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><!-- FIN DEL NAVBAR -->
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section">
+      <div class="container">
+        
+        <!-- Cabecera / Hero -->
+        <div class="crop-hero">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <span class="tag is-info is-light mb-3" style="font-weight: 600;">SOPORTE AL AGRICULTOR</span>
+              <h1 class="title is-2 has-text-white mb-2" style="font-weight: 800; letter-spacing: -0.03em;">Centro de Ayuda y FAQ</h1>
+              <h2 class="subtitle is-5 has-text-white mb-0" style="opacity: 0.9; font-weight: 400;">
+                Resuelve dudas rápidas sobre la integración de OpenMeteo, configuración de cultivos en la base de datos y la agenda de tareas.
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buscador y Filtros -->
+        <div class="columns">
+          <div class="column is-8">
+            <!-- Input de búsqueda en tiempo real -->
+            <div class="search-box">
+              <span class="material-icons">search</span>
+              <input class="input is-medium" id="faqSearch" type="text" placeholder="Escribe tu consulta (ej: latitud, riego, OpenMeteo)...">
+            </div>
+
+            <!-- Botones de filtro de categorías -->
+            <div class="custom-tabs">
+              <button class="custom-tab is-active" data-filter="all">
+                <span class="material-icons" style="font-size:1.1rem;">grid_view</span> Todas
+              </button>
+              <button class="custom-tab" data-filter="parcelas">
+                <span class="material-icons" style="font-size:1.1rem; color: var(--accent-amber);">place</span> Parcelas y Clima
+              </button>
+              <button class="custom-tab" data-filter="cultivos">
+                <span class="material-icons" style="font-size:1.1rem; color: var(--accent-emerald);">eco</span> Cultivos
+              </button>
+              <button class="custom-tab" data-filter="tareas">
+                <span class="material-icons" style="font-size:1.1rem; color: var(--accent-blue);">assignment</span> Tareas
+              </button>
+            </div>
+
+            <!-- LISTA DE PREGUNTAS (ACORDEÓN) -->
+            <div id="faqContainer">
+              
+              <!-- Pregunta 1 (Parcelas) -->
+              <div class="faq-card" data-category="parcelas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #fffbeb;">
+                      <span class="material-icons" style="color: var(--accent-amber);">add_location</span>
+                    </div>
+                    <span>¿Cómo doy de alta una nueva parcela y qué datos requiere?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Para registrar una parcela debes acceder a la pestaña <strong class="has-text-black">Parcelas</strong> e ingresar un nombre descriptivo junto con su <strong class="has-text-black">latitud</strong> y <strong class="has-text-black">longitud</strong> en formato decimal.</p>
+                    <p class="mt-2">Estos datos se guardan en la tabla <code>parcelas</code> de tu base de datos relacional:</p>
+                    <span class="schema-badge">Tabla: parcelas (nombre, latitud, longitud)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 2 (Parcelas) -->
+              <div class="faq-card" data-category="parcelas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #fffbeb;">
+                      <span class="material-icons" style="color: var(--accent-amber);">cloud_queue</span>
+                    </div>
+                    <span>¿Cómo se actualizan los datos de clima mediante OpenMeteo?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>La aplicación utiliza las coordenadas geográficas de la parcela (latitud y longitud) para hacer una petición externa a la API gratuita de <strong class="has-text-black">OpenMeteo</strong>.</p>
+                    <p class="mt-2">Esta llamada recupera automáticamente la temperatura actual, el nivel de precipitaciones y la humedad del suelo de la zona, almacenándolos en el historial.</p>
+                    <span class="schema-badge">Tabla asociada: detalle_parcela</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 3 (Parcelas) -->
+              <div class="faq-card" data-category="parcelas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #fffbeb;">
+                      <span class="material-icons" style="color: var(--accent-amber);">water_drop</span>
+                    </div>
+                    <span>¿Qué es el índice de Evapotranspiración registrado en los detalles?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>La <strong class="has-text-black">evapotranspiración</strong> representa la pérdida de humedad de una parcela debido a la evaporación directa del suelo sumada a la transpiración de las plantas. Es un dato crítico que provee la API de OpenMeteo para calcular si necesitas activar sistemas de riego adicionales.</p>
+                    <span class="schema-badge">Campo: detalle_parcela.evapotranspiracion</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 4 (Cultivos) -->
+              <div class="faq-card" data-category="cultivos">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #ecfdf5;">
+                      <span class="material-icons" style="color: var(--accent-emerald);">grass</span>
+                    </div>
+                    <span>¿Cómo asocio un nuevo cultivo a una parcela que ya creé?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Desde la sección <strong class="has-text-black">Cultivos</strong>, puedes añadir una plantación especificando su parcela mediante un selector. Internamente, la base de datos utiliza una clave foránea que relaciona el id del cultivo con el id de la parcela de destino.</p>
+                    <span class="schema-badge">Relación: cultivos.parcela_id -> parcelas.id</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 5 (Cultivos) -->
+              <div class="faq-card" data-category="cultivos">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #ecfdf5;">
+                      <span class="material-icons" style="color: var(--accent-emerald);">thermostat</span>
+                    </div>
+                    <span>¿Para qué sirve configurar la "Temperatura Óptima" o "Mililitros"?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Al registrar a mano parámetros como la <strong class="has-text-black">temperatura óptima</strong> o los <strong class="has-text-black">mililitros de agua diarios requeridos</strong>, el sistema puede alertarte si los datos de clima de OpenMeteo están por debajo o por encima de lo que tu siembra necesita para crecer sana.</p>
+                    <span class="schema-badge">Campos: temperatura_optima, mililitros_necesarios</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 6 (Tareas) -->
+              <div class="faq-card" data-category="tareas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #eff6ff;">
+                      <span class="material-icons" style="color: var(--accent-blue);">assignment_turned_in</span>
+                    </div>
+                    <span>¿Cómo llevo el control de tareas y su estado actual?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>En el módulo <strong class="has-text-black">Tareas</strong>, puedes crear labores específicas como riego, abono o poda para cada parcela. El campo <code>hecho</code> se guarda como un booleano (falso/verdadero). Al marcar la casilla "Completado" en la interfaz, el estado se actualiza dinámicamente en tu base de datos.</p>
+                    <span class="schema-badge">Tabla: tareas (tarea, hecho)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 7 (Tareas) -->
+              <div class="faq-card" data-category="tareas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #eff6ff;">
+                      <span class="material-icons" style="color: var(--accent-blue);">playlist_play</span>
+                    </div>
+                    <span>¿Se pueden planificar movimientos a futuro en la agenda?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>¡Sí! Las tareas se registran con el estado <code>FALSE</code> (pendiente) de manera inicial. Esto te permite programar tareas futuras, organizar el orden de actividades en el campo y luego tildar las completadas a medida que se efectúen.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mensaje cuando no hay resultados en el buscador -->
+              <div id="noResults" class="has-text-centered py-6" style="display: none;">
+                <span class="material-icons" style="font-size: 3rem; color: var(--text-muted);">search_off</span>
+                <p class="subtitle is-5 mt-3 mb-1">No encontramos resultados</p>
+                <p class="text-muted">Prueba buscando con palabras como: <em>parcela, clima, mililitros, tareas</em></p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SIDEBAR DE ASISTENCIA RÁPIDA -->
+          <div class="column is-4">
+            <div class="support-box">
+              <span class="material-icons" style="font-size: 2.5rem; color: var(--accent-emerald);">help_outline</span>
+              <h3 class="title is-4 mt-2 mb-2 has-text-black">¿No encontraste lo que buscabas?</h3>
+              <p class="mb-4 text-muted" style="font-size: 0.9rem; line-height: 1.5;">
+                Envíanos tu consulta sobre la base de datos o el funcionamiento de las integraciones climáticas y te responderemos a la brevedad.
+              </p>
+              
+              <!-- Campo: Nombre (NUEVO) -->
+              <div class="field">
+                <label class="label has-text-black">Tu Nombre</label>
+                <div class="control">
+                  <input class="input" type="text" id="supportName" placeholder="Ej. Juan Pérez" required>
+                </div>
+              </div>
+
+              <!-- Campo: Correo Electrónico (NUEVO) -->
+              <div class="field">
+                <label class="label has-text-black">Tu Correo Electrónico</label>
+                <div class="control">
+                  <input class="input" type="email" id="supportEmail" placeholder="correo@ejemplo.com" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label has-text-black">Asunto</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select id="supportSubject">
+                      <option value="Conexión API OpenMeteo">Problema con Clima (OpenMeteo)</option>
+                      <option value="Registro de Cultivo">Dudas de Cultivos</option>
+                      <option value="Error de Base de Datos">Base de Datos / SQL</option>
+                      <option value="Otro">Otro asunto</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label has-text-black">Mensaje breve</label>
+                <div class="control">
+                  <textarea class="textarea" id="supportMsg" placeholder="Describe brevemente tu duda..." rows="3" required></textarea>
+                </div>
+              </div>
+
+              <button class="button is-emerald w-full" style="background-color: var(--accent-emerald); color: white; width: 100%; font-weight:600;" onclick="sendSupportMail()">
+                Enviar consulta de soporte
+              </button>
+
+              <!-- Notificación flotante interna para evitar alerts -->
+              <div id="toastNotification" class="notification is-success mt-3" style="display: none; padding: 0.75rem 1rem; border-radius: 8px;">
+                <button class="delete" onclick="hideToast()"></button>
+                <span>¡Mensaje enviado con éxito al soporte técnico!</span>
+              </div>
+            </div>
+
+            <!-- Resumen rápido técnico -->
+            <div class="card mt-4" style="border: 1px solid var(--border-soft); border-radius: 12px; box-shadow: none;">
+              <div class="card-content" style="padding: 1.25rem;">
+                <h4 style="font-weight: 700; font-size: 0.9rem;" class="mb-2">FICHA TÉCNICA DEL MODELO</h4>
+                <div class="tags">
+                  <span class="tag is-light">SQL Relacional</span>
+                  <span class="tag is-light">OpenMeteo JSON</span>
+                  <span class="tag is-light">Lat/Long Decimal</span>
+                  <span class="tag is-light">Agenda de Tareas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT INTERACTIVO -->
+    <script src="./js/ayuda.js"> </script>
+  </body>
+</html>

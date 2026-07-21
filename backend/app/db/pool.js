@@ -1,4 +1,5 @@
 import { Pool } from "pg";
+
 //Esto sirve para que puedas hacer 
 // en Los otros js que hay en /db mirar camejo
 // import { db } from "./pool.js";
@@ -15,3 +16,4 @@ export const db = new Pool({
   port: process.env.DB_PORT ?? 5432,
   database: process.env.DB_NAME ?? "postgres",
 });
+

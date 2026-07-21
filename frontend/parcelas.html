@@ -11,13 +11,18 @@
     />
     <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
     <link rel="stylesheet" href="./css/navbar.css" />
-    
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   </head>
   <body>
     <!-- NAVBAR -->
     <nav class="navbar is-white">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="index.html">
         <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
         </a>
         <div
@@ -43,10 +48,10 @@
               <p class="control">
                 <a
                   class="button is-primary"
-                  href="https://github.com/jgthms/bulma/releases/download/1.0.4/bulma-1.0.4.zip"
+                  href="ayuda.html"
                 >
 
-                  <span>Boton</span>
+                  <span>Ayuda</span>
                 </a>
               </p>
             </div>
@@ -54,13 +59,84 @@
         </div>
       </div>
     </nav><!-- FIN DEL NAVBAR -->
+
+
+   <section class="section">
+  <div class="container">
     
-    
-    <!--
-    SEGUIR ACA
-    -->
+    <!-- BARRA DE ACCIONES SUPERIOR -->
+    <nav class="level is-mobile mb-6">
+      <!-- Lado Izquierdo: Título -->
+      <div class="level-left">
+        <div class="level-item">
+          <p class="title is-3">Parcelas</p>
+        </div>
+      </div>
+      
+      <!-- Lado Derecho: Botones -->
+      <div class="level-right">
+        <div class="level-item">
+          <div class="buttons">
+            <!-- Botón Agregar Parcela -->
+            <button class ="button is-info is-small" id="agregar-parcela-btn">
+                Agregar Parcela
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>  
 
+    <div id="error" class="has-text-danger mb-4"></div>
 
+    <!-- GRILLA DE COLUMNAS (Acá es donde JS va a meter las tarjetas luego) -->
+    <div id="tarjetas-parcelas" class="columns is-multiline">
 
+      <!-- ENVOLTORIO DE LA TARJETA: Controla el tamaño (is-4 significa que entran 3 por fila) -->
+      <div  class="column is-12-mobile is-6-tablet is-4-desktop">
+        
+        <!-- TU TARJETA -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img
+                src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                alt="Placeholder image"
+                style="object-fit: cover;" 
+              />
+            </figure>
+          </div>
+          
+          <div class="card-content">
+            <p class="title is-4 mb-3">.</p>
+
+            <div class="content">
+              <p class="has-text-grey">
+              </p>
+              
+              <!-- Agrupamos tus botones para que se acomoden bien si la pantalla es chica -->
+              <div class="buttons mt-4">
+                <button class="button is-info is-small">Ver Detalle</button>
+                <button class="button is-danger is-small">Eliminar</button>
+                <button class="button is-warning is-small">Editar</button>
+                <button class="button is-success is-small">Agregar Tarea</button>
+              </div>
+            </div>
+          </div>
+        </div> <!-- FIN DE TU TARJETA -->
+
+      </div> <!-- FIN DEL ENVOLTORIO -->
+
+    </div> <!-- FIN DE LA GRILLA -->
+
+  </div> <!-- FIN DEL CONTAINER -->
+</section>
+  <dialog id="modal-confirmacion" class="modal-personalizado">
+  <p id="texto-confirmacion">¿Estás seguro?</p>
+  <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+    <button id="btn-cancelar-modal" class="button">Cancelar</button>
+    <button id="btn-aceptar-modal" class="button is-danger">Eliminar</button>
+  </div>
+</dialog>
+    <script src="js/parcela.js"></script>
   </body>
 </html>
