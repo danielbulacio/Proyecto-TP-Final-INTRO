@@ -424,6 +424,7 @@
   gap: 6px;
   padding: 8px 16px;
   border: none;
+  border-radius: 50px;
   background-color: transparent;
   border-bottom: 3px solid transparent;
   font-size: 13px;
@@ -441,7 +442,7 @@
   color: #fff;
   background-color: #d97134;
 
-  border-radius: 19px;
+  border-radius: 50px;
 }
 
 .tab.active[data-metric="temperatura"] {
