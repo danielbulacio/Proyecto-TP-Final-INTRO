@@ -649,6 +649,20 @@
   justify-content: space-between;
   align-items: center;
 }
+.cultivo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+.cultivo-link:hover {
+  text-decoration: underline;
+}
+.cultivo-link-icon {
+  font-size: 14px !important;
+  width: 203px;
+}
+
 .cultivo-icono-box {
   width: 40px;
   height: 40px;
