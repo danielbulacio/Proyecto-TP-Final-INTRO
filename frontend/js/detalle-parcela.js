@@ -114,6 +114,11 @@ async function mostrarDatosActuales() {
   document.getElementById("evapo").textContent = parcela.evapotranspiracion;
   document.getElementById("parcela-ubicacion").textContent =
     `${parcela.latitud}, ${parcela.longitud}`;
+
+  document.getElementById("cultivo-nombre").textContent = parcela.nombre_cultivo;
+  document.getElementById("cultivo-tipo").textContent = parcela.tipo;
+  document.getElementById("cultivo-temp").textContent = `${parcela.temperatura_optima}°`;
+  document.getElementById("cultivo-agua").textContent = `${parcela.mililitros_necesarios} ml`;
 }
 
 document.querySelectorAll(".tab").forEach((boton) => {
@@ -173,10 +178,21 @@ async function mostrarScore() {
   document.getElementById("bar-agua").style.background = colorPorScore(
     score.agua,
   );
+  function estadoTexto(valor) {
+  if (valor >= 80) return "Óptimo";
+  if (valor >= 60) return "Bueno";
+  if (valor >= 40) return "Regular";
+  return "Crítico";
+}
+
+  // dentro de mostrarScore, después de los números:
+  document.getElementById("estado-general").textContent = estadoTexto(score.general);
+  document.getElementById("estado-temperatura").textContent = estadoTexto(score.temperatura);
+  document.getElementById("estado-agua").textContent = estadoTexto(score.agua);
 }
 async function init() {
-  await mostrarDatosActuales(); // trae la parcela y setea tempOptima
-  await cargarHistorial(); // dibuja el gráfico (ya con la línea óptima)
+  await mostrarDatosActuales(); // trae la parcela 
+  await cargarHistorial(); // dibuja el grafico
   mostrarScore();
 }
 
