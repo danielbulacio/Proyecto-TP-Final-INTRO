@@ -20,10 +20,11 @@ app.use(cors(corsOptions));
 app.use("/api/v1/cultivos", endpointsCultivos);
 app.use("/api/v1/parcelas", endpointsParcelas);
 app.use("/api/v1/tareas", endpointsTareas);
+app.use("/api/v1/parcelas/detalle", endpointsDetalleParcela);
 
 const port = 8000;
 
-app.use("/api/v1/parcelas", endpointsDetalleParcela);
+
 app.get("/health", (req, res) => res.send("OK"));
 
 app.listen(port, () => {

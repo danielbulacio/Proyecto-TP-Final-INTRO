@@ -20,7 +20,7 @@ let tempOptima; // guardo la temperatura óptima del cultivo (para la línea del
 
 async function cargarHistorial() {
   const res = await fetch(
-    `http://localhost:8000/api/v1/parcelas/${id}/historial`,
+    `http://localhost:8000/api/v1/parcelas/detalle/${id}/historial`,
   );
   historialGlobal = await res.json();
   dibujarGrafico("temperatura"); // arranca mostrando temperatura
@@ -95,7 +95,7 @@ function dibujarGrafico(tipo) {
 }
 
 async function mostrarDatosActuales() {
-  const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}`);
+  const res = await fetch(`http://localhost:8000/api/v1/parcelas/detalle/${id}`);
   const parcela = await res.json();
   tempOptima = parcela.temperatura_optima; // guardo el óptimo para la línea del gráfico
   dibujarMapa(
@@ -148,7 +148,7 @@ document.querySelectorAll(".tab").forEach((boton) => {
 });
 
 async function mostrarScore() {
-  const res = await fetch(`http://localhost:8000/api/v1/parcelas/${id}/score`);
+  const res = await fetch(`http://localhost:8000/api/v1/parcelas/detalle/${id}/score`);
   const score = await res.json();
 
   // los números
