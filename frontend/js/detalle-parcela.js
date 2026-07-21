@@ -108,10 +108,10 @@ async function mostrarDatosActuales() {
   document.getElementById("parcela_nombre_breadcumb").textContent =
     parcela.nombre;
 
-  document.getElementById("temp").textContent = parcela.temperatura;
-  document.getElementById("humedad").textContent = parcela.humedad_suelo;
-  document.getElementById("precipitacion").textContent = parcela.precipitacion;
-  document.getElementById("evapo").textContent = parcela.evapotranspiracion;
+  document.getElementById("temp").textContent = `${parcela.temperatura} °C`;
+  document.getElementById("humedad").textContent = `${parcela.humedad_suelo} m3/m3`;
+  document.getElementById("precipitacion").textContent = `${parcela.precipitacion} mm`;
+  document.getElementById("evapo").textContent = `${parcela.evapotranspiracion} mm`;
   document.getElementById("parcela-ubicacion").textContent =
     `${parcela.latitud}, ${parcela.longitud}`;
 
