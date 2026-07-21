@@ -66,7 +66,7 @@ parcelas.forEach(parcela => {
 
     // Botón Ver Detalle (Igual que antes)
     const botonVer = document.createElement("button");
-    botonVer.className = "button is-info is-small";
+    botonVer.className = "button is-white is-outlined";
     botonVer.textContent = "Ver Detalle";
     botonVer.addEventListener('click', () => {
         verDetalle(parcela.id);
@@ -74,7 +74,7 @@ parcelas.forEach(parcela => {
 
     // Botón Agregar Tarea (Igual que antes)
     const botonTarea = document.createElement("button");
-    botonTarea.className = "button is-success is-small";
+    botonTarea.className = "button is-white is-outlined";
     botonTarea.textContent = "Agregar Tarea";
     botonTarea.addEventListener('click', () => {
         agregarTareaA(parcela.id);
@@ -93,11 +93,11 @@ parcelas.forEach(parcela => {
     dropdownTrigger.className = "dropdown-trigger";
     
     const botonOpciones = document.createElement("button");
-    botonOpciones.className = "button is-light is-small";
+    botonOpciones.className = "button is-white is-outlined";
     botonOpciones.setAttribute("aria-haspopup", "true");
     botonOpciones.setAttribute("aria-controls", "dropdown-menu");
     // Usamos un emoji de lápiz, si usas FontAwesome puedes cambiarlo por <i class="fas fa-pencil-alt"></i>
-    botonOpciones.innerHTML = `<span>✏️</span>`; 
+    botonOpciones.innerHTML = `<span class="icon"><i class="material-icons">edit</i></span>`; 
     
     // Funcionalidad para abrir/cerrar el menú desplegable
     botonOpciones.addEventListener('click', (e) => {
@@ -122,6 +122,8 @@ parcelas.forEach(parcela => {
     itemEditar.textContent = "Editar";
     itemEditar.addEventListener('click', () => {
         dropdown.classList.remove('is-active'); // Cerramos el menú
+        window.location.href = `update_parcela.html?id=${parcela.id}`; 
+        console.log("Se hizo clic en Editar Parcela");
         abrirEditar(parcela.id);
     });
 

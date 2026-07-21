@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crear Parcela</title>
+    <title>Actualizar Parcela</title>
     <!-- Esto es para que funcione Bulma -->
     <link
       rel="stylesheet"
@@ -66,11 +66,11 @@
         
         <!-- Opcional: la clase "box" le da un fondo blanco con una sombra sutil muy elegante -->
         <div class="box" style="margin-top: 4rem; background: linear-gradient(135deg, #a54910, #612807) ">
-          <h1 class="title has-text-white">Crear Nueva Parcela</h1>
+          <h1 class="title has-text-white">Actualizar Parcela</h1>
           
           <!-- Formulario -->
 
-         <form id="form-agregar-parcela form-editar-parcela" class="form">
+         <form id="form-editar-parcela" class="form">
             <div class="field">
                 <label class="label ">Nombre de la Parcela</label>
                 <div class="control">
@@ -93,7 +93,7 @@
         
                 <p class="help is-danger" id="mensaje-error"></p>
                 <div class="control">
-                    <button type="submit" class="button is-top">Guardar Parcela</button>
+                    <button type="submit" class="button is-top">Guardar Cambios</button>
                     <!-- Botón para cancelar y volver atrás -->
                     <a href="parcelas.html" class="button is-light" style="border: solid white !important; box-shadow: none !important;">Cancelar</a> 
                 </div>
@@ -104,6 +104,6 @@
     </div>
   </div>
 </section>
-    <script src="./js/create_parcela.js"></script>
+    <script src="./js/update_parcela.js"></script>
   </body>
 </html>

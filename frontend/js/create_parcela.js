@@ -1,11 +1,16 @@
-// Este código va en el JS de tu NUEVA página
-
 const formAgregar = document.getElementById('form-agregar-parcela');
+const mensajeError = document.getElementById('mensaje-error');
 
 if (formAgregar) {
     formAgregar.addEventListener('submit', async (e) => {
-        // 1. IMPORTANTE: Evitamos que la página se recargue al enviar el formulario
+        // 1. Evitamos que la página se recargue
         e.preventDefault(); 
+        
+        // Limpiamos errores previos
+        if (mensajeError) {
+            mensajeError.style.display = 'none';
+            mensajeError.innerText = "";
+        }
 
         // 2. Recolectamos los datos de los inputs
         const nuevaParcela = {
@@ -14,7 +19,7 @@ if (formAgregar) {
             longitud: parseFloat(document.getElementById('input-longitud').value),
         };
 
-        // 3. Enviamos los datos al backend
+        // 3. Enviamos los datos al backend usando POST (Crear)
         try {
             const response = await fetch("http://localhost:8000/api/parcelas", {
                 method: 'POST',
@@ -24,16 +29,24 @@ if (formAgregar) {
                 body: JSON.stringify(nuevaParcela)
             });
 
-            if (response.status === 201 || response.status === 200) {
-                window.location.href = 'parcelas.html'; // Ajusta al nombre de tu página principal
+            // Si el backend responde que se creó correctamente (200 o 201)
+            if (response.ok) {
+                alert('¡Parcela creada con éxito!');
+                window.location.href = 'parcelas.html'; 
             } else {
-                // Mostramos el error en pantalla si algo falló
-                const errorMsg = document.getElementById("mensaje-error");
-                errorMsg.textContent = "Error al guardar: " + response.statusText;
+                // Mostramos el error si el backend rechaza la creación
+                const errorData = await response.json();
+                if (mensajeError) {
+                    mensajeError.style.display = 'block';
+                    mensajeError.innerText = errorData.mensaje || "Error al crear la parcela.";
+                }
             }
         } catch (err) {
             console.error("Hubo un problema de conexión:", err);
-            document.getElementById("mensaje-error").textContent = "Error de conexión con el servidor.";
+            if (mensajeError) {
+                mensajeError.style.display = 'block';
+                mensajeError.innerText = "Error de conexión con el servidor. Verifica que el backend esté encendido.";
+            }
         }
     });
 }
