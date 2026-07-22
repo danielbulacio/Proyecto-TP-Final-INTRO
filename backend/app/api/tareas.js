@@ -87,13 +87,13 @@ endpointsTareas.post("/", async (req, res) => {
 
     // 1. Valida campos/columnas requeridos/as
     if (!parcela_id || !tarea) {
-        res.status(400).json({ message: "Faltan campos requeridos: parcela_id y tarea son obligatorios" });
+        res.status(400).json({ message: "Faltan campos requeridos" });
         return;
     }
 
     // 2. Valida parcela_id
     if (isNaN(parcela_id) || parcela_id <= 0) {
-        res.status(400).json({ message: "El campo parcela_id debe ser un número positivo válido" });
+        res.status(400).json({ message: "La parcela debe ser un número positivo válido" });
         return;
     }
 
