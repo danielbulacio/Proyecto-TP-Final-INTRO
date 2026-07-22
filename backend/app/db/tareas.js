@@ -35,14 +35,15 @@ export async function createTarea(parcela_id, tarea, prioridad, fecha_limite) {
     return true;
 }
 
-export async function updateTarea(id, tarea, prioridad, fecha_limite) {
+export async function updateTarea(id, parcela_id, tarea, prioridad, fecha_limite) {
     const resultado = await db.query(
         `UPDATE tareas SET
-           tarea = COALESCE($1, tarea),
-           prioridad = COALESCE($2, prioridad),
-           fecha_limite = COALESCE($3, fecha_limite)
-         WHERE id = $4`,
-        [tarea ?? null, prioridad ?? null, fecha_limite ?? null, id]
+           parcela_id = COALESCE($1, parcela_id),
+           tarea = COALESCE($2, tarea),
+           prioridad = COALESCE($3, prioridad),
+           fecha_limite = COALESCE($4, fecha_limite)
+         WHERE id = $5`,
+        [parcela_id ?? null, tarea ?? null, prioridad ?? null, fecha_limite ?? null, id]
     );
 
     if (resultado.rowCount === 0) return false;

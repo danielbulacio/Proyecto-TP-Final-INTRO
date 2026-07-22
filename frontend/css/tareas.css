@@ -1,5 +1,5 @@
 :root {
-  --verde-cultivo: #2f6f4e;
+  --verde-cultivo: #10b981;
   --verde-oscuro: #1f4d36;
   --tierra: #6b4a34;
   --trigo: #c9a227;
@@ -7,6 +7,8 @@
   --texto: #1f2a24;
   --gris-suave: #6b7d6f;
   --linea: #dfe6df;
+  --azul: #3b82f6;
+  --azul-oscuro: #1e40af;
  
   --prioridad-baja: #7a9e7a;
   --prioridad-media: #c9a227;
@@ -23,7 +25,7 @@ body {
 .titulo-seccion {
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--verde-oscuro);
+  color: var(--azul);
 }
  
 .subtitulo-seccion {
@@ -133,9 +135,9 @@ textarea:focus-visible {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background-color: var(--verde-cultivo);
+  background-color: var(--azul-oscuro);
   border: 2px solid #fff;
-  box-shadow: 0 0 0 1px var(--verde-cultivo);
+  box-shadow: 0 0 0 1px var(--azul-oscuro);
 }
  
 .linea-tiempo .fecha-evento {
@@ -157,4 +159,16 @@ textarea:focus-visible {
  
 .button.is-primary:hover {
   background-color: var(--verde-oscuro);
+}
+
+/* Botón azul reutilizable para acciones principales */
+.button.btn-primario-azul {
+  background-color: var(--azul) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.button.btn-primario-azul:hover {
+  background-color: var(--azul-oscuro) !important;
+  color: #ffffff !important;
 }

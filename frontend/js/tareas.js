@@ -1,6 +1,8 @@
+// Configuración de API con URL completa
+const API_BASE_URL = "http://localhost:8000/api/v1";
 
 const mapaParcelas = new Map(); // id -> nombre
-let tareasActuales = []; 
+let tareasActuales = [];
 
 const ETIQUETAS_ESTADO = {
   pendiente: "Pendiente",
@@ -12,24 +14,32 @@ const ETIQUETAS_ESTADO = {
 //  Utilidades 
 
 function escapeHtml(texto) {
+  if (texto === null || texto === undefined) return "";
   const div = document.createElement("div");
-  div.textContent = texto ?? "";
+  div.textContent = String(texto);
   return div.innerHTML;
 }
 
 function formatFecha(fechaIso) {
   if (!fechaIso) return "";
-  return fechaIso.slice(0, 10);
+  return String(fechaIso).slice(0, 10);
 }
 
 function esVencida(tarea) {
   if (["completada", "cancelada"].includes(tarea.estado)) return false;
   if (!tarea.fecha_limite) return false;
-  return tarea.fecha_limite.slice(0, 10) < new Date().toISOString().slice(0, 10);
+  
+  // Comparación en zona horaria local limpia
+  const fechaLimiteStr = String(tarea.fecha_limite).slice(0, 10);
+  const hoy = new Date();
+  const hoyStr = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`;
+  
+  return fechaLimiteStr < hoyStr;
 }
 
 function mostrarNotificacion(mensaje, tipo = "success") {
   const el = document.getElementById("notificacion-global");
+  if (!el) return;
   el.className = `notification mx-5 is-${tipo}`;
   el.textContent = mensaje;
   el.classList.remove("is-hidden");
@@ -38,18 +48,20 @@ function mostrarNotificacion(mensaje, tipo = "success") {
 }
 
 function abrirModal(id) {
-  document.getElementById(id).classList.add("is-active");
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add("is-active");
 }
 
 function cerrarModal(id) {
-  document.getElementById(id).classList.remove("is-active");
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove("is-active");
 }
 
 //  Carga inicial de parcelas (para selects) 
 
 async function cargarParcelas() {
   try {
-    const respuesta = await fetch("/api/v1/parcelas");
+    const respuesta = await fetch(`${API_BASE_URL}/parcelas`);
     if (!respuesta.ok) throw new Error("No se pudieron obtener las parcelas");
     
     const parcelas = await respuesta.json();
@@ -59,11 +71,14 @@ async function cargarParcelas() {
 
     const opciones = `
       <option value="" disabled selected>-- Seleccione una parcela --</option>
-      ${parcelas.map((p) => `<option value="${p.id}">${escapeHtml(p.nombre)}</option>`).join("")}
+      ${parcelas.map((p) => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.nombre)}</option>`).join("")}
     `;
 
-    document.getElementById("input-parcela").innerHTML = opciones;
-    document.getElementById("input-nueva-parcela").innerHTML = opciones;
+    const selectParcela = document.getElementById("input-parcela");
+    const selectNuevaParcela = document.getElementById("input-nueva-parcela");
+
+    if (selectParcela) selectParcela.innerHTML = opciones;
+    if (selectNuevaParcela) selectNuevaParcela.innerHTML = opciones;
   } catch (error) {
     console.error("Error cargando parcelas:", error);
     mostrarNotificacion("Error al obtener la lista de parcelas", "danger");
@@ -73,27 +88,39 @@ async function cargarParcelas() {
 //  Carga y render de tareas 
 
 async function cargarTareas() {
-  const estado = document.getElementById("filtro-estado").value;
-  const prioridad = document.getElementById("filtro-prioridad").value;
+  try {
+    const respuesta = await fetch(`${API_BASE_URL}/tareas`);
+    if (!respuesta.ok) throw new Error("Error al obtener tareas");
 
-  const parametros = new URLSearchParams();
-  if (estado) parametros.set("estado", estado);
-  if (prioridad) parametros.set("prioridad", prioridad);
+    const todasLasTareas = await respuesta.json();
 
-  const respuesta = await fetch(`/api/v1/tareas?${parametros.toString()}`);
-  tareasActuales = await respuesta.json();
+    // Leemos los valores de los selects
+    const filtroEstado = document.getElementById("filtro-estado")?.value;
+    const filtroPrioridad = document.getElementById("filtro-prioridad")?.value;
 
-  renderizarTareas(tareasActuales);
+    // Filtramos en memoria
+    tareasActuales = todasLasTareas.filter((t) => {
+      const cumpleEstado = !filtroEstado || t.estado === filtroEstado;
+      const cumplePrioridad = !filtroPrioridad || t.prioridad === filtroPrioridad;
+      return cumpleEstado && cumplePrioridad;
+    });
+
+    renderizarTareas(tareasActuales);
+  } catch (error) {
+    console.error("Error cargando tareas:", error);
+    mostrarNotificacion("No se pudieron cargar las tareas", "danger");
+  }
 }
 
 function renderizarTareas(tareas) {
   const contenedor = document.getElementById("lista-tareas");
+  if (!contenedor) return;
 
-  if (!tareas.length) {
+  if (!tareas || !tareas.length) {
     contenedor.innerHTML = `
       <div class="column is-full">
         <div class="estado-vacio">
-          <p class="title is-5">Todavía no hay tareas acá</p>
+          <p class="title is-5 has-text-grey">Todavía no hay tareas</p>
           <p>Creá la primera con "Nueva tarea" para empezar a registrar el trabajo de la parcela.</p>
         </div>
       </div>
@@ -108,75 +135,97 @@ function tarjetaTareaHTML(t) {
   const parcelaNombre = mapaParcelas.get(t.parcela_id) || `Parcela #${t.parcela_id}`;
   const vencida = esVencida(t);
 
+  // Escapamos todas las variables para evitar XSS
+  const tId = escapeHtml(t.id);
+  const tPrioridad = escapeHtml(t.prioridad);
+  const tEstado = escapeHtml(t.estado);
+  const tEstadoEtiqueta = escapeHtml(ETIQUETAS_ESTADO[t.estado] || t.estado);
+
   return `
     <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
       <div class="box tarjeta-tarea ${vencida ? "esta-vencida" : ""}">
         <div class="tags mb-2">
-          <span class="tag tag-prioridad-${t.prioridad}">${t.prioridad}</span>
-          <span class="tag is-light">${ETIQUETAS_ESTADO[t.estado] || t.estado}</span>
+          <span class="tag tag-prioridad-${tPrioridad}">${tPrioridad}</span>
+          <span class="tag is-light">${tEstadoEtiqueta}</span>
           ${vencida ? '<span class="tag is-danger is-light">Vencida</span>' : ""}
         </div>
 
         <p class="has-text-weight-semibold descripcion-tarea">${escapeHtml(t.tarea)}</p>
         <p class="is-size-7 has-text-grey mb-3">
-          ${escapeHtml(parcelaNombre)}${t.fecha_limite ? " · Vence " + formatFecha(t.fecha_limite) : ""}
+          ${escapeHtml(parcelaNombre)}${t.fecha_limite ? " · Vence " + escapeHtml(formatFecha(t.fecha_limite)) : ""}
         </p>
 
         <div class="dropdown is-hoverable mb-2">
           <div class="dropdown-trigger">
-            <button class="button is-small is-fullwidth" aria-haspopup="true">
+            <button class="button is-small is-fullwidth has-text-white" aria-haspopup="true">
               <span>Cambiar estado</span>
             </button>
           </div>
           <div class="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a href="#" class="dropdown-item" data-accion="estado" data-id="${t.id}" data-estado="pendiente">Pendiente</a>
-              <a href="#" class="dropdown-item" data-accion="estado" data-id="${t.id}" data-estado="en_progreso">En progreso</a>
-              <a href="#" class="dropdown-item" data-accion="estado" data-id="${t.id}" data-estado="completada">Completada</a>
-              <a href="#" class="dropdown-item" data-accion="estado" data-id="${t.id}" data-estado="cancelada">Cancelada</a>
+              <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="pendiente">Pendiente</a>
+              <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="en_progreso">En progreso</a>
+              <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="completada">Completada</a>
+              <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="cancelada">Cancelada</a>
             </div>
           </div>
         </div>
 
         <div class="buttons are-small">
-          <button class="button is-light" data-accion="editar" data-id="${t.id}">Editar</button>
-          <button class="button is-light" data-accion="reasignar" data-id="${t.id}">Reasignar</button>
-          <button class="button is-light" data-accion="historial" data-id="${t.id}">Historial</button>
-          <button class="button is-light is-danger" data-accion="eliminar" data-id="${t.id}">Eliminar</button>
+          <button class="button is-light" data-accion="editar" data-id="${tId}">Editar</button>
+          <button class="button is-light" data-accion="historial" data-id="${tId}">Historial</button>
+          <button class="button is-light is-danger" data-accion="eliminar" data-id="${tId}">Eliminar</button>
         </div>
       </div>
     </div>
   `;
 }
 
-// Crear / Editar 
+//  Crear / Editar 
 
 function seleccionarPrioridad(valor) {
-  document.getElementById("input-prioridad").value = valor;
+  const input = document.getElementById("input-prioridad");
+  if (input) input.value = valor;
+  
   document.querySelectorAll(".opcion-prioridad").forEach((el) => {
     el.classList.toggle("is-selected", el.dataset.valor === valor);
   });
 }
 
 function abrirModalNueva() {
-  document.getElementById("form-tarea").reset();
+  const form = document.getElementById("form-tarea");
+  if (form) form.reset();
+  
   document.getElementById("tarea-id").value = "";
   document.getElementById("modal-tarea-titulo").textContent = "Nueva tarea";
-  document.getElementById("errores-form-tarea").classList.add("is-hidden");
+  
+  const errores = document.getElementById("errores-form-tarea");
+  if (errores) errores.classList.add("is-hidden");
+  
   seleccionarPrioridad("Media");
   abrirModal("modal-tarea");
 }
 
 function abrirModalEditar(id) {
-  const tarea = tareasActuales.find((t) => t.id === Number(id));
+  // Conversión segura para encontrar la tarea independiente de si es número o string
+  const tarea = tareasActuales.find((t) => String(t.id) === String(id));
   if (!tarea) return;
 
   document.getElementById("modal-tarea-titulo").textContent = "Editar tarea";
   document.getElementById("tarea-id").value = tarea.id;
-  document.getElementById("input-parcela").value = tarea.parcela_id;
-  document.getElementById("input-tarea").value = tarea.tarea;
+  
+  // Asignación segura del select (convertido a String para coincidir con el option value)
+  const selectParcela = document.getElementById("input-parcela");
+  if (selectParcela) {
+    selectParcela.value = String(tarea.parcela_id ?? "");
+  }
+
+  document.getElementById("input-tarea").value = tarea.tarea || "";
   document.getElementById("input-fecha-limite").value = formatFecha(tarea.fecha_limite);
-  document.getElementById("errores-form-tarea").classList.add("is-hidden");
+  
+  const errores = document.getElementById("errores-form-tarea");
+  if (errores) errores.classList.add("is-hidden");
+  
   seleccionarPrioridad(tarea.prioridad);
 
   abrirModal("modal-tarea");
@@ -184,116 +233,118 @@ function abrirModalEditar(id) {
 
 function mostrarErroresFormulario(contenedorId, datos) {
   const el = document.getElementById(contenedorId);
-  const mensajes = datos.detalles
+  if (!el) return;
+
+  const mensajes = datos?.detalles
     ? datos.detalles.map((d) => `${d.campo}: ${d.mensaje}`).join(" | ")
-    : datos.message || "Ocurrió un error";
+    : datos?.message || "Ocurrió un error inesperado";
+
   el.textContent = mensajes;
   el.classList.remove("is-hidden");
 }
 
 async function guardarTarea() {
-  const id = document.getElementById("tarea-id").value;
+  const btnGuardar = document.getElementById("guardar-tarea");
+  if (btnGuardar) btnGuardar.disabled = true; // Bloqueo de doble clic
 
-  const cuerpo = {
-    parcela_id: Number(document.getElementById("input-parcela").value),
-    tarea: document.getElementById("input-tarea").value,
-    prioridad: document.getElementById("input-prioridad").value,
-    fecha_limite: document.getElementById("input-fecha-limite").value || undefined
-  };
+  try {
+    const id = document.getElementById("tarea-id").value;
 
-  const esEdicion = Boolean(id);
-  const url = esEdicion ? `/api/v1/tareas/${id}` : "/api/v1/tareas";
-  const metodo = esEdicion ? "PUT" : "POST";
+    const cuerpo = {
+      parcela_id: Number(document.getElementById("input-parcela").value),
+      tarea: document.getElementById("input-tarea").value,
+      prioridad: document.getElementById("input-prioridad").value,
+      fecha_limite: document.getElementById("input-fecha-limite").value || undefined
+    };
 
-  const respuesta = await fetch(url, {
-    method: metodo,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(cuerpo)
-  });
-  const datos = await respuesta.json();
+    const esEdicion = Boolean(id);
+    const url = esEdicion ? `${API_BASE_URL}/tareas/${id}` : `${API_BASE_URL}/tareas`;
+    const metodo = esEdicion ? "PUT" : "POST";
 
-  if (!respuesta.ok) {
-    mostrarErroresFormulario("errores-form-tarea", datos);
-    return;
+    const respuesta = await fetch(url, {
+      method: metodo,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cuerpo)
+    });
+
+    // Manejo seguro por si la API no devuelve contenido en JSON
+    const datos = respuesta.status !== 204 ? await respuesta.json() : {};
+
+    if (!respuesta.ok) {
+      mostrarErroresFormulario("errores-form-tarea", datos);
+      return;
+    }
+
+    cerrarModal("modal-tarea");
+    mostrarNotificacion(esEdicion ? "Tarea actualizada" : "Tarea creada", "success");
+    await cargarTareas();
+  } catch (error) {
+    console.error("Error guardando tarea:", error);
+    mostrarNotificacion("No se pudo conectar con el servidor", "danger");
+  } finally {
+    if (btnGuardar) btnGuardar.disabled = false;
   }
-
-  cerrarModal("modal-tarea");
-  mostrarNotificacion(esEdicion ? "Tarea actualizada" : "Tarea creada", "success");
-  await cargarTareas();
 }
 
 //  Cambiar estado 
 
 async function cambiarEstado(id, estado) {
-  const respuesta = await fetch(`/api/v1/tareas/${id}/estado`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ estado })
-  });
-  const datos = await respuesta.json();
+  try {
+    const respuesta = await fetch(`${API_BASE_URL}/tareas/${id}/estado`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ estado })
+    });
+    
+    const datos = respuesta.status !== 204 ? await respuesta.json() : {};
 
-  mostrarNotificacion(datos.message, respuesta.ok ? "success" : "danger");
-  if (respuesta.ok) await cargarTareas();
-}
-
-//  Reasignar 
-
-function abrirModalReasignar(id) {
-  document.getElementById("reasignar-tarea-id").value = id;
-  document.getElementById("errores-reasignar").classList.add("is-hidden");
-  abrirModal("modal-reasignar");
-}
-
-async function confirmarReasignacion() {
-  const id = document.getElementById("reasignar-tarea-id").value;
-  const nueva_parcela_id = Number(document.getElementById("input-nueva-parcela").value);
-
-  const respuesta = await fetch(`/api/v1/tareas/${id}/asignar`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nueva_parcela_id })
-  });
-  const datos = await respuesta.json();
-
-  if (!respuesta.ok) {
-    mostrarErroresFormulario("errores-reasignar", datos);
-    return;
+    mostrarNotificacion(
+      datos.message || (respuesta.ok ? "Estado actualizado" : "Error al cambiar estado"),
+      respuesta.ok ? "success" : "danger"
+    );
+    if (respuesta.ok) await cargarTareas();
+  } catch (error) {
+    console.error("Error cambiando estado:", error);
+    mostrarNotificacion("Error de conexión al actualizar el estado", "danger");
   }
-
-  cerrarModal("modal-reasignar");
-  mostrarNotificacion("Tarea reasignada", "success");
-  await cargarTareas();
 }
 
 //  Historial 
 
 async function abrirModalHistorial(id) {
-  const respuesta = await fetch(`/api/v1/tareas/${id}/historial`);
-  const historial = await respuesta.json();
+  try {
+    const respuesta = await fetch(`${API_BASE_URL}/tareas/${id}/historial`);
+    if (!respuesta.ok) throw new Error("Error al obtener historial");
 
-  const contenedor = document.getElementById("contenido-historial");
+    const historial = await respuesta.json();
+    const contenedor = document.getElementById("contenido-historial");
+    if (!contenedor) return;
 
-  if (!historial.length) {
-    contenedor.innerHTML = `<p class="has-text-grey">Todavía no hay acciones registradas.</p>`;
-  } else {
-    contenedor.innerHTML = `
-      <div class="linea-tiempo">
-        ${historial
-          .map(
-            (h) => `
-              <div class="evento">
-                <span class="tag is-light">${h.accion.replace("_", " ")}</span>
-                <p>${escapeHtml(h.detalle || "")}</p>
-                <p class="fecha-evento">${new Date(h.fecha).toLocaleString()}</p>
-              </div>
-            `
-          )
-          .join("")}
-      </div>
-    `;
+    if (!historial || !historial.length) {
+      contenedor.innerHTML = `<p class="has-text-grey">Todavía no hay acciones registradas.</p>`;
+    } else {
+      contenedor.innerHTML = `
+        <div class="linea-tiempo">
+          ${historial
+            .map(
+              (h) => `
+                <div class="evento">
+                  <span class="tag is-light">${escapeHtml(h.accion ? h.accion.replace("_", " ") : "")}</span>
+                  <p>${escapeHtml(h.detalle || "")}</p>
+                  <p class="fecha-evento">${escapeHtml(new Date(h.fecha).toLocaleString())}</p>
+                </div>
+              `
+            )
+            .join("")}
+        </div>
+      `;
+    }
+
+    abrirModal("modal-historial");
+  } catch (error) {
+    console.error("Error al cargar historial:", error);
+    mostrarNotificacion("No se pudo cargar el historial de la tarea", "danger");
   }
-
-  abrirModal("modal-historial");
 }
 
 //  Eliminar 
@@ -304,14 +355,27 @@ function abrirModalConfirmarEliminar(id) {
 }
 
 async function confirmarEliminacion() {
-  const id = document.getElementById("eliminar-tarea-id").value;
+  const btnEliminar = document.getElementById("confirmar-eliminar");
+  if (btnEliminar) btnEliminar.disabled = true;
 
-  const respuesta = await fetch(`/api/v1/tareas/${id}`, { method: "DELETE" });
-  const datos = await respuesta.json();
+  try {
+    const id = document.getElementById("eliminar-tarea-id").value;
 
-  cerrarModal("modal-confirmar-eliminar");
-  mostrarNotificacion(datos.message, respuesta.ok ? "success" : "danger");
-  if (respuesta.ok) await cargarTareas();
+    const respuesta = await fetch(`${API_BASE_URL}/tareas/${id}`, { method: "DELETE" });
+    const datos = respuesta.status !== 204 ? await respuesta.json() : {};
+
+    cerrarModal("modal-confirmar-eliminar");
+    mostrarNotificacion(
+      datos.message || (respuesta.ok ? "Tarea eliminada correctamente" : "Error al eliminar"),
+      respuesta.ok ? "success" : "danger"
+    );
+    if (respuesta.ok) await cargarTareas();
+  } catch (error) {
+    console.error("Error al eliminar:", error);
+    mostrarNotificacion("Error de conexión al intentar eliminar", "danger");
+  } finally {
+    if (btnEliminar) btnEliminar.disabled = false;
+  }
 }
 
 //  Delegacion de eventos de las tarjetas 
@@ -324,7 +388,6 @@ document.addEventListener("click", (evento) => {
   const id = objetivo.dataset.id;
 
   if (accion === "editar") abrirModalEditar(id);
-  if (accion === "reasignar") abrirModalReasignar(id);
   if (accion === "historial") abrirModalHistorial(id);
   if (accion === "eliminar") abrirModalConfirmarEliminar(id);
   if (accion === "estado") {
@@ -333,40 +396,47 @@ document.addEventListener("click", (evento) => {
   }
 });
 
-//  Selector de prioridad  
+//  Listeners con validación de existencia en DOM 
 
-document.getElementById("selector-prioridad").addEventListener("click", (evento) => {
-  const opcion = evento.target.closest(".opcion-prioridad");
-  if (opcion) seleccionarPrioridad(opcion.dataset.valor);
-});
-
-//  Cierre de modales 
+const selectorPrioridad = document.getElementById("selector-prioridad");
+if (selectorPrioridad) {
+  selectorPrioridad.addEventListener("click", (evento) => {
+    const opcion = evento.target.closest(".opcion-prioridad");
+    if (opcion) seleccionarPrioridad(opcion.dataset.valor);
+  });
+}
 
 document.querySelectorAll("[data-cerrar]").forEach((el) => {
   el.addEventListener("click", () => cerrarModal(el.dataset.cerrar));
 });
 
-//  Burger del navbar 
-
 document.querySelectorAll(".navbar-burger").forEach((burger) => {
   burger.addEventListener("click", () => {
     const destino = document.getElementById(burger.dataset.target);
-    burger.classList.toggle("is-active");
-    destino.classList.toggle("is-active");
+    if (destino) {
+      burger.classList.toggle("is-active");
+      destino.classList.toggle("is-active");
+    }
   });
 });
 
-//  Botones principales 
+//  Asignación de eventos principales
+const btnNuevaTarea = document.getElementById("btn-nueva-tarea");
+if (btnNuevaTarea) btnNuevaTarea.addEventListener("click", abrirModalNueva);
 
-document.getElementById("btn-nueva-tarea").addEventListener("click", abrirModalNueva);
-document.getElementById("guardar-tarea").addEventListener("click", guardarTarea);
-document.getElementById("confirmar-reasignar").addEventListener("click", confirmarReasignacion);
-document.getElementById("confirmar-eliminar").addEventListener("click", confirmarEliminacion);
-document.getElementById("filtro-estado").addEventListener("change", cargarTareas);
-document.getElementById("filtro-prioridad").addEventListener("change", cargarTareas);
+const btnGuardarTarea = document.getElementById("guardar-tarea");
+if (btnGuardarTarea) btnGuardarTarea.addEventListener("click", guardarTarea);
 
-//  Arranque 
+const btnConfirmarEliminar = document.getElementById("confirmar-eliminar");
+if (btnConfirmarEliminar) btnConfirmarEliminar.addEventListener("click", confirmarEliminacion);
 
+const filtroEstado = document.getElementById("filtro-estado");
+if (filtroEstado) filtroEstado.addEventListener("change", cargarTareas);
+
+const filtroPrioridad = document.getElementById("filtro-prioridad");
+if (filtroPrioridad) filtroPrioridad.addEventListener("change", cargarTareas);
+
+//  Arranque seguro
 (async function iniciar() {
   await cargarParcelas();
   await cargarTareas();
