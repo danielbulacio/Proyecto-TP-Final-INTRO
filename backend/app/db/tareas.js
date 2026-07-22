@@ -62,7 +62,9 @@ export async function deleteTarea(id) {
 }
 
 export async function reassignTarea(id, nuevaParcelaId, parcelaAnteriorId) {
-    const resultado = await db.query(
+
+    const resultado = await pool.query(
+
         "UPDATE tareas SET parcela_id = $1 WHERE id = $2",
         [nuevaParcelaId, id]
     );

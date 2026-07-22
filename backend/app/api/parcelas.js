@@ -29,15 +29,18 @@ endpointsParcelas.get("/:id", async (req, res) => {
   res.json(parcela);
 });
 //actualizacion de parcelas
- endpointsParcelas.put("/:id", async (req,res) => {
+// Actualizacion de parcelas
+endpointsParcelas.put("/:id", async (req,res) => {
     let id = req.params.id;
 
+    // CORRECCIÓN: Agregamos 'typeof' a la validación
     if(
-      req.body.latitud === undefined || req.body.latitud != "number"||
-      req.body.longitud === undefined || req.body.longitud != "number"
+      req.body.latitud === undefined || typeof req.body.latitud !== "number" ||
+      req.body.longitud === undefined || typeof req.body.longitud !== "number"
     ){
-      res.status(400).send("Latitud o longitud inválidas o vacias")
-    };
+        res.status(400).send("Latitud o longitud inválidas o vacias");
+        return; // CORRECCIÓN: Faltaba el return para detener la ejecución si hay error
+    }
 
     const update = await updateParcela(
       id,
@@ -47,11 +50,12 @@ endpointsParcelas.get("/:id", async (req, res) => {
     );
 
     if (!update) {
-      res.sendStatus(500);
-      return;
+        res.sendStatus(500);
+        return;
     }
+    
     res.sendStatus(200);
- });
+});
 
  //actualizar campo especifico
  endpointsParcelas.patch("/:id", async (req,res) => {
