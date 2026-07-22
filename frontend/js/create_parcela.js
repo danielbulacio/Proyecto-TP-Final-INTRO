@@ -49,8 +49,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (respuesta.ok) {
-                    // Redirigimos al listado principal de parcelas al guardar con éxito
+                    const nueva = await respuesta.json(); // formateamos como un json la respuesta
+                    
+                    // cuando el usuario crea la pagina lo rederigimos de create parcelas html a parcelas html
                     window.location.href = 'parcelas.html';
+                    // disparamos la insercion de datos del clima
+                    await fetch(`http://localhost:8000/api/v1/parcelas/detalle/${nueva.id}/clima`, {
+                        method: "POST"
+                    });
+                    
+                    
                 } else {
                     const errorData = await respuesta.json().catch(() => ({}));
                     if (mensajeError) {
@@ -104,3 +112,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         actualizarMarcador(lat, lng);
     });
 });
+
