@@ -48,16 +48,27 @@ function cerrarModal(id) {
 //  Carga inicial de parcelas (para selects) 
 
 async function cargarParcelas() {
-  const respuesta = await fetch("/api/parcelas");
-  const parcelas = await respuesta.json();
+  try {
+    const respuesta = await fetch("/api/parcelas");
+    if (!respuesta.ok) throw new Error("No se pudieron obtener las parcelas");
+    
+    const parcelas = await respuesta.json();
 
-  mapaParcelas.clear();
-  parcelas.forEach((p) => mapaParcelas.set(p.id, p.nombre));
+    mapaParcelas.clear();
+    parcelas.forEach((p) => mapaParcelas.set(p.id, p.nombre));
 
-  const opciones = parcelas.map((p) => `<option value="${p.id}">${escapeHtml(p.nombre)}</option>`).join("");
-  document.getElementById("input-parcela").innerHTML = opciones;
-  document.getElementById("input-nueva-parcela").innerHTML = opciones;
-}
+    const opciones = `
+      <option value="" disabled selected>-- Seleccione una parcela --</option>
+      ${parcelas.map((p) => `<option value="${p.id}">${escapeHtml(p.nombre)}</option>`).join("")}
+    `;
+
+    document.getElementById("input-parcela").innerHTML = opciones;
+    document.getElementById("input-nueva-parcela").innerHTML = opciones;
+  } catch (error) {
+    console.error("Error cargando parcelas:", error);
+    mostrarNotificacion("Error al obtener la lista de parcelas", "danger");
+  }
+} 
 
 //  Carga y render de tareas 
 
