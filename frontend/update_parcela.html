@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="./css/navbar.css" />
     <link rel="stylesheet" href="./css/var-globales.css" />
     <link rel="stylesheet" href="./css/parcela.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 
     
   </head>
@@ -56,49 +58,48 @@
   <!-- El contenedor principal -->
   <div class="container">
     
-    <!-- Fila centrada -->
-    <div class="columns is-centered">
+    <!-- Agregamos el margen superior aquí para que afecte a todo el bloque por igual -->
+    <div class="columns is-desktop is-vcentered" style="margin-top: 2rem;">
       
-      <!-- Columna que controla el ancho del formulario (ocupará la mitad en PC y un poco más en tablets) -->
-      <div class="column is-half-desktop is-8-tablet">
+      <!-- Columna Izquierda: FORMULARIO (Se quitó el is-8-tablet para que sea 50/50 exacto) -->
+      <div class="column is-half-desktop">
         
-        <!-- Opcional: la clase "box" le da un fondo blanco con una sombra sutil muy elegante -->
-        <div class="box" style="margin-top: 4rem; background: linear-gradient(135deg, #a54910, #612807) ">
+        <!-- Le quitamos el margin-top a la caja para que no se desalinee -->
+        <div class="box" style="background: linear-gradient(135deg, #a54910, #612807);">
           <h1 class="title has-text-white">Actualizar Parcela</h1>
           
           <!-- Formulario -->
-
-         <form id="form-editar-parcela" class="form">
+          <form id="form-editar-parcela" class="form">
             <div class="field">
-                <label class="label ">Nombre de la Parcela</label>
+                <label class="label has-text-white">Nombre de la Parcela</label>
                 <div class="control">
                     <input class="input" type="text" id="input-nombre" required>
                 </div>
             </div>
+            
             <div class="field">
-             <label class="label">Latitud</label>
+             <label class="label has-text-white">Latitud</label>
                 <div class="control">
                     <input class="input" type="text" id="input-latitud" required>
                 </div>
             </div>
+            
             <div class="field">
-                <label class="label">Longitud</label>
+                <label class="label has-text-white">Longitud</label>
                 <div class="control">
                     <input class="input" type="text" id="input-longitud" required>
                 </div>
-            </div>
+            </div> 
+            
             <div class="field">
-                  <label class="label has-text-white">Hectáreas</label>
-                  <div class="control">
-                    <input class="input" type="text" id="input-hectareas" />
-                  </div>
+                <label class="label has-text-white">Hectáreas</label>
+                <div class="control">
+                    <input class="input" type="text" id="input-hectareas" required>
                 </div>
-
-                <!-- Imagen (Opcional en edición) -->
-                            <!-- Imagen (Opcional para actualizar) -->
-                        <!-- Imagen (Opcional para actualizar) -->
+            </div>
+            
             <div class="field">
-              <label class="label has-text-white">Imagen (Opcional para actualizar)</label>
+              <label class="label has-text-white">Imagen (Opcional)</label>
               <div class="control">
                 <!-- Contenedor blanco idéntico a los otros inputs -->
                 <div class="custom-file-box">
@@ -111,20 +112,27 @@
               </div>
             </div>
 
-        
-                <p class="help is-danger" id="mensaje-error"></p>
-                <div class="control">
-                    <button type="submit" class="button is-top">Guardar Cambios</button>
-                    <!-- Botón para cancelar y volver atrás -->
-                    <a href="parcelas.html" class="button is-light" style="border: solid white !important; box-shadow: none !important;">Cancelar</a> 
-                </div>
+            <p class="help is-danger" id="mensaje-error"></p>
+            
+            <div class="control" style="margin-top: 1.5rem;">
+                <button type="submit" class="button is-top">Actualizar Parcela</button>
+                <!-- Botón para cancelar y volver atrás -->
+                <a href="parcelas.html" class="button is-light" style="border: solid white !important; box-shadow: none !important;">Cancelar</a> 
+            </div>
          </form>
-
         </div>
+      </div> <!-- Fin columna izquierda -->
+
+      <!-- Columna Derecha: MAPA -->
+      <div class="column is-half-desktop">
+        <!-- Le quitamos el margin-top interno para que quede simétrico con la caja -->
+        <div id="mapa-parcela" style="height: 550px; width: 100%; border-radius: 8px; border: 4px solid #a54910; box-shadow: 0 4px 10px rgba(0,0,0,0.3);"></div>
       </div>
+      
     </div>
   </div>
 </section>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./js/update_parcela.js"></script>
   </body>
 </html>
