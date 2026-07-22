@@ -25,7 +25,9 @@ parcelas.forEach(parcela => {
     figure.className = "image is-4by3";
 
     const img = document.createElement("img");
-    img.src = parcela.imagen || 'https://bulma.io/assets/images/placeholders/1280x960.png';
+    img.src = parcela.imagen 
+        ? `http://localhost:8000/uploads/${parcela.imagen}` 
+        : 'https://bulma.io/assets/images/placeholders/1280x960.png';
     img.alt = parcela.nombre;
     img.style.objectFit = "cover"; // Evita que la imagen de prueba se deforme
 
@@ -51,7 +53,8 @@ parcelas.forEach(parcela => {
     // Usamos innerHTML para poder poner las negritas (<strong>) y el salto de línea (<br>)
     coordenadas.innerHTML = `
         <strong>Latitud:</strong> ${parcela.latitud} <br>
-        <strong>Longitud:</strong> ${parcela.longitud}
+        <strong>Longitud:</strong> ${parcela.longitud} <br>
+        <strong>Hectáreas:</strong> ${parcela.hectareas || 'N/A'}
     `;
     
     contentText.appendChild(coordenadas);

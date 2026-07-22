@@ -1,12 +1,15 @@
-// =================================================================
-// 1. CARGAR LOS DATOS CUANDO SE ABRE LA PÁGINA
-// =================================================================
 document.addEventListener("DOMContentLoaded", async () => {
-    // Obtenemos el ID de la URL
+    // 1. Obtenemos el ID de la parcela desde la URL
     const urlParams = new URLSearchParams(window.location.search);
     const idParcela = urlParams.get('id');
 
-    // Si hay un ID, buscamos los datos de esa parcela en el backend
+    // Elementos del DOM
+    const formEditar = document.getElementById('form-editar-parcela');
+    const inputImagen = document.getElementById("input-imagen");
+    const nombreArchivo = document.getElementById("nombre-archivo");
+    const mensajeError = document.getElementById("mensaje-error");
+
+    // 2. Cargamos los datos actuales de la parcela en los inputs
     if (idParcela) {
         try {
             const respuesta = await fetch(`http://localhost:8000/api/parcelas/${idParcela}`);
@@ -14,10 +17,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (respuesta.ok) {
                 const parcela = await respuesta.json();
                 
-                // Rellenamos los inputs
-                document.getElementById('input-nombre').value = parcela.nombre;
-                document.getElementById('input-latitud').value = parcela.latitud;
-                document.getElementById('input-longitud').value = parcela.longitud;
+                // Rellenamos los campos
+                document.getElementById('input-nombre').value = parcela.nombre || '';
+                document.getElementById('input-latitud').value = parcela.latitud || '';
+                document.getElementById('input-longitud').value = parcela.longitud || '';
+                
+                const inputHectareas = document.getElementById('input-hectareas');
+                if (inputHectareas) {
+                    inputHectareas.value = parcela.hectareas || '';
+                }
                 
                 console.log("Datos cargados exitosamente en el formulario:", parcela);
             } else {
@@ -27,75 +35,73 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error("Error al obtener los datos de la parcela:", error);
         }
     }
-});
 
-// =================================================================
-// 2. INTERCEPTAR EL BOTÓN "GUARDAR" (¡ESTO ES LO QUE FALTABA!)
-// =================================================================
-const formularioEditar = document.getElementById('form-editar-parcela');
-
-if (formularioEditar) {
-    formularioEditar.addEventListener('submit', async (e) => {
-        // ¡ESTO EVITA QUE LA PÁGINA SE RECARGUE Y SE BORREN LOS CAMPOS!
-        e.preventDefault(); 
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const idParcela = urlParams.get('id');
-
-        if (!idParcela) {
-            console.error("Falta el ID en la URL.");
-            return;
-        }
-
-        // Capturamos los datos actuales de los inputs
-        const datosActualizados = {
-            nombre: document.getElementById('input-nombre').value,
-            latitud: parseFloat(document.getElementById('input-latitud').value),
-            longitud: parseFloat(document.getElementById('input-longitud').value)
-        };
-
-        // Llamamos a la función que se comunica con el backend
-        await updateParcela(idParcela, datosActualizados);
-    });
-}
-
-// =================================================================
-// 3. ENVIAR LOS DATOS AL BACKEND (Tu función intacta)
-// =================================================================
-async function updateParcela(id, datosActualizados) {
-    console.log("Datos que se están enviando al backend:", datosActualizados);
-
-    try {
-        const response = await fetch(`http://localhost:8000/api/parcelas/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(datosActualizados)
-        });
-
-        if (response.ok) {
-            console.log("Parcela actualizada con éxito");
-            alert("Parcela actualizada con éxito!");
-            window.location.href = 'parcelas.html'; 
-        } else {
-            const errorData = await response.json().catch(() => ({})); 
-            console.error("El backend rechazó los datos (400). Razón:", errorData);
-
-            const errorElement = document.getElementById("mensaje-error");
-            if (errorElement) {
-                errorElement.style.display = 'block';
-                errorElement.textContent = "Error del servidor: " + (errorData.message || response.statusText);
+    // 3. Listener para actualizar dinámicamente el nombre de la imagen elegida
+    if (inputImagen && nombreArchivo) {
+        inputImagen.addEventListener("change", (e) => {
+            if (e.target.files && e.target.files.length > 0) {
+                nombreArchivo.textContent = e.target.files[0].name;
+                nombreArchivo.style.color = "#000000";
+                nombreArchivo.style.fontWeight = "600";
             } else {
-                alert("Error al actualizar la parcela. Revisa la consola.");
+                nombreArchivo.textContent = "Sin archivo seleccionado";
+                nombreArchivo.style.color = "#4a4a4a";
+                nombreArchivo.style.fontWeight = "normal";
             }
-        }
-    } catch (err) {
-        console.error("Hubo un problema de conexión:", err);
-        const errorElement = document.getElementById("mensaje-error");
-        if (errorElement) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = "Error de conexión con el servidor.";
-        }
+        });
     }
-}
+
+    // 4. A QUÍ VA EL ENVÍO DEL FORMULARIO (PETICIÓN PUT)
+    if (formEditar) {
+        formEditar.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Evita recargar la página
+
+            if (!idParcela) {
+                alert("Error: No se encontró el ID de la parcela.");
+                return;
+            }
+
+            if (mensajeError) mensajeError.style.display = 'none';
+
+            // Usamos FormData para enviar texto + archivo adjunto
+            const formData = new FormData();
+            formData.append('nombre', document.getElementById('input-nombre').value);
+            formData.append('latitud', document.getElementById('input-latitud').value);
+            formData.append('longitud', document.getElementById('input-longitud').value);
+            
+            const hectareasVal = document.getElementById('input-hectareas').value;
+            if (hectareasVal) {
+                formData.append('hectareas', hectareasVal);
+            }
+
+            // Solo agregamos la imagen si seleccionó una nueva
+            if (inputImagen && inputImagen.files.length > 0) {
+                formData.append('imagen', inputImagen.files[0]);
+            }
+
+            try {
+                const respuesta = await fetch(`http://localhost:8000/api/parcelas/${idParcela}`, {
+                    method: 'PUT',
+                    body: formData // Fetch asigna automáticamente el encabezado multipart/form-data
+                });
+
+                if (respuesta.ok) {
+                    // Redirigimos al usuario a la lista principal
+                    window.location.href = 'parcelas.html';
+                } else {
+                    const errorData = await respuesta.json().catch(() => ({}));
+                    if (mensajeError) {
+                        mensajeError.textContent = errorData.error || 'Error al actualizar la parcela.';
+                        mensajeError.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error("Error en la petición PUT:", error);
+                if (mensajeError) {
+                    mensajeError.textContent = 'Error de conexión con el servidor.';
+                    mensajeError.style.display = 'block';
+                }
+            }
+        });
+    }
+});

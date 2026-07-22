@@ -1,7 +1,8 @@
-INSERT INTO parcelas (nombre, latitud, longitud) VALUES
-  ('Lote Norte', -34.603722, -58.381592),
-  ('Lote Sur',   -33.118333, -64.349722),
-  ('Campo Este', -32.412300, -63.240000);
+INSERT INTO parcelas (nombre, latitud, longitud, hectareas) VALUES
+  ('Lote Norte', -34.603722, -58.381592, 100.0),
+  ('Lote Sur',   -33.118333, -64.349722, 150.0),
+  ('Campo Este', -32.412300, -63.240000, 200.0);
+
 
 -- cultivos
 INSERT INTO cultivos (nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios) VALUES

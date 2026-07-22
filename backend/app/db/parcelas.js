@@ -4,7 +4,7 @@ import {db} from "./pool.js";
 export async function getAllParcelas() {
 
     const res = await db.query(
-        "SELECT id,nombre,latitud,longitud FROM parcelas"
+        "SELECT id,nombre,latitud,longitud,hectareas,imagen FROM parcelas"
     );
     return res.rows;
 }
@@ -12,17 +12,17 @@ export async function getAllParcelas() {
 export async function getParcela(id) {
 
     const res = await db.query(
-        "SELECT id, nombre, latitud, longitud FROM parcelas WHERE id = $1",
+        "SELECT id, nombre, latitud, longitud, hectareas, imagen FROM parcelas WHERE id = $1",
         [id]
     );
     return res.rows[0];
 }
 
-export async function updateParcela(id, nombre, latitud, longitud) {
+export async function updateParcela(id, nombre, latitud, longitud, hectareas, imagen) {
   
     const res = await db.query(
 
-        "UPDATE parcelas SET nombre=$1, latitud=$2, longitud=$3 WHERE id = $4", [nombre, latitud, longitud, id]
+        "UPDATE parcelas SET nombre=$1, latitud=$2, longitud=$3, hectareas=$4, imagen=$5 WHERE id = $6", [nombre, latitud, longitud, hectareas, imagen, id]
     );
     return res.rowCount == 1;
 }
@@ -37,11 +37,11 @@ export async function deleteParcela(id) {
         "DELETE FROM parcelas WHERE id = $1",[id]);
     return res.rowCount == 1;
 }
-export async function createParcela(nombre, latitud, longitud){
+export async function createParcela(nombre, latitud, longitud , hectareas, imagen) {
 
     const res = await db.query(
-        "INSERT INTO parcelas(nombre, latitud, longitud) VALUES ($1, $2, $3)",
-        [nombre, latitud, longitud]
+        "INSERT INTO parcelas(nombre, latitud, longitud, hectareas, imagen) VALUES ($1, $2, $3, $4, $5)",
+        [nombre, latitud, longitud, hectareas, imagen]
     );
     return res.rowCount == 1;
 }
