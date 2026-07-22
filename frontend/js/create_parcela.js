@@ -68,3 +68,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+document.addEventListener("DOMContentLoaded", async () => {
+    // --- 1. INICIALIZACIÓN DEL MAPA ---
+    // Centramos por defecto en el centro de Argentina (aprox) con un zoom nivel 5
+    const mapa = L.map('mapa-parcela').setView([-34.0, -64.0], 5);
+    
+    // Cargamos el diseño del mapa (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(mapa);
+
+    let marcador = null; // Variable para guardar el pin
+
+    // Función para actualizar el pin en el mapa
+    function actualizarMarcador(lat, lng) {
+        if (marcador) {
+            marcador.setLatLng([lat, lng]); // Mueve el pin si ya existe
+        } else {
+            marcador = L.marker([lat, lng]).addTo(mapa); // Crea el pin si no existe
+        }
+        mapa.setView([lat, lng], 13); // Acerca el zoom a la ubicación
+    }
+
+    // --- 2. EVENTO: CLIC EN EL MAPA ---
+    mapa.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(6); // Extraemos latitud con 6 decimales
+        const lng = e.latlng.lng.toFixed(6); // Extraemos longitud con 6 decimales
+
+        // Escribimos los valores en tus inputs
+        document.getElementById('input-latitud').value = lat;
+        document.getElementById('input-longitud').value = lng;
+
+        // Ponemos el pin donde el usuario hizo clic
+        actualizarMarcador(lat, lng);
+    });
+});
