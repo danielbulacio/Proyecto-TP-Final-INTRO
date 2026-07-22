@@ -1,0 +1,57 @@
+.tag-parcelas {
+    background: linear-gradient(135deg, #9a640d, #92400e) !important;
+    color: #fffbeb !important;
+    font-weight: 600;
+}
+
+/* Forzamos a que el título dentro de esta tarjeta también cambie de color */
+.tag-parcelas .title, 
+.tag-parcelas .content strong {
+    color: #fffbeb !important;
+}
+dialog#modal-confirmacion {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto; /* Lo centra perfectamente en la pantalla */
+}
+
+/* Estilos para el fondo que cubre la pantalla cuando se abre */
+dialog#modal-confirmacion::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px); /* Difumina un poco el fondo */
+}
+.modal-redondo {
+  border-radius: 25px;
+  overflow: hidden; /* Asegura que el contenido no se salga de las esquinas */
+}
+/* 1. Forzar el texto blanco en el botón de guardar */
+button[type="submit"] {
+    color: #ffffff !important;
+    background-color: #421d07 !important; /* Mantiene el fondo oscuro que ya tienes */
+    border:solid #421d07 !important; /* Elimina cualquier borde predeterminado */; /* Elimina cualquier sombra predeterminada */
+}
+
+/* 2. OPCIONAL PERO RECOMENDADO: Texto blanco al escribir en los inputs oscuros */
+.input {
+    background-color: #ffff !important; 
+    color: #421d07 !important; /* Hace que lo que el usuario escriba sea blanco */
+}
+
+/* Cambia el color del texto falso (placeholder) para que sea un gris clarito y se lea bien */
+.input::placeholder {
+
+    color: #7f858e !important; 
+}
+.crop-hero {
+background: linear-gradient(135deg, #a54910, #612807);
+color: white;
+border-radius: 12px;
+margin-bottom: 2rem;
+padding: 2.5rem;
+}
+.crop-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}

@@ -41,6 +41,18 @@ endpointsCultivos.put("/:id", async (req, res) => {
         return;
     }
 
+    // Validamos ÚNICAMENTE los campos estrictamente requeridos
+    if (!nombre_cultivo || !parcela_id) {
+        res.status(400).json({ message: "Faltan campos requeridos: nombre_cultivo y parcela_id son obligatorios" });
+        return;
+    }
+
+    // Validamos parcela_id (ya que ahora sabemos con certeza que existe)
+    if (isNaN(parcela_id) || parcela_id <= 0) {
+        res.status(400).json({ message: "El campo parcela_id debe ser un número positivo válido" });
+        return;
+    }
+
     // Chequear que el cultivo existe antes de intentar actualizarlo
     const cultivo = await getOneCultivo(id);
 
@@ -87,19 +99,19 @@ endpointsCultivos.post("/", async (req, res) => {
     
     const { nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios } = req.body;
 
-    // 1. Validar campos requeridos
+
     if (!nombre_cultivo || !parcela_id) {
         res.status(400).json({ message: "Faltan campos requeridos: nombre_cultivo y parcela_id son obligatorios" });
         return;
     }
 
-    // 2. Validar que parcela_id sea un número positivo
+
     if (isNaN(parcela_id) || parcela_id <= 0) {
         res.status(400).json({ message: "El campo parcela_id debe ser un número positivo válido" });
         return;
     }
 
-    // 3. Validaciones condicionales:si se envían los campos opcionales
+
     // (Validamos que temperatura_optima, dias_de_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
     if (temperatura_optima !== undefined) {
         if (isNaN(temperatura_optima) || temperatura_optima <= 0) {

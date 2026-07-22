@@ -11,6 +11,21 @@
     />
     <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
     <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/parcela.css">
+    <link rel="stylesheet" href="./css/var-globales.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,-25&icon_names=agriculture"
+    />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   </head>
   <body>
@@ -43,10 +58,10 @@
               <p class="control">
                 <a
                   class="button is-primary"
-                  href="https://github.com/jgthms/bulma/releases/download/1.0.4/bulma-1.0.4.zip"
+                  href="ayuda.html"
                 >
 
-                  <span>Boton</span>
+                  <span>Ayuda</span>
                 </a>
               </p>
             </div>
@@ -55,32 +70,30 @@
       </div>
     </nav><!-- FIN DEL NAVBAR -->
 
-
-   <section class="section">
-  <div class="container">
-    
-    <!-- BARRA DE ACCIONES SUPERIOR -->
-    <nav class="level is-mobile mb-6">
-      <!-- Lado Izquierdo: Título -->
-      <div class="level-left">
-        <div class="level-item">
-          <p class="title is-3">Parcelas</p>
-        </div>
-      </div>
-      
-      <!-- Lado Derecho: Botones -->
-      <div class="level-right">
-        <div class="level-item">
-          <div class="buttons">
-            <!-- Botón Agregar Parcela -->
-            <button class ="button is-info is-small" id="agregar-parcela-btn">
-                Agregar Parcela
-            </button>
+  <main class="section">
+    <div class="container">
+      <div class="crop-hero shadow-sm">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h1 class="title is-3 has-text-white mb-2">Monitoreo de Parcelas</h1>
+              <h2 class="subtitle is-6 has-text-white-ter mb-0">parcelas activas actualmente</h2>
+            </div>
+            <!-- Botón de redirección a la página de administración CRUD ubicado dentro de la página -->
+            <div class="column is-narrow">
+              <div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+                  <button id="btn-agregar-parcela" class="button is-white is-outlined is-rounded is-medium">
+                    <span class="icon mr-1"><i class="material-icons">settings</i></span>
+                    Agregar Parcela
+                  </button>
+                  
+              </div>
+            </div>
           </div>
-        </div>
       </div>
-    </nav>  
 
+
+   
+  
     <div id="error" class="has-text-danger mb-4"></div>
 
     <!-- GRILLA DE COLUMNAS (Acá es donde JS va a meter las tarjetas luego) -->
@@ -111,8 +124,6 @@
               <!-- Agrupamos tus botones para que se acomoden bien si la pantalla es chica -->
               <div class="buttons mt-4">
                 <button class="button is-info is-small">Ver Detalle</button>
-                <button class="button is-danger is-small">Eliminar</button>
-                <button class="button is-warning is-small">Editar</button>
                 <button class="button is-success is-small">Agregar Tarea</button>
               </div>
             </div>
@@ -124,14 +135,14 @@
     </div> <!-- FIN DE LA GRILLA -->
 
   </div> <!-- FIN DEL CONTAINER -->
-</section>
-  <dialog id="modal-confirmacion" class="modal-personalizado">
-  <p id="texto-confirmacion">¿Estás seguro?</p>
-  <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
-    <button id="btn-cancelar-modal" class="button">Cancelar</button>
-    <button id="btn-aceptar-modal" class="button is-danger">Eliminar</button>
-  </div>
-</dialog>
+</main>
+    <dialog id="modal-confirmacion" class="modal-personalizado">
+          <p id="texto-confirmacion">¿Estás seguro?</p>
+      <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+          <button id="btn-cancelar-modal" class="button is-light">Cancelar</button>
+          <button id="btn-aceptar-modal" class="button is-danger">Eliminar</button>
+      </div>
+    </dialog>
     <script src="js/parcela.js"></script>
   </body>
 </html>

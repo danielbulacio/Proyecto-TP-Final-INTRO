@@ -1,5 +1,5 @@
 async function getAllParcelas(){
-    const url = "http://localhost:8000/api/parcelas";
+    const url = "http://localhost:8000/api/v1/parcelas";
     const response = await fetch(url);
     const parcelas = await response.json();
     console.log(parcelas)
@@ -15,7 +15,7 @@ parcelas.forEach(parcela => {
 
     // 2. Creamos la Tarjeta Principal
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card tag-parcelas"; 
 
     // --- SECCIÓN DE LA IMAGEN ---
     const cardImage = document.createElement("div");
@@ -57,42 +57,98 @@ parcelas.forEach(parcela => {
     contentText.appendChild(coordenadas);
 
     // --- GRUPO DE BOTONES (ACCIONES CRUD) ---
-    
+    const footerBotones = document.createElement("div");
+    footerBotones.className = "is-flex is-justify-content-space-between is-align-items-center mt-4";
 
-   // --- GRUPO DE BOTONES (ACCIONES CRUD) ---
-    const grupoBotones = document.createElement("div");
-    grupoBotones.className = "buttons mt-4";
+    // 2. Contenedor izquierdo para los botones principales
+    const divBotonesPrincipales = document.createElement("div");
+    divBotonesPrincipales.className = "buttons mb-0"; // mb-0 para que no agregue margen extra abajo
 
-    // Botón Ver Detalle
+    // Botón Ver Detalle (Igual que antes)
     const botonVer = document.createElement("button");
-    botonVer.className = "button is-info is-small";
+    botonVer.className = "button is-white is-outlined";
     botonVer.textContent = "Ver Detalle";
     botonVer.addEventListener('click', () => {
         verDetalle(parcela.id);
     });
 
-    // Botón Eliminar con tu Modal Personalizado
-    const botonEliminar = document.createElement("button");
-    botonEliminar.className = "button is-danger is-small";
-    botonEliminar.textContent = "Eliminar";
+    // Botón Agregar Tarea (Igual que antes)
+    const botonTarea = document.createElement("button");
+    botonTarea.className = "button is-white is-outlined";
+    botonTarea.textContent = "Agregar Tarea";
+    botonTarea.addEventListener('click', () => {
+        agregarTareaA(parcela.id);
+    });
+
+    divBotonesPrincipales.appendChild(botonVer);
+    divBotonesPrincipales.appendChild(botonTarea);
+
+    // 3. Contenedor derecho: Dropdown de Opciones (Lápiz)
+    const dropdown = document.createElement("div");
+    // "is-right" asegura que el menú se abra hacia la izquierda y no se desborde de la tarjeta
+    dropdown.className = "dropdown is-right is-up"; // is-up si quieres que abra hacia arriba, quítalo si prefieres hacia abajo
+
+    // Disparador del dropdown (El botón con el lápiz)
+    const dropdownTrigger = document.createElement("div");
+    dropdownTrigger.className = "dropdown-trigger";
     
-    botonEliminar.addEventListener('click', () => {
-        // 1. Buscamos los elementos del modal en el HTML
+    const botonOpciones = document.createElement("button");
+    botonOpciones.className = "button is-white is-outlined";
+    botonOpciones.setAttribute("aria-haspopup", "true");
+    botonOpciones.setAttribute("aria-controls", "dropdown-menu");
+    // Usamos un emoji de lápiz, si usas FontAwesome puedes cambiarlo por <i class="fas fa-pencil-alt"></i>
+    botonOpciones.innerHTML = `<span class="icon"><i class="material-icons">edit</i></span>`; 
+    
+    // Funcionalidad para abrir/cerrar el menú desplegable
+    botonOpciones.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que otros clics cierren esto de inmediato
+        dropdown.classList.toggle('is-active');
+    });
+    
+    dropdownTrigger.appendChild(botonOpciones);
+
+    // Contenido del dropdown
+    const dropdownMenu = document.createElement("div");
+    dropdownMenu.className = "dropdown-menu";
+    dropdownMenu.id = "dropdown-menu";
+    dropdownMenu.setAttribute("role", "menu");
+
+    const dropdownContent = document.createElement("div");
+    dropdownContent.className = "dropdown-content";
+
+    // Opción: Editar
+    const itemEditar = document.createElement("a");
+    itemEditar.className = "dropdown-item has-text-warning has-text-weight-bold";
+    itemEditar.textContent = "Editar";
+    itemEditar.addEventListener('click', () => {
+        dropdown.classList.remove('is-active'); // Cerramos el menú
+        window.location.href = `update_parcela.html?id=${parcela.id}`; 
+        console.log("Se hizo clic en Editar Parcela");
+        abrirEditar(parcela.id);
+    });
+
+    // Separador visual
+    const divider = document.createElement("hr");
+    divider.className = "dropdown-divider";
+
+    // Opción: Eliminar
+    const itemEliminar = document.createElement("a");
+    itemEliminar.className = "dropdown-item has-text-danger has-text-weight-bold";
+    itemEliminar.textContent = "Eliminar";
+    itemEliminar.addEventListener('click', () => {
+        dropdown.classList.remove('is-active'); // Cerramos el menú
+        
         const modal = document.getElementById('modal-confirmacion');
         const textoModal = document.getElementById('texto-confirmacion');
         const btnAceptarModal = document.getElementById('btn-aceptar-modal');
         const btnCancelarModal = document.getElementById('btn-cancelar-modal');
 
-        // 2. Seteamos el texto dinámico
         textoModal.textContent = `¿Estás seguro de que deseas eliminar la parcela "${parcela.nombre}"?`;
-        
-        // 3. Abrimos el modal (aplica el difuminado)
         modal.showModal();
 
-        // 4. IMPORTANTE: Usamos un onclick directo para LIMPIAR cualquier ID anterior de la memoria
         btnAceptarModal.onclick = async () => {
-            modal.close(); // Cerramos el modal primero
-            await deleteParcela(parcela.id); // Llama a tu función de abajo pasándole el ID limpio
+            modal.close();
+            await deleteParcela(parcela.id);
         };
 
         btnCancelarModal.onclick = () => {
@@ -100,33 +156,25 @@ parcelas.forEach(parcela => {
         };
     });
 
-    // Botón Editar
-    const botonEditar = document.createElement("button");
-    botonEditar.className = "button is-warning is-small";
-    botonEditar.textContent = "Editar";
-    botonEditar.addEventListener('click', () => {
-        abrirEditar(parcela.id);
-    });
-
-    // Botón Agregar Tarea
-    const botonTarea = document.createElement("button");
-    botonTarea.className = "button is-success is-small";
-    botonTarea.textContent = "Agregar Tarea";
-    botonTarea.addEventListener('click', () => {
-        agregarTareaA(parcela.id);
-    });
-
-
-    // ENSAMBLAJE DE LA ESTRUCTURA 
-    grupoBotones.appendChild(botonVer);
-    grupoBotones.appendChild(botonEliminar);
-    grupoBotones.appendChild(botonEditar);
-    grupoBotones.appendChild(botonTarea);
+    // Ensamblamos el dropdown
+    dropdownContent.appendChild(itemEditar);
+    dropdownContent.appendChild(divider);
+    dropdownContent.appendChild(itemEliminar);
     
-    contentText.appendChild(grupoBotones);
+    dropdownMenu.appendChild(dropdownContent);
+    dropdown.appendChild(dropdownTrigger);
+    dropdown.appendChild(dropdownMenu);
+
+    // 4. ENSAMBLAJE FINAL
+    footerBotones.appendChild(divBotonesPrincipales);
+    footerBotones.appendChild(dropdown);
+    
+    // Lo inyectamos en el contenido de la tarjeta
+    contentText.appendChild(footerBotones);
 
     cardContent.appendChild(title);
     cardContent.appendChild(contentText);
+    // ... el resto sigue igual (card.appendChild...)
 
     card.appendChild(cardImage);
     card.appendChild(cardContent);
@@ -140,7 +188,7 @@ parcelas.forEach(parcela => {
 getAllParcelas();
 
 async function deleteParcela(id){
-    const response = await fetch(`http://localhost:8000/api/parcelas/${id}`, {
+    const response = await fetch(`http://localhost:8000/api/v1/parcelas/${id}`, {
         method: 'DELETE'
     });
 
@@ -150,4 +198,37 @@ async function deleteParcela(id){
         const error = document.getElementById("error");
         error.textContent = response.statusText;
     }
-} // Llamada de prueba para eliminar la parcela con ID 1
+} 
+
+const btnAgregar = document.getElementById('btn-agregar-parcela');
+
+if (btnAgregar) {
+    btnAgregar.addEventListener('click', () => {
+        window.location.href = 'create_parcela.html'; 
+        console.log("Se hizo clic en Agregar Parcela");
+    });
+}
+async function createParcela(datosNuevaParcela) {
+    try {
+        const response = await fetch("http://localhost:8000/api/parcelas", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // Convertimos el objeto de datos a un string JSON
+            body: JSON.stringify(datosNuevaParcela)
+        });
+
+        if (response.status === 201 || response.status === 200) {
+            console.log("Parcela creada con éxito");
+            // Volvemos a cargar las parcelas para que aparezca la nueva
+            await getAllParcelas();
+            
+        } else {
+            const error = document.getElementById("error");
+            error.textContent = "Error al crear la parcela: " + response.statusText;
+        }
+    } catch (err) {
+        console.error("Hubo un problema con la petición:", err);
+    }
+}
