@@ -11,10 +11,6 @@ import {
 
 // Hago global el endpointparcela
 export const endpointsParcelas = Router();
-
-// =======================================================
-// 1. CONFIGURACIÓN DE MULTER (Debe ir antes de las rutas)
-// =======================================================
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/') // La carpeta que creamos antes
