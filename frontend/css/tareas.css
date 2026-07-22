@@ -1,3 +1,11 @@
+.crop-hero {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  padding: 2.5rem;
+}
+
 :root {
   --verde-cultivo: #10b981;
   --verde-oscuro: #1f4d36;
@@ -18,7 +26,6 @@
  
 body {
   font-family: "Inter", sans-serif;
-  background-color: var(--fondo);
   color: var(--texto);
 }
  
@@ -49,12 +56,11 @@ textarea:focus-visible {
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition: 0.4s;
 }
  
 .tarjeta-tarea:hover {
-  box-shadow: 0 6px 18px rgba(31, 77, 54, 0.12);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
  
 .tarjeta-tarea.esta-vencida {
@@ -145,23 +151,19 @@ textarea:focus-visible {
   font-size: 0.8rem;
 }
  
-/* Estado vacio */
 .estado-vacio {
   text-align: center;
   padding: 3.5rem 1rem;
   color: var(--gris-suave);
 }
  
-/* Botones primarios con el verde de marca */
+.button-tarea{
+  background-color: rgb(254, 254, 254) !important;
+}
 .button.is-primary {
   background-color: var(--verde-cultivo);
 }
  
-.button.is-primary:hover {
-  background-color: var(--verde-oscuro);
-}
-
-/* Botón azul reutilizable para acciones principales */
 .button.btn-primario-azul {
   background-color: var(--azul) !important;
   color: #ffffff !important;
