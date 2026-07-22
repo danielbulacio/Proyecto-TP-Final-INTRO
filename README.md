@@ -7,7 +7,7 @@
 </p>
 
 <h1 align="center">AgroMonitor</h1>
-<h4 align="center">El EQUIPO 1</h4>
+<h2 align="center">El EQUIPO 1</h4>
 
 <p align="center">
     <strong>Autores</strong><br>
