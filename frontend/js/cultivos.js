@@ -25,9 +25,7 @@ async function getParcelasMap() {
   }
 }
 
-/**
- * Trae todos los cultivos registrados en la base de datos de Postgres y renderiza las tarjetas correspondientes.
- */
+// Trae todos los cultivos registrados en la base de datos de Postgres y renderiza las tarjetas correspondientes.
 async function getAllCultivos() {
   const grid = document.getElementById("grid-cultivos");
   const errorDiv = document.getElementById("error");
@@ -156,9 +154,7 @@ async function getAllCultivos() {
   }
 }
 
-/**
- * Alterna el menú responsive de Bulma (Hamburguesa) en entornos de pantallas reducidas o móviles.
- */
+// Alterna el menú responsive de Bulma (Hamburguesa) en entornos de pantallas reducidas o móviles.
 function toggleNavbar() {
   const burger = document.querySelector(".navbar-burger");
   const menu = document.getElementById("navbarMain");

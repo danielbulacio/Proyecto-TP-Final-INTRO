@@ -86,7 +86,7 @@ if (burger && menu) {
 }
 });
 
-// Función unificada de envío de correo clásica (mailto)
+// Función unificada de envío de correo (mailto)
 function sendSupportMail() {
 const nombre = document.getElementById('supportName').value.trim();
 const emailUsuario = document.getElementById('supportEmail').value.trim();
@@ -94,7 +94,7 @@ const subjectSelect = document.getElementById('supportSubject').value;
 const msg = document.getElementById('supportMsg').value.trim();
 const toast = document.getElementById('toastNotification');
 
-// Validaciones básicas de campos vacíos
+// Validaciones de campos vacíos
 if (nombre === '' || emailUsuario === '' || msg === '') {
     toast.className = "notification is-danger mt-3";
     toast.querySelector('span').innerText = "Por favor, completa todos los campos antes de continuar.";
@@ -102,7 +102,7 @@ if (nombre === '' || emailUsuario === '' || msg === '') {
     return;
 }
 
-// Validación simple de estructura de correo
+// Validación de estructura de correo
 if (!emailUsuario.includes('@') || emailUsuario.length < 5) {
     toast.className = "notification is-danger mt-3";
     toast.querySelector('span').innerText = "Por favor, introduce un correo electrónico válido.";
@@ -128,7 +128,7 @@ const cuerpo = encodeURIComponent(
     `--- Enviado desde el panel de control agrícola.`
 );
 
-// Abrir el enlace mailto del cliente local del dispositivo tras un breve lapso
+// Abrir el enlace mailto del cliente local del dispositivo tras un segundo
 setTimeout(() => {
     window.location.href = `mailto:${correoSoporte}?subject=${asunto}&body=${cuerpo}`;
 }, 1000);
