@@ -32,3 +32,28 @@ html {
 .is-secondary {
   background-color: rgb(161, 144, 144);
 }
+
+/* 1. Transiciones globales para suavizar el efecto hover */
+a {
+transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* 2. Hover para los elementos del Navbar */
+.navbar-item {
+transition: color 0.2s ease, background-color 0.2s ease;
+}
+.navbar-item:hover {
+color: #10b981 !important;
+background-color: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* 5. Hover para el botón de ayuda */
+.button.is-primary {
+background-color: #10b981;
+transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.button.is-primary:hover {
+background-color: #059669 !important;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}

@@ -112,11 +112,11 @@ if (!emailUsuario.includes('@') || emailUsuario.length < 5) {
 
 // Simular envío de forma visual avisando que se abrirá el correo
 toast.className = "notification is-success mt-3";
-toast.querySelector('span').innerText = `¡Abriendo tu cliente de correo para enviar a equipo.uno.aura@gmail.com!`;
+toast.querySelector('span').innerText = `¡Abriendo tu cliente de correo para enviar a soporte.equipoagro@gmail.com!`;
 toast.style.display = 'block';
 
 // Configuración de los parámetros para el mailto
-const correoSoporte = "equipo.uno.aura@gmail.com"; 
+const correoSoporte = "soporte.equipoagro@gmail.com"; 
 const asunto = encodeURIComponent(`Soporte AgroTech - [${subjectSelect}] de ${nombre}`);
 const cuerpo = encodeURIComponent(
     `Hola equipo de AgroTech,\n\n` +
