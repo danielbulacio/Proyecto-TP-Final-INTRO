@@ -55,10 +55,6 @@
       </div>
     </nav><!-- FIN DEL NAVBAR -->
     
-    
-    <!--
-    SEGUIR ACA
-    -->
 
     <!-- ENCABEZADO DE LA SECCION -->
     <section class="section pb-3">
@@ -71,7 +67,7 @@
             </div>
           </div>
           <div class="level-right">
-            <button id="btn-nueva-tarea" class="button is-primary">
+            <button id="btn-nueva-tarea" class="button btn-primario-azul">
               <span class="icon"><strong>+</strong></span>
               <span>Nueva tarea</span>
             </button>
@@ -186,33 +182,6 @@
       </div>
     </div>
 
-    <!-- MODAL: REASIGNAR A OTRA PARCELA -->
-    <div id="reasignar" class="modal">
-      <div class="modal-background" data-cerrar="reasignar"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Reasignar tarea a otra parcela</p>
-          <button class="delete" aria-label="close" data-cerrar="reasignar"></button>
-        </header>
-        <section class="modal-card-body">
-          <input type="hidden" id="reasignar-tarea-id" />
-          <div class="field">
-            <label class="label" for="input-nueva-parcela">Nueva parcela</label>
-            <div class="control">
-              <div class="select is-fullwidth">
-                <select id="input-nueva-parcela"></select>
-              </div>
-            </div>
-          </div>
-          <div id="errores-reasignar" class="notification is-danger is-light is-hidden"></div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-primary" id="confirmar-reasignar">Reasignar</button>
-          <button class="button" data-cerrar="reasignar">Cancelar</button>
-        </footer>
-      </div>
-    </div>
-
     <!-- MODAL: HISTORIAL DE ACCIONES -->
     <div id="modal-historial" class="modal">
       <div class="modal-background" data-cerrar="modal-historial"></div>
@@ -239,12 +208,12 @@
           <button class="delete" aria-label="close" data-cerrar="modal-confirmar-eliminar"></button>
         </header>
         <section class="modal-card-body">
-          <p>Esta acción no se puede deshacer. ¿Confirmás que querés eliminar esta tarea?</p>
+          <p class="has-text-white">Esta acción no se puede deshacer. ¿Confirmás que querés eliminar esta tarea?</p>
           <input type="hidden" id="eliminar-tarea-id" />
         </section>
         <footer class="modal-card-foot">
           <button class="button is-danger" id="confirmar-eliminar">Sí, eliminar</button>
-          <button class="button" data-cerrar="modal-confirmar-eliminar">Cancelar</button>
+          <button class="button has-text-white" data-cerrar="modal-confirmar-eliminar">Cancelar</button>
         </footer>
       </div>
     </div>

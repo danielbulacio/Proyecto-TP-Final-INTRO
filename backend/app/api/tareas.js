@@ -41,7 +41,8 @@ endpointsTareas.get("/:id", async (req, res) => {
 
 endpointsTareas.put("/:id", async (req, res) => {
     let id = req.params.id;
-    const { tarea, prioridad, fecha_limite } = req.body;
+    // 1. Extraemos parcela_id también
+    const { parcela_id, tarea, prioridad, fecha_limite } = req.body; 
 
     if (isNaN(id)) {
         res.status(400).json({ message: "El ID debe ser un número válido" });
@@ -49,10 +50,22 @@ endpointsTareas.put("/:id", async (req, res) => {
     }
 
     const tareaExistente = await getOneTarea(id);
-
     if (!tareaExistente) {
         res.status(404).json({ message: "Tarea no encontrada" });
         return;
+    }
+
+    // 2. Si envían parcela_id, validamos que exista[cite: 3]
+    if (parcela_id !== undefined) {
+        if (isNaN(parcela_id) || parcela_id <= 0) {
+            res.status(400).json({ message: "La parcela debe ser un número positivo válido" });
+            return;
+        }
+        const parcela = await getParcela(parcela_id);
+        if (!parcela) {
+            res.status(404).json({ message: "La parcela indicada no existe" });
+            return;
+        }
     }
 
     if (tarea !== undefined && tarea.trim().length === 0) {
@@ -70,8 +83,8 @@ endpointsTareas.put("/:id", async (req, res) => {
         return;
     }
 
-    // Intentamos actualizar la tarea en la base de datos
-    const updated = await updateTarea(id, tarea, prioridad, fecha_limite);
+    // 3. Pasamos parcela_id a updateTarea[cite: 3]
+    const updated = await updateTarea(id, parcela_id, tarea, prioridad, fecha_limite);
 
     if (!updated) {
         res.status(500).json({ message: "Error al actualizar la tarea" });
