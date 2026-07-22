@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const respuesta = await fetch('http://localhost:8000/api/parcelas', {
+                const respuesta = await fetch('http://localhost:8000/api/v1/parcelas', {
                     method: 'POST',
                     body: formData
                 });

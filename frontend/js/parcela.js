@@ -72,7 +72,7 @@ parcelas.forEach(parcela => {
     botonVer.className = "button is-white is-outlined";
     botonVer.textContent = "Ver Detalle";
     botonVer.addEventListener('click', () => {
-        verDetalle(parcela.id);
+        window.location.href = `parcela/detalle.html?id=${parcela.id}`;
     });
 
     // Botón Agregar Tarea (Igual que antes)
@@ -80,7 +80,7 @@ parcelas.forEach(parcela => {
     botonTarea.className = "button is-white is-outlined";
     botonTarea.textContent = "Agregar Tarea";
     botonTarea.addEventListener('click', () => {
-        agregarTareaA(parcela.id);
+        window.location.href = `tareas.html?id=${parcela.id}`;
     });
 
     divBotonesPrincipales.appendChild(botonVer);

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 2. Cargamos los datos actuales de la parcela en los inputs
     if (idParcela) {
         try {
-            const respuesta = await fetch(`http://localhost:8000/api/parcelas/${idParcela}`);
+            const respuesta = await fetch(`http://localhost:8000/api/v1/parcelas/${idParcela}`);
             
             if (respuesta.ok) {
                 const parcela = await respuesta.json();
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             try {
-                const respuesta = await fetch(`http://localhost:8000/api/parcelas/${idParcela}`, {
+                const respuesta = await fetch(`http://localhost:8000/api/v1/parcelas/${idParcela}`, {
                     method: 'PUT',
                     body: formData // Fetch asigna automáticamente el encabezado multipart/form-data
                 });
