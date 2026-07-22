@@ -13,6 +13,7 @@ const ETIQUETAS_ESTADO = {
 
 //  Utilidades 
 
+// Escapa texto para prevenir XSS
 function escapeHtml(texto) {
   if (texto === null || texto === undefined) return "";
   const div = document.createElement("div");
@@ -20,11 +21,13 @@ function escapeHtml(texto) {
   return div.innerHTML;
 }
 
+// Formatea fecha ISO a YYYY-MM-DD
 function formatFecha(fechaIso) {
   if (!fechaIso) return "";
   return String(fechaIso).slice(0, 10);
 }
 
+// Determina si una tarea está vencida según su fecha límite y estado
 function esVencida(tarea) {
   if (["completada", "cancelada"].includes(tarea.estado)) return false;
   if (!tarea.fecha_limite) return false;
@@ -37,6 +40,8 @@ function esVencida(tarea) {
   return fechaLimiteStr < hoyStr;
 }
 
+
+//  Notificaciones y modales
 function mostrarNotificacion(mensaje, tipo = "success") {
   const el = document.getElementById("notificacion-global");
   if (!el) return;
@@ -61,14 +66,17 @@ function cerrarModal(id) {
 
 async function cargarParcelas() {
   try {
+    // Fetch seguro con manejo de errores
     const respuesta = await fetch(`${API_BASE_URL}/parcelas`);
     if (!respuesta.ok) throw new Error("No se pudieron obtener las parcelas");
     
+    // Parseamos la respuesta JSON y llenamos el mapa de parcelas
     const parcelas = await respuesta.json();
 
     mapaParcelas.clear();
     parcelas.forEach((p) => mapaParcelas.set(p.id, p.nombre));
 
+    // Llenamos los selects de parcela en el formulario de tareas
     const opciones = `
       <option value="" disabled selected>-- Seleccione una parcela --</option>
       ${parcelas.map((p) => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.nombre)}</option>`).join("")}
@@ -105,6 +113,7 @@ async function cargarTareas() {
       return cumpleEstado && cumplePrioridad;
     });
 
+    // Renderizamos las tareas filtradas
     renderizarTareas(tareasActuales);
   } catch (error) {
     console.error("Error cargando tareas:", error);
@@ -121,7 +130,7 @@ function renderizarTareas(tareas) {
       <div class="column is-full">
         <div class="estado-vacio">
           <p class="title is-5 has-text-grey">Todavía no hay tareas</p>
-          <p>Creá la primera con "Nueva tarea" para empezar a registrar el trabajo de la parcela.</p>
+          <p class="has-text-grey">Creá la primera con "Nueva tarea" para empezar a registrar el trabajo de la parcela.</p>
         </div>
       </div>
     `;
@@ -131,6 +140,7 @@ function renderizarTareas(tareas) {
   contenedor.innerHTML = tareas.map(tarjetaTareaHTML).join("");
 }
 
+//  Generación de HTML de tarjeta de tarea
 function tarjetaTareaHTML(t) {
   const parcelaNombre = mapaParcelas.get(t.parcela_id) || `Parcela #${t.parcela_id}`;
   const vencida = esVencida(t);
@@ -183,6 +193,7 @@ function tarjetaTareaHTML(t) {
 
 //  Crear / Editar 
 
+//  Función para seleccionar la prioridad y actualizar el input oculto
 function seleccionarPrioridad(valor) {
   const input = document.getElementById("input-prioridad");
   if (input) input.value = valor;
@@ -250,6 +261,7 @@ async function guardarTarea() {
   try {
     const id = document.getElementById("tarea-id").value;
 
+    // Construimos el cuerpo de la solicitud con validación mínima
     const cuerpo = {
       parcela_id: Number(document.getElementById("input-parcela").value),
       tarea: document.getElementById("input-tarea").value,
@@ -261,6 +273,7 @@ async function guardarTarea() {
     const url = esEdicion ? `${API_BASE_URL}/tareas/${id}` : `${API_BASE_URL}/tareas`;
     const metodo = esEdicion ? "PUT" : "POST";
 
+    // Enviamos la solicitud al backend
     const respuesta = await fetch(url, {
       method: metodo,
       headers: { "Content-Type": "application/json" },
@@ -286,7 +299,8 @@ async function guardarTarea() {
   }
 }
 
-//  Cambiar estado 
+
+//  Cambia el estado de una tarea y recarga la lista
 
 async function cambiarEstado(id, estado) {
   try {
@@ -319,6 +333,7 @@ async function abrirModalHistorial(id) {
     const historial = await respuesta.json();
     const contenedor = document.getElementById("contenido-historial");
     if (!contenedor) return;
+
 
     if (!historial || !historial.length) {
       contenedor.innerHTML = `<p class="has-text-grey">Todavía no hay acciones registradas.</p>`;
@@ -405,6 +420,8 @@ if (selectorPrioridad) {
     if (opcion) seleccionarPrioridad(opcion.dataset.valor);
   });
 }
+
+//  Eventos de cierre de modales y toggles de navbar
 
 document.querySelectorAll("[data-cerrar]").forEach((el) => {
   el.addEventListener("click", () => cerrarModal(el.dataset.cerrar));
