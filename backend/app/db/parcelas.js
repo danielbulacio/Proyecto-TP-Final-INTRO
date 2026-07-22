@@ -38,10 +38,12 @@ export async function deleteParcela(id) {
     return res.rowCount == 1;
 }
 export async function createParcela(nombre, latitud, longitud , hectareas, imagen) {
-
-    const res = await db.query(
-        "INSERT INTO parcelas(nombre, latitud, longitud, hectareas, imagen) VALUES ($1, $2, $3, $4, $5)",
-        [nombre, latitud, longitud, hectareas, imagen]
+    await db.query(
+    "INSERT INTO parcelas(nombre, latitud, longitud, hectareas, imagen) VALUES ($1, $2, $3, $4, $5)",
+    [nombre, latitud, longitud, hectareas, imagen]
     );
-    return res.rowCount == 1;
+    // Luego de insertar la parcela, agarramos la parcela con el maximo id (es decir la ultima creada)
+    // Y lo devolvemos
+    const res = await db.query("SELECT MAX(id) AS id FROM parcelas");
+    return res.rows[0].id;
 }
