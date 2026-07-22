@@ -2,7 +2,9 @@ CREATE TABLE parcelas (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     latitud DECIMAL(9,6),
-    longitud DECIMAL(9,6)
+    longitud DECIMAL(9,6),
+    hectareas DECIMAL (10,2),
+    imagen VARCHAR(255)
 );
 
 CREATE TABLE cultivos (

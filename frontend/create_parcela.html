@@ -69,8 +69,7 @@
           <h1 class="title has-text-white">Crear Nueva Parcela</h1>
           
           <!-- Formulario -->
-
-         <form id="form-agregar-parcela form-editar-parcela" class="form">
+          <form id="form-agregar-parcela" class="form">
             <div class="field">
                 <label class="label ">Nombre de la Parcela</label>
                 <div class="control">
@@ -88,7 +87,27 @@
                 <div class="control">
                     <input class="input" type="text" id="input-longitud" required>
                 </div>
+            </div> 
+            <div class="field">
+                <label class="label">Hectáreas</label>
+                <div class="control">
+                    <input class="input" type="text" id="input-hectareas" required>
+                </div>
             </div>
+            <div class="field">
+              <label class="label has-text-white">Imagen (Opcional para actualizar)</label>
+              <div class="control">
+                <!-- Contenedor blanco idéntico a los otros inputs -->
+                <div class="custom-file-box">
+                  <label for="input-imagen" class="custom-file-btn">
+                    Elegir archivo 📁
+                  </label>
+                  <span id="nombre-archivo" class="custom-file-text">Sin archivo seleccionado</span>
+                  <input type="file" id="input-imagen" accept="image/*" class="is-hidden-input" />
+                </div>
+              </div>
+            </div>
+
 
         
                 <p class="help is-danger" id="mensaje-error"></p>

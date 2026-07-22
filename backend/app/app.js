@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import cors from "cors";
 import { endpointsParcelas } from "./api/parcelas.js";
@@ -14,9 +15,8 @@ const corsOptions = {
 };
 
 app.use(express.json());
-
+app.use("/uploads", express.static("uploads"));
 app.use(cors(corsOptions));
-
 app.use("/api/v1/cultivos", endpointsCultivos);
 app.use("/api/v1/parcelas", endpointsParcelas);
 app.use("/api/v1/tareas", endpointsTareas);

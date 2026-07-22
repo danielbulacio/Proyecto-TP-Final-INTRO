@@ -55,3 +55,48 @@ padding: 2.5rem;
 transform: translateY(-4px);
 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
+.custom-file-box {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 4px;
+  height: 2.5em;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+/* Botón 'Elegir archivo' interior */
+.custom-file-btn {
+  background-color: #e6e6e6;
+  color: #612807;
+  font-weight: 600;
+  padding: 0 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.custom-file-btn:hover {
+  background-color: #d8d8d8;
+}
+
+/* Nombre del archivo subido */
+.custom-file-text {
+  color: #4a4a4a;
+  font-size: 0.9rem;
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+/* Input nativo oculto */
+.is-hidden-input {
+  display: none !important;
+}
