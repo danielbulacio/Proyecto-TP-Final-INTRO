@@ -1,5 +1,5 @@
 async function getAllParcelas(){
-    const url = "http://localhost:8000/api/parcelas";
+    const url = "http://localhost:8000/api/v1/parcelas";
     const response = await fetch(url);
     const parcelas = await response.json();
     console.log(parcelas)
@@ -188,7 +188,7 @@ parcelas.forEach(parcela => {
 getAllParcelas();
 
 async function deleteParcela(id){
-    const response = await fetch(`http://localhost:8000/api/parcelas/${id}`, {
+    const response = await fetch(`http://localhost:8000/api/v1/parcelas/${id}`, {
         method: 'DELETE'
     });
 
