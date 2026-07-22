@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Esto es para que funcione Bulma -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+    <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/detalle-parcelas.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- Leatfleat (mapa) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+  </head>
+  
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+        <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
+        </a>
+        <div
+          class="navbar-burger js-burger"
+          data-target="navbarExampleTransparentExample"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- LINKS DEL NAVBAR -->
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="../parcelas.html"> Parcelas </a>
+          <a class="navbar-item" href="../cultivos.html"> Cultivos </a>
+          <a class="navbar-item" href="../tareas.html"> Tareas </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            
+              <p class="control">
+                <a
+                  class="button is-primary"
+                  href="ayuda.html"
+                >
+
+                  <span>Ayuda</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- FIN DEL NAVBAR -->
+    
+    <!-- HEADER -->
+    <div class="header">
+      <div class="breadcrumb-row">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li><a href="parcelas.html">PARCELAS</a></li>
+            <li class="is-active"><a href="#" aria-current="page" id="parcela_nombre_breadcumb">LOTE NORTE</a></li>
+          </ul>
+        </nav>
+      </div>
+      
+      <div class="header-content">
+        <div class="header-left">
+          <a href="../parcelas.html" class="back-link">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </a>
+          <div class="title-info">
+            <h1 id="parcela-nombre">Lote Norte</h1>
+            <p id="parcela-ubicacion">-34.603722 -58.381592</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!-- FIN DEL HEADER -->
+     
+    <!-- Comienzo de pagina principal -->
+    <div class="big-container">
+      
+      <!-- Primera fila de contendores -->
+      <div class="row-superior">
+        <div class="scores-container">
+          <div class="score-card health-index">
+            <div class="card-header" data-titulo="Ínidice general de salud (IGS)" data-formula="(aptitud_termica + estado_hidrico) / 2" data-desc="Índice general de 0 a 100 que promedia la aptitud térmica y el estado hídrico. Resume qué tan favorables son las condiciones actuales para el cultivo."><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="score-header">
+              <span class="score-label label-health-index">Ínidice general de salud (IGS)</span>
+             
+            </div>
+            <p class="score-value score-health-index" id="score-general">--</p>
+            <p class="score-estado" id="estado-general">--</p>
+            <div class="score-bar"><div class="score-bar-fill" id="bar-general"></div></div>
+          </div>
+
+          <div class="score-card">
+            <div class="card-header" data-titulo="Aptitud térmica" data-formula="max(0, 100 - |temp_actual - temp_optima| * 5)" data-desc="Mide qué tan cerca está la temperatura actual de la óptima del cultivo. Cae a medida que la diferencia de grados aumenta."><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="score-header">
+              <span class="score-label">Aptitud térmica (AT)</span>
+              
+            </div>
+            <p class="score-value" id="score-temperatura">--</p>
+            <p class="score-estado" id="estado-temperatura">--</p>
+            <div class="score-bar"><div class="score-bar-fill" id="bar-temperatura"></div></div>
+          </div>
+
+          <div class="score-card">
+            <div class="card-header" data-titulo="Estado hídrico" data-formula="(balance_hidrico + humedad_suelo * 100) / 2" data-desc="Combina el balance hídrico (precipitación menos evapotranspiración) con la humedad del suelo, frente al agua que el cultivo necesita."><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="score-header">
+              <span class="score-label">Estado hídrico (EH)</span>
+             
+            </div>
+            <p class="score-value" id="score-agua">--</p>
+            <p class="score-estado" id="estado-agua">--</p>
+            <div class="score-bar"><div class="score-bar-fill" id="bar-agua"></div></div>
+          </div>
+        </div>
+
+        <div class="cultivo-container">
+          <div class="cultivo-header">
+            <span class="score-label">Cultivo actual</span>
+            <span class="cultivo-icono-box"><span class="material-symbols-outlined">potted_plant</span></span>
+          </div>
+          <div class="cultivo-datos">
+            <p><span class="cultivo-campo">Cultivo:</span> <span id="cultivo-nombre">--</span></p>
+            <p><span class="cultivo-campo">Tipo:</span> <span id="cultivo-tipo">--</span></p>
+            <p><span class="cultivo-campo">Temp. óptima:</span> <span id="cultivo-temp">--</span></p>
+            <p><span class="cultivo-campo">Agua:</span> <span id="cultivo-agua">--</span></p>
+          </div>
+        </div>
+      </div>
+      <!-- fin de primeros contenedores --> 
+
+      <!-- datos actuales --> 
+      <div class="fixed-grid">
+          <div class="grid">
+            <div class="card-stat">
+              <!-- &lt;br&gt; sirve para poner puntos y aparte. Osea para insertar un <br> --> 
+              <div class="card-header" data-titulo="Temperatura" data-desc="La temperatura es la magnitud física que mide la cantidad de energía térmica (calor) acumulada en el aire o en el suelo.&lt;br&gt;&lt;br&gt;Las plantas necesitan acumular calor para pasar de etapas (ej: de semilla a flor). La temperatura optima suele estar entre 15 y 30 grados. Fuera de esos rangos, la planta crece mas lento o muere.&lt;br&gt;&lt;br&gt;Se mide en grados Celsius (°C) y se obtiene la temperatura de 0 a 2 metros del suelo.">
+                <span class="material-symbols-outlined card-info">info</span>
+              </div>
+              <div class="card-icon temp-icon">
+                <span class="material-symbols-outlined">thermostat</span>
+              </div>
+              <div class="card-content">
+                <div class="card-value" id="temp">--</div>
+                <div class="card-label">Temperatura</div>
+              </div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-stat">
+              <div class="card-header" data-titulo="Precipitación" data-desc="La recipitation representa la cantidad total de agua que cae desde la atmósfera&lt;br&gt;&lt;br&gt;Es el combustible para absorber nutrientes y regular su temperatura.&lt;br&gt;&lt;br&gt;Su unidad de medida es milímetros (mm)">
+                <span class="material-symbols-outlined card-info">info</span>
+              </div>
+              <div class="card-icon precip-icon">
+                <span class="material-symbols-outlined">water_drop</span>
+              </div>
+              <div class="card-content">
+                <div class="card-value" id="precipitacion">--</div>
+                <div class="card-label">Precipitación</div>
+              </div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-stat">
+              <div class="card-header" data-bs-html="true" data-titulo="Humedad del suelo" data-desc="Cantidad de agua retenida en la capa superficial de la tierra (particularmente en un rango de 0 a 1 centimetros).&lt;br&gt;&lt;br&gt;Es un factor necesario e importante para que la planta sobreviva los primeros dias luego de ser plantada.&lt;br&gt;&lt;br&gt;Su unidad de medida es o se mide por la &quot;humedad volumetrica&quot; que son m³/m³ (metros cúbicos de agua por metro cúbico de suelo)">
+                <span class="material-symbols-outlined card-info">info</span>
+              </div>
+              <div class="card-icon humid-icon">
+                <span class="material-symbols-outlined">water</span>
+              </div>
+              <div class="card-content">
+                <div class="card-value" id="humedad">--</div>
+                <div class="card-label">Humedad Suelo</div>
+              </div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
+            </div>
+
+            <div  class="card-stat">
+              <div class="card-header" data-titulo="Evapotranspiración" data-desc="Pérdida total de humedad de una superficie hacia la atmosfera, es resulatdo de 2 procesos: La evaporación y la transpiración de las plantas (agua que absorben las plantas y liberan al aire en forma de vapor).&lt;br&gt;&lt;br&gt;Es util para mejorar el rendimiento de las plantas, evitando poner agua de mas o de menos. Pero principalmente de más.&lt;br&gt;&lt;br&gt; Su unidad de medida es la suma acumulada de perdida de la hora anterior en milímetros (mm). Se puede considerar que este numero representa la pérdida de agua real proyectada para esa ubicación.">
+                <span class="material-symbols-outlined card-info">info</span>
+              </div>
+              <div class="card-icon evapot-icon">
+                <span class="material-symbols-outlined">cloud</span>
+              </div>
+              <div class="card-content">
+                <div class="card-value" id="evapo">--</div>
+                <div class="card-label">Evapotranspiración</div>
+              </div>
+              <div class="card-badge actual">
+                <div class="red-dot-container">
+                  <div class="animated-dot"></div>
+                  <span>En vivo</span>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+      </div>
+      <!-- fin  datos actuales --> 
+      
+      <!-- Grafico y mapa --> 
+      <div class="small-container">
+        <div class="fixed-grid">
+          <div class="grafico">
+            <div class="grafico-header">
+              <div class="header-top">
+                <div class="header-left">
+                  <h2>Clima Histórico</h2>
+                </div>
+                <div class="header-right">
+                  <div class="time-buttons">
+                    <button class="time-btn">1D</button>
+                    <button class="time-btn">1S</button>
+                    <button class="time-btn">1M</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tabs-container">
+                <button class="tab active" data-metric="temperatura">
+                  <span class="material-symbols-outlined">thermostat</span>
+                  Temperatura
+                </button>
+                <button class="tab" data-metric="precipitacion">
+                  <span class="material-symbols-outlined">water_drop</span>
+                  Precipitación
+                </button>
+                <button class="tab" data-metric="humedad_suelo">
+                  <span class="material-symbols-outlined">water</span>
+                  Humedad Suelo
+                </button>
+                <button class="tab" data-metric="evapotranspiracion">
+                  <span class="material-symbols-outlined">cloud</span>
+                  Evapotranspiración
+                </button>
+              </div>
+            </div>
+           <canvas id="grafico-posicion"></canvas>
+          </div>
+        </div>
+        
+        <div class="map-container">
+          <h3 class="map-title">Ubicación de la parcela</h3>
+          <div id="map"></div>
+
+        </div>
+        
+      </div>
+
+      </div>
+      <div id="map"></div>
+    </div>
+    </div>
+    
+     
+
+    
+
+
+
+    <div id="modal-info" class="modal-info-overlay">
+      <div class="modal-info-box">
+        <button class="modal-info-close" id="modal-info-close">&times;</button>
+        <h3 id="modal-info-titulo"></h3>
+        <p id="modal-info-texto"></p>
+        <code id="modal-info-formula"></code>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/detalle-parcela.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+  </body>
+</html>

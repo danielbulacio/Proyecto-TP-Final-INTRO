@@ -160,3 +160,27 @@ background-color: #10b981;
 border-radius: 50%;
 margin-right: 6px;
 }
+
+
+/* 3. Hover para los enlaces del Footer con desplazamiento dinámico */
+.footer-link-item {
+color: #9ca3af;
+display: inline-block;
+text-decoration: none;
+}
+.footer-link-item:hover {
+color: #10b981 !important;
+transform: translateX(5px); /* Se desplaza 5px hacia la derecha */
+}
+
+/* 4. Hover para los ítems de contacto */
+.footer-contact-item {
+color: #d1d5db;
+transition: color 0.2s ease;
+}
+.footer-contact-item:hover {
+color: #ffffff;
+}
+.footer-contact-item .material-icons {
+color: #10b981;
+}

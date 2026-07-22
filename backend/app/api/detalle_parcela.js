@@ -1,38 +1,66 @@
-import express from "express";
+import { Router } from "express";
+import {
+  getHistorialParcela,
+  getDatosParcela,
+  actualizarClima,
+  calcularscores,
+} from "../db/detalle-parcelas.js";
 
-const app = express();
-app.use(express.json());
+export const endpointsDetalleParcela = Router();
 
-const port = 8000;
+// GET /api/v1/parcelas/:id
+endpointsDetalleParcela.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const parcela = await getDatosParcela(id);
 
-const url = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m';
+    // Si no existe la parcela, aviso con un 404
+    if (parcela === undefined) {
+      res.status(404).json({ error: "No se encontro la parcela" });
+      return;
+    }
 
-app.get("/health", (req, res) => res.send("OK"));
-
-app.listen(port, () => {
-  console.log(`todo ok`);
+    res.json(parcela);
+  } catch (error) {
+    // Si algo falla (por ejemplo la base de datos) devuelvo un 500
+    console.error("Error al traer la parcela:", error);
+    res.status(500).json({ error: "Error al traer los datos de la parcela" });
+  }
 });
-// 1. URL de la API
-const url = 'https://open-meteo.com';
 
-// 2. Crear una función asíncrona
-async function obtenerClima() {
-    try {
-        // Esperar la respuesta de la petición HTTP
-        const response = await fetch(url);
+// GET /api/v1/parcelas/:id/historial
+endpointsDetalleParcela.get("/:id/historial", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const historial = await getHistorialParcela(id);
+    res.json(historial);
+  } catch (error) {
+    console.error("Error al traer el historial:", error);
+    res.status(500).json({ error: "Error al traer el historial de clima" });
+  }
+});
 
-        // Esperar a que los datos se transformen en JSON
-        const data = await response.json();
+// POST /api/v1/parcelas/:id/clima
+endpointsDetalleParcela.post("/:id/clima", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cantidad = await actualizarClima(id);
+    res.json({ mensaje: `Se guardaron ${cantidad} días de clima` });
+  } catch (error) {
+    // En el caso de que se haya caido open meteo. Atrapamos el error
+    console.error("Error al actualizar el clima:", error);
+    res.status(500).json({ error: "Error al actualizar el clima" });
+  }
+});
 
-        // 3. Extraer los datos
-        const temperatura = data.current.temperature_2m;
-        const unidad = data.current_units.temperature_2m;
-
-        // 4. Mostrar en pantalla
-        document.getElementById('resultado').textContent = `${temperatura} ${unidad}`;
-        
-    } 
-}
-
-// 5. Ejecutar la función
-obtenerClima();
+// GET /api/v1/parcelas/:id/score
+endpointsDetalleParcela.get("/:id/score", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const score = await calcularscores(id);
+    res.json(score);
+  } catch (error) {
+    console.error("Error al calcular el score:", error);
+    res.status(500).json({ error: "Error al calcular el score" });
+  }
+});

@@ -1,0 +1,187 @@
+:root {
+--color-primary-rgb: 16, 185, 129; /* Emerald 500 */
+--bg-pure-white: #ffffff;
+--border-soft: #e2e8f0;
+--text-dark: #0f172a;
+--text-muted: #64748b;
+--accent-amber: #d97706;
+--accent-emerald: #059669;
+--accent-blue: #2563eb;
+}
+
+html, body {
+background-color: var(--bg-pure-white) !important;
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+color: var(--text-dark);
+min-height: 100vh;
+}
+
+/* Hero section adaptado */
+.crop-hero {
+background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
+border-radius: 16px;
+padding: 3rem;
+box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15);
+margin-bottom: 2.5rem;
+}
+
+/* Estilo acordeón FAQ */
+.faq-card {
+background: #ffffff;
+border: 1px solid var(--border-soft);
+border-radius: 12px;
+margin-bottom: 1rem;
+transition: all 0.3s ease;
+overflow: hidden;
+}
+
+.faq-card:hover {
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+border-color: #cbd5e1;
+}
+
+.faq-trigger {
+padding: 1.25rem 1.5rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+cursor: pointer;
+user-select: none;
+background-color: #ffffff;
+transition: background-color 0.2s ease;
+}
+
+.faq-trigger:hover {
+background-color: #f8fafc;
+}
+
+.faq-question {
+font-weight: 600;
+font-size: 1.05rem;
+color: var(--text-dark);
+display: flex;
+align-items: center;
+gap: 0.75rem;
+}
+
+.faq-icon-holder {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 32px;
+height: 32px;
+border-radius: 8px;
+}
+
+.faq-trigger .chevron {
+transition: transform 0.3s ease;
+color: var(--text-muted);
+}
+
+.faq-card.is-active .chevron {
+transform: rotate(180deg);
+color: var(--text-dark);
+}
+
+.faq-card.is-active {
+border-color: #94a3b8;
+}
+
+/* FAQ Content animado */
+.faq-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+background-color: #fcfdfe;
+}
+
+.faq-card.is-active .faq-content {
+max-height: 1000px;
+transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+}
+
+.faq-body {
+padding: 1.25rem 1.5rem;
+border-top: 1px solid #f1f5f9;
+color: #475569;
+font-size: 0.95rem;
+line-height: 1.6;
+}
+
+.faq-body code {
+background-color: #f1f5f9;
+color: #0f172a;
+padding: 0.15rem 0.4rem;
+border-radius: 4px;
+font-size: 0.85rem;
+}
+
+/* Filtros e Inputs */
+.search-box {
+position: relative;
+margin-bottom: 2rem;
+}
+.search-box .input {
+border-radius: 999px;
+padding-left: 3rem;
+box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+height: 3.25rem;
+font-size: 1rem;
+}
+.search-box .material-icons {
+position: absolute;
+left: 1.25rem;
+top: 50%;
+transform: translateY(-50%);
+color: var(--text-muted);
+}
+
+/* Tabs personalizadas */
+.custom-tabs {
+display: flex;
+gap: 0.5rem;
+overflow-x: auto;
+padding-bottom: 0.5rem;
+margin-bottom: 1.5rem;
+}
+.custom-tab {
+background: #f1f5f9;
+color: var(--text-muted);
+border: none;
+padding: 0.5rem 1.25rem;
+border-radius: 999px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s ease;
+white-space: nowrap;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+.custom-tab.is-active {
+background-color: var(--text-dark);
+color: #ffffff;
+}
+.custom-tab:hover:not(.is-active) {
+background-color: #e2e8f0;
+}
+
+/* Sidebar widget */
+.support-box {
+background-color: #f8fafc;
+border: 1px dashed #cbd5e1;
+border-radius: 12px;
+padding: 1.5rem;
+}
+
+/* Estilos para el banner de base de datos */
+.schema-badge {
+font-size: 0.75rem;
+font-weight: 700;
+background: #eff6ff;
+color: #1e40af;
+padding: 0.25rem 0.5rem;
+border-radius: 6px;
+display: inline-block;
+margin-top: 0.5rem;
+}
