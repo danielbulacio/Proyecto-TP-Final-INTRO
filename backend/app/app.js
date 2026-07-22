@@ -4,6 +4,7 @@ import cors from "cors";
 import { endpointsParcelas } from "./api/parcelas.js";
 import { endpointsCultivos } from "./api/cultivos.js";
 import { endpointsTareas } from "./api/tareas.js";
+import { endpointsDetalleParcela } from "./api/detalle_parcela.js";
 
 const app = express();
 
@@ -19,10 +20,10 @@ app.use(cors(corsOptions));
 app.use("/api/v1/cultivos", endpointsCultivos);
 app.use("/api/v1/parcelas", endpointsParcelas);
 app.use("/api/v1/tareas", endpointsTareas);
+app.use("/api/v1/parcelas/detalle", endpointsDetalleParcela);
 
 const port = 8000;
 
-app.use("/api/parcelas", endpointsParcelas);
 
 app.get("/health", (req, res) => res.send("OK"));
 
