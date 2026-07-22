@@ -11,7 +11,6 @@
 }
 
 .header .breadcrumb {
-  width: 85%;
   margin: 0 auto;
   padding: 0;
 }
@@ -34,7 +33,6 @@
 }
 
 .header-content {
-  width: 85%;
   margin: 0 auto;
   padding: 12px 0;
   display: flex;
@@ -489,8 +487,36 @@
 }
 .big-container {
   padding-top: 20px;
-  width: 85%;
   margin: auto;
+}
+
+.big-container,
+.header-content,
+.header .breadcrumb {
+  width: auto;
+}
+@media screen and (min-width: 1024px) {
+  .big-container,
+  .header-content,
+  .header .breadcrumb {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (min-width: 1216px) {
+  .big-container,
+  .header-content,
+  .header .breadcrumb {
+    max-width: 1152px;
+  }
+}
+@media screen and (min-width: 1408px) {
+  .big-container,
+  .header-content,
+  .header .breadcrumb {
+    max-width: 1344px;
+  }
 }
 
 .small-container {
