@@ -1,10 +1,10 @@
-<div style="text-align: center;">
+<p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/FIUBA_gris_transparente.png/960px-FIUBA_gris_transparente.png" width="200">
-</div>
+</p>
 
-<div style="text-align: center;">
+<p align="center">
   <img src="./frontend/logo.png" width="200">
-</div>
+</p>
 
 <h1 align="center">AgroMonitor</h1>
 <h4 align="center">El EQUIPO 1</h4>
