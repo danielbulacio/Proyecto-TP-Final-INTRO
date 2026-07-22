@@ -1,102 +1,53 @@
+<div style="text-align: center;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/FIUBA_gris_transparente.png/960px-FIUBA_gris_transparente.png" width="200">
+</div>
 
-División: Parcela: Rodri
-Detalle de parcela: Marcos
-Cultivos: Tomi
-Main-Docker-Tareas: Ezequiel
+<div style="text-align: center;">
+  <img src="./frontend/logo.png" width="200">
+</div>
 
-## ESQUEMA PARTES
-[\[a\](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)
+<h1 align="center">AgroMonitor</h1>
+<h4 align="center">El EQUIPO 1</h4>
 
-# COMO LEVANTAR PROYECTO
-1. TENER docker destop abierto
-2. cd Proyecto-TP-Final-INTRO/backend/
-3. Levantar los contenedores: 1era vez - docker compose up --build (demas veces) docker compose up
-4. Verificar que anda : curl http://localhost:8000/health  
+<div style="text-align: center;">
+    <strong>Autores</strong>
+    Rodrigo Berón
+    Tomás Perez
+    Daniel Ezequiel Bulacios
+    Marcos Fortunato
+</div>
+AgroMonitor es una plataforma  gestión y monitoreo de campos agrícolas. La idea central es que el productor agrícola pueda tener, en un solo lugar, toda la información de sus terrenos cruzando por un lado el cultivo que tiene su terreno y por otro las condiciones meteorológicas reales en esa ubicación. Permitiéndole tomar mejores decisiones. 
 
-## Parcela:
-id
-cultivo_id 
-clima_id
-nombre
-latitud
-longitud
+Concretamente:
+1. Registrar sus terrenos.
+2. Conocer las condiciones metereológicas actuales y de los últimos 30 días.
+3. Evaluar la salud del cultivo mediante un sistema de puntuación (score).
+4. Registrar y planificar tareas.
 
-## Cultivo: (opciones predefinidas)
-id
-nombre_cultivo
-id_parcela
-tipo
-temperatura_optima
-dias_de_cosecha
-mililitros_necesarios
+En las **siguientes secciones** desarollamos mas profundamente con ejemplos visuales, cada uno de estos puntos.
 
-## detalle parcela:
-id
-id_parcela
-temperatura_actual
-precipitacion_actual
-humedad_suelo
-evapotranspiracion
+[TOCM]
 
-Tareas:
-id
-id_parcela
-tarea
-hecho
-...
-CREATE TABLE parcelas (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    latitud DECIMAL(9,6),
-    longitud DECIMAL(9,6)
-);
+[TOC]
 
-CREATE TABLE cultivos (
-    id SERIAL PRIMARY KEY,
-    nombre_cultivo VARCHAR(100) NOT NULL,
-    parcela_id INT REFERENCES parcelas,
-    tipo VARCHAR(50),
-    temperatura_optima INT,
-    dias_de_cosecha INT,
-    mililitros_necesarios INT
-);
+## Como levantar el proyecto
+1.  cd Proyecto-TP-Final-INTRO
+2.  make run
 
-CREATE TABLE detalle_parcela (
-    id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
-    temperatura_actual DECIMAL(5,2),
-    precipitacion_actual DECIMAL(5,2),
-    humedad_suelo DECIMAL(5,2),
-    evapotranspiracion DECIMAL(5,2)
-);
+Alternativamente:
+1. cd Proyecto-TP-Final-INTRO/backend/
+2. docker compose up --build
 
-CREATE TABLE tareas (
-    id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
-    tarea VARCHAR(255) NOT NULL,
-    hecho BOOLEAN NOT NULL DEFAULT FALSE
-);
+##Arquitectura
+A continuación explicamos brevemente la arquitectura creada.
+###Parcelas
+###Cultivos
+###Detalle de parcelas
+###Tareas
 
-Estructuración:
-Directorios:
-#node_modules: contiene todas las dependencas 
-~Frontend:
-#public: archivos estaticos que se acceden directamente del navegador(pagina principal)
-#styles: Hoja de estilo del CSS
-#Pages: representa las rutas web para acceder a la/s paginas/s
-~Backend
-#Routes: Formas o caminos en el que el cliente ingresa sus datos
-#Controllers: Resuelve e implementa la logica de negocios
-#Models: capa de datos
-El contolador actua de intermediario, la ruta envia los datos al controlador y el controlador los envia al modelo, y viceversa.
-#Config: Son variables y ajustes que definen cómo se comporta la API en diferentes entornos
-#Helpers: Funciones de utilidad que se repiten a lo largo del proyecto(su objetivo es evitar funciones duplicadas)
-Carpetas: 
-#.gitignore
-#package.json: archivo que define todo el proyecto
-#package-log.json: guarda las versiones de las dependencias instaladas(Se genera automaticamente)
-#Next.config.js:(podria ir dentro de config) como se comporta o interactua el usuario con la pagina
-#Index.js / app.js: Crea la aplicacion y define las rutas de interaccion con los datos
-#.env: solo para definir el puerto
-#.eslintrc.json: lo podriamos usar para evitar errores y mantener una misma logica en el uso de variables(osea asignacion de nombres a variables, como estructurar las funciones,etc)
-#README.md: documentacion del proyecto
+
+##Excplicacion de plataforma con ejemplos visuales
+###Parcelas
+###Cultivos
+###Detalle de parcelas
+###Tareas
