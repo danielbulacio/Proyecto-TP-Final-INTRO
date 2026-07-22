@@ -630,6 +630,48 @@
   display: flex;
   gap: 16px;
   margin-bottom: 16px;
+  position: relative;
+}
+.row-superior.sin-cultivo .scores-container,
+.row-superior.sin-cultivo .cultivo-container {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.aviso-cultivo {
+  display: none;
+}
+.row-superior.sin-cultivo .aviso-cultivo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  z-index: 2;
+}
+.aviso-cultivo .material-symbols-outlined {
+  font-size: 40px;
+  color: #2f9e44;
+}
+.aviso-cultivo p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+.aviso-cultivo-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: #2f9e44;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  
 }
 .scores-container {
   flex: 2;
@@ -659,8 +701,12 @@
   text-decoration: underline;
 }
 .cultivo-link-icon {
-  font-size: 14px !important;
-  width: 203px;
+  font-size: 16px !important;
+  color: #999;
+  transform: translateY(-4px);
+}
+.cultivo-link:hover .cultivo-link-icon {
+  color: #2f9e44;
 }
 
 .cultivo-icono-box {
