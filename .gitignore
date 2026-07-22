@@ -4,14 +4,3 @@ node_modules/
 #data se crea cuando haces docker compose up
 data/
 
-# Variables de entorno (Secretos)
-.env
-.env.local
-
-# Logs y archivos del sistema
-npm-debug.log*
-.DS_Store
-dist/
-build/
-
-
