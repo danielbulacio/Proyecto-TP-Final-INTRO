@@ -1,6 +1,7 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
+// SECCION DE MAPA POR LEATFLET
 function dibujarMapa(lat, long, nombre_parcela) {
   const map = L.map("map").setView([lat, long], 13);
 
@@ -13,6 +14,8 @@ function dibujarMapa(lat, long, nombre_parcela) {
     .bindPopup(`${nombre_parcela}: ${lat}, ${long}`)
     .openPopup();
 }
+// FIN DE SECCION DE MAPA POR LEATFLET
+
 
 let chart; // guardo la instancia del gráfico
 let historialGlobal; // guardo los datos traídos
@@ -26,22 +29,29 @@ async function cargarHistorial() {
   dibujarGrafico("temperatura"); // arranca mostrando temperatura
 }
 
+// SECCION DEL GRAFICO 
 function dibujarGrafico(tipo) {
+  
+  // formateamos las fechas en un formato mas legible en este caso dd/mm
   const fechas = historialGlobal.map((fila) => {
     const [anio, mes, dia] = fila.fecha.split("T")[0].split("-");
     return `${dia}/${mes}`;
   });
+  
+  // 
   const valores = historialGlobal.map((fila) => Number(fila[tipo]));
 
-  const canvas = document.getElementById("grafico-temp");
+  // obtenemos donde vamos a insertar el grafico
+  const canvas = document.getElementById("grafico-posicion");
 
-  if (chart) chart.destroy(); // 👈 destruyo el gráfico anterior
+  if (chart) chart.destroy(); // suponiendo que me muevo de grafico, destruyo el anterior. Osea lo eliminno para cargar uno nuevo
 
+  // Esto es para agregarle un gradiente y color (config)
   const gradiente = canvas.getContext("2d").createLinearGradient(0, 0, 0, 300);
   gradiente.addColorStop(0, "rgba(136, 132, 216, 0.8)");
   gradiente.addColorStop(1, "rgba(136, 132, 216, 0)");
 
-  // dataset principal (el dato real)
+  // dataset principal (esto va a servir mas abajo que creamos el chart)
   const datasets = [
     {
       label: tipo,
@@ -54,18 +64,18 @@ function dibujarGrafico(tipo) {
     },
   ];
 
-  // si es temperatura, agrego la línea de la óptima del cultivo
+  // si es temperatura, agrego la temperatura optima
   if (tipo === "temperatura" && tempOptima != null) {
     datasets.push({
       label: "Óptima del cultivo",
-      data: fechas.map(() => tempOptima), // mismo valor en todas las fechas = línea horizontal
+      data: fechas.map(() => tempOptima), // mismo valor en todas las fechas 
       borderColor: "#e03131",
       borderDash: [6, 6], // punteada
       pointRadius: 0, // sin puntos
       fill: false,
     });
   }
-
+  // creamos el chart propiamente dicho por chart.js
   chart = new Chart(canvas, {
     type: "line",
     data: {
@@ -93,33 +103,42 @@ function dibujarGrafico(tipo) {
     },
   });
 }
+// FIN DE SECCION DEL GRAFICO
 
+
+// SECCION mostrar datos actuales. 
+// 
+// Es la funcion principal que pide los datos edl backend (tipo la info principal) 
+// y lo reemplaza en el front
 async function mostrarDatosActuales() {
   const res = await fetch(`http://localhost:8000/api/v1/parcelas/detalle/${id}`);
+  
+  // obtenemos el json del fetch
   const parcela = await res.json();
-  tempOptima = parcela.temperatura_optima; // guardo el óptimo para la línea del gráfico
+  
+  tempOptima = parcela.temperatura_optima; // guardo la temperatura optima
+
+  // con latitud y long llamo a la funcion que me pone el mapa
   dibujarMapa(
     Number(parcela.latitud),
     Number(parcela.longitud),
     parcela.nombre,
   );
+
   document.getElementById("parcela-nombre").textContent = parcela.nombre;
-
-  document.getElementById("parcela_nombre_breadcumb").textContent =
-    parcela.nombre;
-
+  document.getElementById("parcela_nombre_breadcumb").textContent = parcela.nombre;
   document.getElementById("temp").textContent = `${parcela.temperatura} °C`;
   document.getElementById("humedad").textContent = `${parcela.humedad_suelo} m3/m3`;
   document.getElementById("precipitacion").textContent = `${parcela.precipitacion} mm`;
   document.getElementById("evapo").textContent = `${parcela.evapotranspiracion} mm`;
-  document.getElementById("parcela-ubicacion").textContent =
-    `${parcela.latitud}, ${parcela.longitud}`;
-
+  document.getElementById("parcela-ubicacion").textContent = `${parcela.latitud}, ${parcela.longitud}`;
   document.getElementById("cultivo-nombre").textContent = parcela.nombre_cultivo;
   document.getElementById("cultivo-tipo").textContent = parcela.tipo;
   document.getElementById("cultivo-temp").textContent = `${parcela.temperatura_optima}°`;
   document.getElementById("cultivo-agua").textContent = `${parcela.mililitros_necesarios} ml`;
 }
+// FIN DE SECCION mostrar datos actuales.
+
 
 document.querySelectorAll(".tab").forEach((boton) => {
   boton.addEventListener("click", () => {
@@ -147,21 +166,22 @@ document.querySelectorAll(".tab").forEach((boton) => {
   });
 });
 
+// SECCINO MOSTRAR SCORE.
+// simplmenete muestra el score
 async function mostrarScore() {
   const res = await fetch(`http://localhost:8000/api/v1/parcelas/detalle/${id}/score`);
   const score = await res.json();
 
-  // los números
   document.getElementById("score-general").textContent = score.general;
   document.getElementById("score-temperatura").textContent = score.temperatura;
   document.getElementById("score-agua").textContent = score.agua;
 
   // el ancho de las barras de abajo
   document.getElementById("bar-general").style.width = `${score.general}%`;
-  document.getElementById("bar-temperatura").style.width =
-    `${score.temperatura}%`;
+  document.getElementById("bar-temperatura").style.width = `${score.temperatura}%`;
   document.getElementById("bar-agua").style.width = `${score.agua}%`;
   
+  // Esto le asigna el color a las barras
   function colorPorScore(valor) {
     if (valor >= 66) return "#2f9e44"; // verde
     if (valor >= 33) return "#f59f00"; // amarillo
@@ -178,6 +198,8 @@ async function mostrarScore() {
   document.getElementById("bar-agua").style.background = colorPorScore(
     score.agua,
   );
+
+  // esto le asgina un adjetivo al estado del score
   function estadoTexto(valor) {
   if (valor >= 80) return "Óptimo";
   if (valor >= 60) return "Bueno";
@@ -185,7 +207,7 @@ async function mostrarScore() {
   return "Crítico";
 }
 
-  // dentro de mostrarScore, después de los números:
+  // seteamos el texto
   document.getElementById("estado-general").textContent = estadoTexto(score.general);
   document.getElementById("estado-temperatura").textContent = estadoTexto(score.temperatura);
   document.getElementById("estado-agua").textContent = estadoTexto(score.agua);
@@ -232,7 +254,7 @@ Info.addEventListener("click", (e) => {
 async function init() {
   await mostrarDatosActuales(); // trae la parcela 
   await cargarHistorial(); // dibuja el grafico
-  mostrarScore();
+  await mostrarScore();
 }
 
 init();
