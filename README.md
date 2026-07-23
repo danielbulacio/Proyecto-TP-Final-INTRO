@@ -35,10 +35,6 @@ En las **siguientes secciones** desarollamos mas profundamente con ejemplos visu
   - [Tareas](#tareas-1)
 
 ## Cómo levantar el proyecto
-1.  cd Proyecto-TP-Final-INTRO
-2.  make run (en realidad el make run no builde. cheqeuar esto
-
-Alternativamente:
 1. cd Proyecto-TP-Final-INTRO/backend/
 2. docker compose up --build
 
