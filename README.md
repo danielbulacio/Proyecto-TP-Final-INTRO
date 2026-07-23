@@ -54,7 +54,7 @@ A continuación explicamos brevemente la arquitectura creada.
 ### Detalle de parcelas
 ### Tareas
 
-## Explicación de plataforma con ejemplos visuales
+## Capturas de pantalla del funcionamiento
 ### Parcelas
 ### Cultivos
 ### Detalle de parcelas
