@@ -112,4 +112,3 @@ document.addEventListener("DOMContentLoaded", async () => {
         actualizarMarcador(lat, lng);
     });
 });
-
