@@ -174,6 +174,7 @@ endpointsParcelas.post("/", upload.single('imagen'), async (req, res) => {
 
   // 4. Respondemos que se creó con éxito
   res.status(201).json({
+    id: created,
     nombre: req.body.nombre,
     latitud: latitudNum,
     longitud: longitudNum,

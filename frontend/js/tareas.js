@@ -49,7 +49,7 @@ function cerrarModal(id) {
 
 async function cargarParcelas() {
   try {
-    const respuesta = await fetch("/api/parcelas");
+    const respuesta = await fetch("/api/v1/parcelas");
     if (!respuesta.ok) throw new Error("No se pudieron obtener las parcelas");
     
     const parcelas = await respuesta.json();
@@ -80,7 +80,7 @@ async function cargarTareas() {
   if (estado) parametros.set("estado", estado);
   if (prioridad) parametros.set("prioridad", prioridad);
 
-  const respuesta = await fetch(`/api/tareas?${parametros.toString()}`);
+  const respuesta = await fetch(`/api/v1/tareas?${parametros.toString()}`);
   tareasActuales = await respuesta.json();
 
   renderizarTareas(tareasActuales);
@@ -202,7 +202,7 @@ async function guardarTarea() {
   };
 
   const esEdicion = Boolean(id);
-  const url = esEdicion ? `/api/tareas/${id}` : "/api/tareas";
+  const url = esEdicion ? `/api/v1/tareas/${id}` : "/api/v1/tareas";
   const metodo = esEdicion ? "PUT" : "POST";
 
   const respuesta = await fetch(url, {
@@ -225,7 +225,7 @@ async function guardarTarea() {
 //  Cambiar estado 
 
 async function cambiarEstado(id, estado) {
-  const respuesta = await fetch(`/api/tareas/${id}/estado`, {
+  const respuesta = await fetch(`/api/v1/tareas/${id}/estado`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ estado })
@@ -248,7 +248,7 @@ async function confirmarReasignacion() {
   const id = document.getElementById("reasignar-tarea-id").value;
   const nueva_parcela_id = Number(document.getElementById("input-nueva-parcela").value);
 
-  const respuesta = await fetch(`/api/tareas/${id}/asignar`, {
+  const respuesta = await fetch(`/api/v1/tareas/${id}/asignar`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nueva_parcela_id })
@@ -268,7 +268,7 @@ async function confirmarReasignacion() {
 //  Historial 
 
 async function abrirModalHistorial(id) {
-  const respuesta = await fetch(`/api/tareas/${id}/historial`);
+  const respuesta = await fetch(`/api/v1/tareas/${id}/historial`);
   const historial = await respuesta.json();
 
   const contenedor = document.getElementById("contenido-historial");
@@ -306,7 +306,7 @@ function abrirModalConfirmarEliminar(id) {
 async function confirmarEliminacion() {
   const id = document.getElementById("eliminar-tarea-id").value;
 
-  const respuesta = await fetch(`/api/tareas/${id}`, { method: "DELETE" });
+  const respuesta = await fetch(`/api/v1/tareas/${id}`, { method: "DELETE" });
   const datos = await respuesta.json();
 
   cerrarModal("modal-confirmar-eliminar");

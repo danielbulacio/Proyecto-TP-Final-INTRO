@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AgroMonitor - Inicio</title>
-    <link rel="icon" type="image/png" href="./logo.png">
-    <link rel="icon" type="image/png" href="./logo.png">
+    <link rel="icon" type="image/png" href="./logo.png" />
+    <link rel="icon" type="image/png" href="./logo.png" />
     <!-- Bulma CSS Framework -->
     <link
       rel="stylesheet"
@@ -16,6 +16,9 @@
 
     <!-- Estilos adicionales limpios para pulir la interfaz -->
     <link rel="stylesheet" href="./css/index.css" />
+
+    <!-- CSS del footer -->
+    <link rel="stylesheet" href="./css/footer.css" />
 
     <!-- Iconografía Google Material Icons -->
     <link
@@ -28,11 +31,12 @@
     />
 
     <!-- Google Fonts - Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-   
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- NAVBAR -->
@@ -40,8 +44,8 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="index.html">
-          <img src="./logo.png">
-          <h1 style="font-weight: 800; font-size: 24PX;">AgroMonitor</h1>
+            <img src="./logo.png" />
+            <h1 style="font-weight: 800; font-size: 24px">AgroMonitor</h1>
           </a>
         </div>
         <!-- LINKS DEL NAVBAR -->
@@ -54,10 +58,7 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <p class="control">
-                <a
-                  class="button is-primary"
-                  href="ayuda.html"
-                >
+                <a class="button is-primary" href="ayuda.html">
                   <span>Ayuda</span>
                 </a>
               </p>
@@ -65,49 +66,46 @@
           </div>
         </div>
       </div>
-    </nav><!-- FIN DEL NAVBAR -->
+    </nav>
+    <!-- FIN DEL NAVBAR -->
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="section">
       <div class="container">
         
-        <!-- Cabecera de Bienvenida (Hero) -->
         <div class="crop-hero">
-          <div class="columns is-vcentered">
-            <div class="column">
-              <span class="tag is-white is-light mb-3" style="font-weight: 600; color: #a07711 !important;">VERSIÓN 1.0</span>
-              <h1 class="title is-2 has-text-white mb-2" style="font-weight: 800; letter-spacing: -0.03em;">Panel de Control Agrícola</h1>
-              <h2 class="subtitle is-5 has-text-white mb-0" style="opacity: 0.9; font-weight: 400;">
-                Bienvenido de nuevo. Accede de forma directa a cada uno de los módulos de control espacial y biológico de tus tierras.
-              </h2>
-            </div>
-          </div>
+          <img src="./logo.png" class="hero-logo" alt="AgroMonitor" />
+          <h1 class="hero-title">AgroMonitor - Panel de control <span style="color: #2abf6d;">Agrícola</span></h1>
+          <h2 class="hero-subtitle">
+            Bienvenido de nuevo. Acceda de forma directa a cada una de los módulos.
+          </h2>
         </div>
-
-        <!-- 3 SECCIONES DEL PANEL (ACCESOS DIRECTOS MODULARES) -->
+        
         <div class="columns is-multiline">
-          
-          <!-- SECCIÓN 1: PARCELAS (ACCESO DIRECTO) -->
-          <div class="column is-12-mobile is-4-tablet">
+          <div class="column">
             <div class="card crop-card">
               <div class="card-header-custom">
                 <span class="tag tag-parcelas">Ubicaciones</span>
-                <span class="material-icons" style="color: #d97706;">place</span>
+                
               </div>
-              
-              <div class="card-content is-flex is-flex-direction-column" style="flex-grow: 1; padding: 1.75rem;">
+
+              <div class="card-content card-body">
                 <div class="media is-align-items-center mb-4">
-                  <div class="media-left" style="background-color: #fffbeb; padding: 0.75rem; border-radius: 12px; display: flex;">
-                    <span class="material-icons" style="font-size: 2.25rem; color: #d97706;">map</span>
+                  <div class="media-left icon-box icon-box-parcelas">
+                    <span class="material-icons icon-parcelas">map</span>
                   </div>
                   <div class="media-content">
                     <p class="title is-4 mb-1">Parcelas</p>
-                    <p class="subtitle is-6 mb-0">Ubicación y Georreferencia</p>
+                    
                   </div>
                 </div>
-                
-                <div class="content card-description" style="flex-grow: 1;">
-                  <p>Registra, visualiza e interactúa con las coordenadas de latitud y longitud correspondientes a tus lotes agrícolas para llevar un control espacial absoluto.</p>
+
+                <div class="content card-description">
+                  <p>
+                    Registra, visualiza e interactúa con las coordenadas de
+                    latitud y longitud correspondientes a tus lotes agrícolas
+                    para llevar un control espacial absoluto.
+                  </p>
                 </div>
               </div>
 
@@ -119,28 +117,30 @@
               </div>
             </div>
           </div>
-
-          <!-- SECCIÓN 2: CULTIVOS (ACCESO DIRECTO) -->
           <div class="column is-12-mobile is-4-tablet">
             <div class="card crop-card">
               <div class="card-header-custom">
                 <span class="tag tag-cultivos">Producción</span>
-                <span class="material-icons" style="color: #059669;">eco</span>
+
               </div>
-              
-              <div class="card-content is-flex is-flex-direction-column" style="flex-grow: 1; padding: 1.75rem;">
+
+              <div class="card-content card-body">
                 <div class="media is-align-items-center mb-4">
-                  <div class="media-left" style="background-color: #ecfdf5; padding: 0.75rem; border-radius: 12px; display: flex;">
-                    <span class="material-icons" style="font-size: 2.25rem; color: #059669;">agriculture</span>
+                  <div class="media-left icon-box icon-box-cultivos">
+                    <span class="material-icons icon-cultivos">agriculture</span>
                   </div>
                   <div class="media-content">
                     <p class="title is-4 mb-1">Cultivos</p>
                     <p class="subtitle is-6 mb-0">Monitoreo de Siembras</p>
                   </div>
                 </div>
-                
-                <div class="content card-description" style="flex-grow: 1;">
-                  <p>Administra las variedades cultivadas en cada sector, define los parámetros hídricos críticos y controla los tiempos estimados de cosecha.</p>
+
+                <div class="content card-description">
+                  <p>
+                    Administra las variedades cultivadas en cada sector, define
+                    los parámetros hídricos críticos y controla los tiempos
+                    estimados de cosecha.
+                  </p>
                 </div>
               </div>
 
@@ -152,28 +152,29 @@
               </div>
             </div>
           </div>
-
-          <!-- SECCIÓN 3: TAREAS (ACCESO DIRECTO) -->
           <div class="column is-12-mobile is-4-tablet">
             <div class="card crop-card">
               <div class="card-header-custom">
                 <span class="tag tag-tareas">Planificación</span>
-                <span class="material-icons" style="color: #2563eb;">assignment</span>
               </div>
-              
-              <div class="card-content is-flex is-flex-direction-column" style="flex-grow: 1; padding: 1.75rem;">
+
+              <div class="card-content card-body">
                 <div class="media is-align-items-center mb-4">
-                  <div class="media-left" style="background-color: #eff6ff; padding: 0.75rem; border-radius: 12px; display: flex;">
-                    <span class="material-icons" style="font-size: 2.25rem; color: #2563eb;">task_alt</span>
+                  <div class="media-left icon-box icon-box-tareas">
+                    <span class="material-icons icon-tareas">task_alt</span>
                   </div>
                   <div class="media-content">
                     <p class="title is-4 mb-1">Tareas</p>
                     <p class="subtitle is-6 mb-0">Labores Diarias del Campo</p>
                   </div>
                 </div>
-                
-                <div class="content card-description" style="flex-grow: 1;">
-                  <p>Organiza, asigna y da seguimiento a las actividades diarias cruciales como el riego, control de malezas, fertilización y cosechas programadas.</p>
+
+                <div class="content card-description">
+                  <p>
+                    Organiza, asigna y da seguimiento a las actividades diarias
+                    cruciales como el riego, control de malezas, fertilización y
+                    cosechas programadas.
+                  </p>
                 </div>
               </div>
 
@@ -185,101 +186,49 @@
               </div>
             </div>
           </div>
-
-        </div> <!-- Fin de las columnas -->
-
-    
-
+        </div>
+        <!-- Fin de las columnas -->
       </div>
     </main>
 
     <!-- FIN DEL CONTENIDO PRINCIPAL -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="footer-brand-top">
+              <img src="./logo.png" class="footer-logo" />
+              <span class="footer-brand-name">AgroMonitor</span>
+            </div>
+            <p class="footer-desc">
+              AgroMonitor es una plataforma de gestión y monitoreo de campos
+              agrícolas que cruza el clima real con las necesidades de cada
+              cultivo para evaluar sus condiciones.
+            </p>
+          </div>
 
-<!-- FOOTER -->
-<footer class="footer has-background-dark has-text-white mt-6" style="background-color: #111827 !important; padding: 4rem 1.5rem 2rem;">
-  <div class="container">
-    <div class="columns is-multiline">
-      
-      <!-- Columna 1: Branding / Descripción -->
-      <div class="column is-12-mobile is-12-tablet is-4-desktop mb-4">
-        <div class="is-flex is-align-items-center mb-3">
-          <img src="./logo.png" style="height: 40px; margin-right: 1rem;" />
-          <h2 class="title is-4 mb-0" style="font-weight: 800; letter-spacing: -0.02em; color: #ffffff !important;">
-            AgroMonitor
-          </h2>
+          <div class="footer-creditos">
+            <p class="footer-titulo">Créditos</p>
+            <ul>
+              <li>Tomás Perez</li>
+              <li>Rodrigo Beron</li>
+              <li>Daniel Ezequiel Bulacios</li>
+              <li>Marcos Fortunato</li>
+            </ul>
+          </div>
         </div>
-        <p class="is-size-6 mb-4" style="color: #9ca3af; line-height: 1.6; max-width: 320px;">
-          Plataforma integral de gestión agrícola para el control espacial, monitoreo inteligente de cultivos y planificación de tareas en el campo.
-        </p>
-        <p class="is-size-7" style="color: #6b7280;">
-          &copy; 2026 AgroMonitor Inc. Todos los derechos reservados.
+
+        <p class="footer-copy">
+          AgroMonitor - Proyecto final para Introducción al desarrollo de Software
         </p>
       </div>
+    </footer>
 
-      <!-- Columna 2: Módulos del Sistema -->
-      <div class="column is-6-mobile is-4-tablet is-2-desktop mb-4">
-        <p class="title is-6 has-text-white mb-3" style="text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">
-          Módulos
-        </p>
-        <ul class="is-size-6">
-          <li class="mb-2"><a href="index.html" class="footer-link-item">Inicio</a></li>
-          <li class="mb-2"><a href="parcelas.html" class="footer-link-item">Parcelas</a></li>
-          <li class="mb-2"><a href="cultivos.html" class="footer-link-item">Cultivos</a></li>
-          <li class="mb-2"><a href="tareas.html" class="footer-link-item">Tareas</a></li>
-        </ul>
-      </div>
-
-      <!-- Columna 3: Soporte y Recursos -->
-      <div class="column is-6-mobile is-4-tablet is-3-desktop mb-4">
-        <p class="title is-6 has-text-white mb-3" style="text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">
-          Soporte
-        </p>
-        <ul class="is-size-6">
-          <li class="mb-2"><a href="ayuda.html" class="footer-link-item">Centro de Ayuda</a></li>
-          <li class="mb-2"><a href="#" class="footer-link-item">Documentación Técnica</a></li>
-          <li class="mb-2"><a href="#" class="footer-link-item">Estado del Sistema</a></li>
-        </ul>
-      </div>
-
-      <!-- Columna 4: Contacto e Ubicación -->
-      <div class="column is-12-mobile is-4-tablet is-3-desktop mb-4">
-        <p class="title is-6 has-text-white mb-3" style="text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">
-          Contacto
-        </p>
-        <div class="is-size-6">
-          <p class="is-flex is-align-items-center mb-2 footer-contact-item">
-            <span class="material-icons mr-2">place</span>
-            Sector Agrícola Central, Lote 4
-          </p>
-          <p class="is-flex is-align-items-center mb-2 footer-contact-item">
-            <span class="material-icons mr-2">email</span>
-            soporte.equipoagro@gmail.com
-          </p>
-          <p class="is-flex is-align-items-center footer-contact-item">
-            <span class="material-icons mr-2">call</span>
-            +54 (11) 4000-0000
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Divisor y Pie Secundario -->
-    <hr style="background-color: #1f2937; height: 1px; border: none; margin: 2rem 0 1.5rem;" />
-
-    <div class="is-flex is-justify-content-space-between is-align-items-center is-flex-wrap-wrap" style="gap: 1rem;">
-      <p class="is-size-7" style="color: #6b7280;">
-        Sistema de georreferenciación y monitoreo biológico modular.
-      </p>
-      <div class="tags has-addons mb-0">
-        <span class="tag is-dark" style="background-color: #1f2937; color: #9ca3af;">Estado</span>
-        <span class="tag is-success is-light" style="font-weight: 600;">Operativo v1.0</span>
-      </div>
-    </div>
-  </div>
-</footer>
-<!-- FIN DEL FOOTER -->
-
-
+    <!-- FIN DEL FOOTER -->
   </body>
 </html>

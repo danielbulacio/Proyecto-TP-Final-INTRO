@@ -21,11 +21,28 @@ padding: 3rem 1.5rem;
 
 /* Héroe mejorado con degradado agrícola premium de alto contraste */
 .crop-hero {
-background: linear-gradient(135deg, #a07711 0%, #deb347 100%) !important;
+background-image: url(../fondo.jpg)!important;
+background-repeat: no-repeat;
+background-size: cover;
+filter: brightness(90%);
+background-position-y: center;
 border-radius: 16px;
-padding: 3rem;
+
+height: 450px;
 box-shadow: 0 10px 25px -5px rgba(169, 146, 12, 0.15), 0 8px 10px -6px rgba(185, 176, 16, 0.15);
 margin-bottom: 3rem;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+padding: 2.5rem;
+position: relative;
+}
+
+.hero-logo {
+position: absolute;
+top: 2rem;
+right: 2rem;
+height: 60px;
 }
 
 /* Tarjetas premium diseñadas específicamente para destacar suavemente en blanco */
@@ -91,6 +108,7 @@ color: var(--text-muted) !important;
 color: #475569;
 font-size: 0.95rem;
 line-height: 1.6;
+flex-grow: 1;
 }
 
 /* Footers de tarjeta interactivos con diseño limpio */
@@ -141,46 +159,65 @@ background-color: #dbeafe;
 color: #1d4ed8;
 }
 
-/* Métrica / Indicador rápido de estado en Dashboard */
-.stats-badge {
-font-size: 0.8rem;
-font-weight: 500;
-color: var(--text-muted);
-background-color: #f1f5f9;
-padding: 0.25rem 0.6rem;
-border-radius: 20px;
-display: inline-flex;
-align-items: center;
-}
-
-.stats-badge span {
-width: 6px;
-height: 6px;
-background-color: #10b981;
-border-radius: 50%;
-margin-right: 6px;
-}
-
-
-/* 3. Hover para los enlaces del Footer con desplazamiento dinámico */
-.footer-link-item {
-color: #9ca3af;
+/* ===== Hero (cabecera de bienvenida) ===== */
+.hero-tag {
 display: inline-block;
-text-decoration: none;
+background-color: #ffffff;
+color: #a07711;
+font-weight: 600;
+font-size: 0.75rem;
+padding: 0.25rem 0.75rem;
+border-radius: 4px;
+margin-bottom: 0.75rem;
 }
-.footer-link-item:hover {
-color: #10b981 !important;
-transform: translateX(5px); /* Se desplaza 5px hacia la derecha */
+.hero-title {
+color: #ffffff;
+font-size: 2.25rem;
+font-weight: 800;
+letter-spacing: -0.03em;
+margin-bottom: 0.5rem;
+}
+.hero-subtitle {
+color: #ffffff;
+font-size: 1.25rem;
+font-weight: 400;
+margin: 0;
 }
 
-/* 4. Hover para los ítems de contacto */
-.footer-contact-item {
-color: #d1d5db;
-transition: color 0.2s ease;
+/* ===== Cuerpo de las tarjetas ===== */
+.card-body {
+display: flex;
+flex-direction: column;
+flex-grow: 1;
+padding: 1.75rem;
 }
-.footer-contact-item:hover {
-color: #ffffff;
+
+/* Caja del icono a la izquierda del titulo */
+.icon-box {
+display: flex;
+padding: 0.75rem;
+border-radius: 12px;
 }
-.footer-contact-item .material-icons {
-color: #10b981;
+.icon-box .material-icons {
+font-size: 2.25rem;
+}
+.icon-box-parcelas {
+background-color: #fffbeb;
+}
+.icon-box-cultivos {
+background-color: #ecfdf5;
+}
+.icon-box-tareas {
+background-color: #eff6ff;
+}
+
+/* Colores de icono por seccion */
+.icon-parcelas {
+color: #d97706;
+}
+.icon-cultivos {
+color: #059669;
+}
+.icon-tareas {
+color: #2563eb;
 }

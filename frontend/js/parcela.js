@@ -213,7 +213,7 @@ if (btnAgregar) {
 }
 async function createParcela(datosNuevaParcela) {
     try {
-        const response = await fetch("http://localhost:8000/api/parcelas", {
+        const response = await fetch("http://localhost:8000/api/v1/parcelas", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
