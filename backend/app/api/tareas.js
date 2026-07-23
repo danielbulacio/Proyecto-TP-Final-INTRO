@@ -6,7 +6,6 @@ import {
     createTarea,
     updateTarea,
     deleteTarea,
-    reassignTarea,
     changeStateTarea
 } from "../db/tareas.js";
 
@@ -122,41 +121,6 @@ endpointsTareas.delete("/:id", async (req, res) => {
     }
 
     res.status(200).json({ message: "Tarea eliminada" });
-});
-
-
-// reasigna la tarea a otra parcela (el frontend NO usa esto, feature a medias)
-endpointsTareas.patch("/:id/asignar", async (req, res) => {
-    let id = req.params.id;
-    const { nueva_parcela_id } = req.body;
-
-    // la parcela destino es obligatoria
-    if (!nueva_parcela_id) {
-        res.status(400).json({ message: "nueva_parcela_id es obligatorio" });
-        return;
-    }
-
-    // la tarea tienee que existir
-    const tarea = await getOneTarea(id);
-    if (!tarea) {
-        res.status(404).json({ message: "Tarea no encontrada" });
-        return;
-    }
-
-    // la parcela destino tiene que existir
-    const parcelaDestino = await getParcela(nueva_parcela_id);
-    if (!parcelaDestino) {
-        res.status(404).json({ message: "La parcela destino no existe" });
-        return;
-    }
-
-    const reasignada = await reassignTarea(id, nueva_parcela_id, tarea.parcela_id);
-
-    if (!reasignada) {
-        res.status(500).json({ message: "Error al reasignar la tarea" });
-        return;
-    }
-    res.status(200).json({ message: "Tarea reasignada con éxito" });
 });
 
 

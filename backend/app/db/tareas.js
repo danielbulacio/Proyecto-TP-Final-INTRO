@@ -50,20 +50,6 @@ export async function deleteTarea(id) {
     return resultado.rowCount > 0;
 }
 
-export async function reassignTarea(id, nuevaParcelaId, parcelaAnteriorId) {
-
-    const resultado = await db.query(
-
-
-        "UPDATE tareas SET parcela_id = $1 WHERE id = $2",
-        [nuevaParcelaId, id]
-    );
-
-    if (resultado.rowCount === 0) return false;
-
-    return true;
-}
-
 export async function changeStateTarea(id, estado) {
     const resultado = await db.query(
         "UPDATE tareas SET estado = $1 WHERE id = $2",

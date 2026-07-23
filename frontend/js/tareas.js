@@ -66,17 +66,10 @@ async function cargarParcelas() {
     opciones += `<option value="${p.id}">${p.nombre}</option>`;
   }
 
-  // Okay aca abajo basicamente reemplaza las opciones y las Ponemos
-
-  // porque dice en 2 lados? porque uno es cuando agregas una tarea y el otro es para cuando la editas se usa el 
-  // mismo modal
-
-  for (const idSelect of ["input-parcela", "input-nueva-parcela"]) {
-    const select = document.getElementById(idSelect);
-    if (select) select.innerHTML = opciones;
-  }
-
-} 
+  // ponemos las opciones en el select de parcela del formulario
+  const select = document.getElementById("input-parcela");
+  if (select) select.innerHTML = opciones;
+}
 
 //  Carga y render de tareas 
 
