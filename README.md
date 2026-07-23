@@ -40,7 +40,7 @@ En las **siguientes secciones** desarollamos mas profundamente con ejemplos visu
 
 ## Cómo levantar el proyecto
 1.  cd Proyecto-TP-Final-INTRO
-2.  make run
+2.  make run (en realidad el make run no builde. cheqeuar esto
 
 Alternativamente:
 1. cd Proyecto-TP-Final-INTRO/backend/
