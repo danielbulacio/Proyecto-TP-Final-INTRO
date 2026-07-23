@@ -87,53 +87,17 @@ endpointsParcelas.put("/:id", upload.single('imagen'), async (req, res) => {
   res.sendStatus(200);
 });
 
-// actualizar campo especifico
-endpointsParcelas.patch("/:id", async (req,res) => {
-  let id = req.params.id;
-
-  if (req.body.latitud !== undefined && typeof req.body.latitud !== "number") {
-    res.status(400).send("Latitud debe ser un número");
-    return;
-  }
-  
-  if (req.body.longitud !== undefined && typeof req.body.longitud !== "number") {
-    res.status(400).send("Longitud debe ser un número");
-    return;
-  }
-
-  let parcela = await getParcela(id);
-
-  if (parcela === undefined){
-    res.sendStatus(404);
-    return;
-  }
-
-  const update = updateParcela(
-    id,
-    req.body.nombre || parcela.nombre,
-    req.body.latitud !== undefined ? req.body.latitud : parcela.latitud,
-    req.body.longitud !== undefined ? req.body.longitud : parcela.longitud,
-    req.body.hectareas !== undefined ? req.body.hectareas : parcela.hectareas,
-    req.body.imagen !== undefined ? req.body.imagen : parcela.imagen
-  )
-  if(!update){
-    res.sendStatus(500);
-    return;
-  }
-
-  res.sendStatus(200);
-});
 
 // delete parcelas
 endpointsParcelas.delete("/:id", async (req,res) => {
   let id = req.params.id;
-  
+  // Primero verificamos si la parcela existe
   const parcela = await getParcela(id);
   if(parcela === undefined){
     res.sendStatus(404);
     return;
   }
-  
+  // Llamamos a la función deleteParcela para eliminar la parcela de la base de datos
   const eliminado = await deleteParcela(id);
   if(!eliminado){
     res.sendStatus(500);
