@@ -42,20 +42,5 @@ CREATE TABLE tareas (
  
 CREATE INDEX idx_tareas_parcela_id ON tareas(parcela_id);
 CREATE INDEX idx_tareas_estado ON tareas(estado);
- 
-CREATE TABLE tareas_historial (
-    id SERIAL PRIMARY KEY,
-    tarea_id INT NOT NULL REFERENCES tareas(id) ON DELETE CASCADE,
-    fecha TIMESTAMP NOT NULL DEFAULT NOW(),
-    accion VARCHAR(30) NOT NULL
-        CHECK (accion IN ('creacion', 'actualizacion', 'reasignacion', 'cambio_estado')),
-    detalle TEXT,
-    parcela_anterior_id INT REFERENCES parcelas(id),
-    parcela_nueva_id INT REFERENCES parcelas(id),
-    estado_anterior VARCHAR(20),
-    estado_nuevo VARCHAR(20)
-);
- 
-CREATE INDEX idx_tareas_historial_tarea_id ON tareas_historial(tarea_id);
- 
+
 
