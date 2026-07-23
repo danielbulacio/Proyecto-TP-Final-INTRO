@@ -19,9 +19,10 @@ AgroMonitor es una plataforma  gestión y monitoreo de campos agrícolas. La ide
 
 Concretamente:
 1. Registrar sus terrenos.
-2. Conocer las condiciones metereológicas actuales y de los últimos 30 días.
-3. Evaluar la salud del cultivo mediante un sistema de puntuación (score).
-4. Registrar y planificar tareas.
+2. Aignar cultivos a tus terrenos
+3. Conocer las condiciones metereológicas actuales y de los últimos 30 días.
+4. Evaluar la salud del cultivo mediante un sistema de puntuación (score).
+5. Registrar y planificar tareas.
 
 En las **siguientes secciones** desarollamos mas profundamente con ejemplos visuales, cada uno de estos puntos.
 
