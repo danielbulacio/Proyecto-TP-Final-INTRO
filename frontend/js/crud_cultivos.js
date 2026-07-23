@@ -5,9 +5,7 @@ const API_PARCELAS_URL = "http://localhost:8000/api/v1/parcelas";
 // Variables globales para mapeo de parcelas
 let parcelasCache = {};
 
-/**
- * Carga todas las parcelas desde el backend y popula el selector del formulario
- */
+// Carga todas las parcelas desde el backend y completa el selector del formulario
 async function loadParcelas() {
   const select = document.getElementById("parcela_id");
   
@@ -43,9 +41,7 @@ async function loadParcelas() {
   }
 }
 
-/**
- * Carga todos los cultivos de la base de datos Postgres y dibuja la tabla
- */
+// Carga todos los cultivos de la base de datos Postgres y dibuja la tabla
 async function getAllCultivos() {
   const tbody = document.getElementById("table-cultivos");
   const totalBadge = document.getElementById("total-registros");
@@ -56,10 +52,12 @@ async function getAllCultivos() {
       throw new Error(`Error de Servidor (${response.status}): ${response.statusText}`);
     }
     
+
     const cultivos = await response.json();
     tbody.innerHTML = "";
     totalBadge.textContent = `${cultivos.length} Cultivos registrados`;
 
+    // Validación de tabla vacía
     if (cultivos.length === 0) {
       tbody.innerHTML = `
         <tr>
@@ -72,6 +70,7 @@ async function getAllCultivos() {
       return;
     }
 
+    // Generación de la tabla de cultivos
     cultivos.forEach(cultivo => {
       const tr = document.createElement("tr");
 
@@ -114,9 +113,7 @@ async function getAllCultivos() {
   }
 }
 
-/**
- * Guarda un cultivo (Crea si id está vacío, actualiza si hay id presente)
- */
+// Guarda un cultivo (Crea si id está vacío, actualiza si hay id presente)
 async function saveCultivo(event) {
   event.preventDefault();
   hideNotifications();
@@ -147,6 +144,7 @@ async function saveCultivo(event) {
     mililitros_necesarios: mililitros_necesarios ? parseInt(mililitros_necesarios) : null
   };
 
+  // Determinar si es una operación de creación o actualización
   const isEditing = id !== "";
   const url = isEditing ? `${API_CULTIVOS_URL}/${id}` : API_CULTIVOS_URL;
   const method = isEditing ? "PUT" : "POST";
@@ -173,13 +171,11 @@ async function saveCultivo(event) {
   }
 }
 
-/**
- * Elimina un cultivo específico por su ID
- */
+// Elimina un cultivo específico por su ID
 async function deleteCultivo(id) {
   hideNotifications();
   
-  // Simulación limpia de confirmación nativa integrada
+  // Simulación limpia de confirmación
   if (!confirm(`¿Estás seguro de que deseas eliminar permanentemente el cultivo con ID ${id}?`)) {
     return;
   }
@@ -201,9 +197,7 @@ async function deleteCultivo(id) {
   }
 }
 
-/**
- * Carga un cultivo seleccionado en el formulario para proceder con la edición
- */
+// Carga un cultivo seleccionado en el formulario para proceder con la edición
 async function editCultivo(cultivo) {
   hideNotifications();
   
@@ -226,9 +220,13 @@ async function editCultivo(cultivo) {
   document.getElementById("form-header").classList.remove("has-background-light");
   document.getElementById("form-header").style.backgroundColor = "#e8f4fd";
   
-  document.getElementById("form-title").innerHTML = `
+  const titleElem = document.getElementById("form-title");
+
+  titleElem.classList.remove("has-text-info", "has-text-success");
+  
+  titleElem.innerHTML = `
     <span class="icon mr-2 has-text-info"><i class="material-icons">edit</i></span>
-    <span>Editar Cultivo ID: ${cultivo.id}</span>
+    <span class="has-text-dark">Editar Cultivo ID: ${cultivo.id}</span>
   `;
   
   document.getElementById("btn-submit").className = "button is-info is-fullwidth";
@@ -236,9 +234,7 @@ async function editCultivo(cultivo) {
   document.getElementById("control-cancelar").classList.remove("is-hidden");
 }
 
-/**
- * Restablece el formulario a su estado de inserción por defecto
- */
+// Restablece el formulario a su estado de inserción por defecto
 function resetForm() {
   document.getElementById("form-cultivo").reset();
   document.getElementById("cultivo-id").value = "";
@@ -249,7 +245,7 @@ function resetForm() {
   
   document.getElementById("form-title").innerHTML = `
     <span class="icon mr-2 has-text-success"><i class="material-icons">add_box</i></span>
-    <span>Registrar Cultivo</span>
+    <span class="has-text-dark">Registrar Cultivo</span>
   `;
   
   document.getElementById("btn-submit").className = "button is-success is-fullwidth";
@@ -257,9 +253,7 @@ function resetForm() {
   document.getElementById("control-cancelar").classList.add("is-hidden");
 }
 
-/**
- * Auxiliares visuales para alertas rápidas
- */
+// Visuales para alertas rápidas
 function showNotification(type, message) {
   const target = document.getElementById(type);
   if (target) {
@@ -295,13 +289,13 @@ function toggleNavbar() {
 
 // Lanzador de eventos asíncronos al inicio
 window.onload = async function() {
-  // 1. Cargar primero las parcelas para poder mapear sus IDs a nombres
+  // Cargar primero las parcelas para poder mapear sus IDs a nombres
   await loadParcelas();
   
-  // 2. Cargar cultivos de la tabla Postgres
+  // Cargar cultivos de la tabla Postgres
   await getAllCultivos();
 
-  // 3. CAPTURAR EL ID DE LA URL SI EXISTE
+  // CAPTURAR EL ID DE LA URL SI EXISTE
   const urlParams = new URLSearchParams(window.location.search);
   const cultivoId = urlParams.get('id');
 
@@ -313,10 +307,10 @@ window.onload = async function() {
       if (response.ok) {
         const cultivo = await response.json();
         
-        // Reutilizamos tu función existente para cargar el formulario
+        // Reutilizamos función existente editCultivo para cargar el formulario
         await editCultivo(cultivo); 
         
-        // Hacer scroll suave hasta el formulario para mejor experiencia visual
+        // Hacer scroll suave hasta el formulario
         document.getElementById("form-cultivo").scrollIntoView({ behavior: 'smooth' });
       } else {
         console.error("No se pudo obtener el cultivo con ID:", cultivoId);

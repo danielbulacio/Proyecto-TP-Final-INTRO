@@ -1,6 +1,3 @@
-# Dependencias
 node_modules/
-
 #data se crea cuando haces docker compose up
 data/
-

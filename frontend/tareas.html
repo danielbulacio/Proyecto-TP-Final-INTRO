@@ -25,84 +25,54 @@
   <body>
     <!-- NAVBAR -->
     <nav class="navbar is-white">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="index.html">
-          <img src="./logo.png">
-          <h1 style="font-weight: 800; font-size: 24PX;">AgroMonitor</h1>
-          </a>
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+        <img src="./logo.png">
+        <h1 style="font-weight: 800; font-size: 24PX;">AgroMonitor</h1>
+        </a>
+      </div>
+      <!-- LINKS DEL NAVBAR -->
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+          <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+          <a class="navbar-item" href="tareas.html"> Tareas </a>
         </div>
-        <!-- LINKS DEL NAVBAR -->
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" href="parcelas.html"> Parcelas </a>
-            <a class="navbar-item" href="cultivos.html"> Cultivos </a>
-            <a class="navbar-item" href="tareas.html"> Tareas </a>
-          </div>
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <p class="control">
-                <a
-                  class="button is-primary"
-                  href="ayuda.html"
-                >
-                  <span>Ayuda</span>
-                </a>
-              </p>
-            </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class="control">
+              <a
+                class="button is-primary"
+                href="ayuda.html"
+              >
+                <span>Ayuda</span>
+              </a>
+            </p>
           </div>
         </div>
       </div>
-    </nav><!-- FIN DEL NAVBAR -->
+    </div>
+  </nav><!-- FIN DEL NAVBAR -->
     
-    
-    <!--
-    SEGUIR ACA
-    -->
-
     <!-- ENCABEZADO DE LA SECCION -->
-    <section class="section pb-3">
+    <section class="section">
       <div class="container">
-        <div class="level is-mobile">
-          <div class="level-left">
-            <div>
-              <h2 class="title is-3 titulo-seccion">Tareas</h2>
-              <p class="subtitulo-seccion">Registro de acciones por parcela y su nivel de importancia</p>
+        <div class="crop-hero shadow-sm">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h1 class="title is-3 has-text-white">Gestor de Tareas</h1>
+              <h2 class="subtitle is-6 has-text-white-ter ">Registro de tareas y su nivel de importancia</h2>
             </div>
-          </div>
-          <div class="level-right">
-            <button id="btn-nueva-tarea" class="button is-primary">
-              <span class="icon"><strong>+</strong></span>
-              <span>Nueva tarea</span>
-            </button>
+            <div class="column is-narrow">
+              <button id="btn-nueva-tarea" class="boton-blanco button">
+                <span class="icon"><strong>+</strong></span>
+                <span>Nueva tarea</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- FILTROS -->
-        <div class="field is-grouped is-grouped-multiline">
-          <div class="control">
-            <div class="select">
-              <select id="filtro-estado">
-                <option value="">Todos los estados</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="en_progreso">En progreso</option>
-                <option value="completada">Completada</option>
-                <option value="cancelada">Cancelada</option>
-              </select>
-            </div>
-          </div>
-          <div class="control">
-            <div class="select">
-              <select id="filtro-prioridad">
-                <option value="">Toda importancia</option>
-                <option value="Baja">Baja</option>
-                <option value="Media">Media</option>
-                <option value="Alta">Alta</option>
-                <option value="Urgente">Urgente</option>
-              </select>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -159,13 +129,14 @@
             <div class="field">
               <label class="label">Importancia</label>
               <div class="control">
-                <div class="selector-prioridad" id="selector-prioridad">
-                  <div class="opcion-prioridad" data-valor="Baja">Baja</div>
-                  <div class="opcion-prioridad" data-valor="Media">Media</div>
-                  <div class="opcion-prioridad" data-valor="Alta">Alta</div>
-                  <div class="opcion-prioridad" data-valor="Urgente">Urgente</div>
+                <div class="select is-fullwidth">
+                  <select id="input-prioridad">
+                    <option value="Baja">Baja</option>
+                    <option value="Media" selected>Media</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Urgente">Urgente</option>
+                  </select>
                 </div>
-                <input type="hidden" id="input-prioridad" value="Media" />
               </div>
             </div>
 
@@ -209,23 +180,6 @@
         <footer class="modal-card-foot">
           <button class="button is-primary" id="confirmar-reasignar">Reasignar</button>
           <button class="button" data-cerrar="reasignar">Cancelar</button>
-        </footer>
-      </div>
-    </div>
-
-    <!-- MODAL: HISTORIAL DE ACCIONES -->
-    <div id="modal-historial" class="modal">
-      <div class="modal-background" data-cerrar="modal-historial"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Registro de acciones</p>
-          <button class="delete" aria-label="close" data-cerrar="modal-historial"></button>
-        </header>
-        <section class="modal-card-body">
-          <div id="contenido-historial"></div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button" data-cerrar="modal-historial">Cerrar</button>
         </footer>
       </div>
     </div>

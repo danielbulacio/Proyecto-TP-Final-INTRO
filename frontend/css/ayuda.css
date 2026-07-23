@@ -16,7 +16,6 @@ color: var(--text-dark);
 min-height: 100vh;
 }
 
-/* Hero section adaptado */
 .crop-hero {
 background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
 border-radius: 16px;

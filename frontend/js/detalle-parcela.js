@@ -136,6 +136,11 @@ async function mostrarDatosActuales() {
   document.getElementById("cultivo-tipo").textContent = parcela.tipo;
   document.getElementById("cultivo-temp").textContent = `${parcela.temperatura_optima}°`;
   document.getElementById("cultivo-agua").textContent = `${parcela.mililitros_necesarios} ml`;
+
+  // Si la parcela no tiene cultivo asignado, blurreamos las tarjetas y mostramos el aviso
+  if (!parcela.nombre_cultivo) {
+    document.querySelector(".row-superior").classList.add("sin-cultivo");
+  }
 }
 // FIN DE SECCION mostrar datos actuales.
 
