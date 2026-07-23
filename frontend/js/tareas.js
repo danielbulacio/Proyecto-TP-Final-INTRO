@@ -108,12 +108,32 @@ function renderizarTareas(tareas) {
 // ACA
 //  GENERAR HTML DE TARJETA
 function tarjetaTareaHTML(t) {
-  const parcelaNombre = mapaParcelas.get(t.parcela_id) || `Parcela #${t.parcela_id}`;
-
   const tId = t.id;
   const tPrioridad = t.prioridad;
-  const tEstado = t.estado;
-  const tEstadoEtiqueta = ETIQUETAS_ESTADO[t.estado] || t.estado;
+
+  // Nombre de la parcela: si esta en el mapa usamos ese, si no ponemos "Parcela #id"
+  let parcelaNombre;
+  if (mapaParcelas.has(t.parcela_id)) {
+    parcelaNombre = mapaParcelas.get(t.parcela_id);
+  } else {
+    parcelaNombre = `Parcela #${t.parcela_id}`;
+  }
+
+  // Etiqueta linda del estado (Pendiente, En progreso...); si no la tenemos, mostramos el crudo
+  let tEstadoEtiqueta;
+  if (ETIQUETAS_ESTADO[t.estado]) {
+    tEstadoEtiqueta = ETIQUETAS_ESTADO[t.estado];
+  } else {
+    tEstadoEtiqueta = t.estado;
+  }
+
+  // Texto de la fecha limite: solo si la tarea tiene una
+  let textoVence;
+  if (t.fecha_limite) {
+    textoVence = " · Vence " + formatFecha(t.fecha_limite);
+  } else {
+    textoVence = "";
+  }
 
   return `
     <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -125,7 +145,7 @@ function tarjetaTareaHTML(t) {
 
         <p class="has-text-weight-semibold descripcion-tarea">${t.tarea}</p>
         <p class="is-size-7 has-text-grey mb-3">
-          ${parcelaNombre}${t.fecha_limite ? " · Vence " + formatFecha(t.fecha_limite) : ""}
+          ${parcelaNombre}${textoVence}
         </p>
 
         <div class="dropdown mb-2">
@@ -153,21 +173,33 @@ function tarjetaTareaHTML(t) {
   `;
 }
 
+// cada es que se abre el modal de nueva tarea
 function abrirModalNueva() {
+  
+  // agarra el formualrio completo 
   const form = document.getElementById("form-tarea");
+  
+  // se borra lo que estaba en el forumualrio anteriromente es decir si lo cerraste y lo abriste
   if (form) form.reset();
   
+  // Estamos creadno una  tarea nueva
   document.getElementById("tarea-id").value = "";
+
+  // Sirve para cmabiar el titulo de la modal a nueva tarea 
   document.getElementById("modal-tarea-titulo").textContent = "Nueva tarea";
   
+  // en el caso de que aprezca un cartel de un error esto lo borar (borra un cartel previo)
   const errores = document.getElementById("errores-form-tarea");
   if (errores) errores.classList.add("is-hidden");
   
+
   document.getElementById("input-prioridad").value = "Media";
   document.getElementById("input-tipo").value = "";
+  
   abrirModal("modal-tarea");
 }
 
+// esta funcion e para maneja lo que pasa si el usuario queire editar una tarea
 function abrirModalEditar(id) {
   // Conversión segura para encontrar la tarea independiente de si es número o string
   const tarea = tareasActuales.find((t) => String(t.id) === String(id));
@@ -194,15 +226,20 @@ function abrirModalEditar(id) {
   abrirModal("modal-tarea");
 }
 
+// MANEJA MOSTARAR LOS ERROE EN EL FOMRULARIO
 function mostrarErroresFormulario(contenedorId, datos) {
   const el = document.getElementById(contenedorId);
   if (!el) return;
 
-  const mensajes = datos?.detalles
-    ? datos.detalles.map((d) => `${d.campo}: ${d.mensaje}`).join(" | ")
-    : datos?.message || "Ocurrió un error inesperado";
+  // El backend manda un solo mensaje de error; si no vino ninguno usamos uno por defecto
+  let mensaje;
+  if (datos && datos.message) {
+    mensaje = datos.message;
+  } else {
+    mensaje = "Ocurrió un error inesperado";
+  }
 
-  el.textContent = mensajes;
+  el.textContent = mensaje;
   el.classList.remove("is-hidden");
 }
 
