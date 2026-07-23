@@ -26,6 +26,7 @@ CREATE TABLE tareas (
     prioridad VARCHAR(20) CHECK (prioridad IN ('Baja', 'Media', 'Alta', 'Urgente')),
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente' -- seteamos que por default la tarea esta en pendiente
         CHECK (estado IN ('pendiente', 'en_progreso', 'completada')),
+    tipo VARCHAR(30) CHECK (tipo IN ('riego', 'fertilizacion', 'poda', 'control_plagas', 'cosecha', 'otro')),
     fecha_limite DATE
 );
 
