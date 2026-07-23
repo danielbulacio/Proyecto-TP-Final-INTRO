@@ -61,23 +61,23 @@ endpointsCultivos.put("/:id", async (req, res) => {
         return;
     }
 
-    // Validaciones condicionales: solo si se envían los campos opcionales
     // (Validamos que temperatura_optima, dias_de_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
-    if (temperatura_optima !== undefined) {
+    // Validaciones condicionales: solo si los campos tienen un valor real (no null ni undefined)
+    if (temperatura_optima !== undefined && temperatura_optima !== null) {
         if (isNaN(temperatura_optima) || temperatura_optima <= 0) {
             res.status(400).json({ message: "La temperatura óptima debe ser un número positivo" });
             return;
         }
     }
 
-    if (dias_de_cosecha !== undefined) {
+    if (dias_de_cosecha !== undefined && dias_de_cosecha !== null) {
         if (isNaN(dias_de_cosecha) || dias_de_cosecha <= 0) {
             res.status(400).json({ message: "Los días de cosecha deben ser un número positivo" });
             return;
         }
     }
 
-    if (mililitros_necesarios !== undefined) {
+    if (mililitros_necesarios !== undefined && mililitros_necesarios !== null) {
         if (isNaN(mililitros_necesarios) || mililitros_necesarios <= 0) {
             res.status(400).json({ message: "Los mililitros necesarios deben ser un número positivo" });
             return;
@@ -113,21 +113,22 @@ endpointsCultivos.post("/", async (req, res) => {
 
 
     // (Validamos que temperatura_optima, dias_de_cosecha y mililitros_necesarios sean números positivos si se proporcionan)
-    if (temperatura_optima !== undefined) {
+    // Validaciones condicionales: solo si los campos tienen un valor real (no null ni undefined)
+    if (temperatura_optima !== undefined && temperatura_optima !== null) {
         if (isNaN(temperatura_optima) || temperatura_optima <= 0) {
             res.status(400).json({ message: "La temperatura óptima debe ser un número positivo" });
             return;
         }
     }
 
-    if (dias_de_cosecha !== undefined) {
+    if (dias_de_cosecha !== undefined && dias_de_cosecha !== null) {
         if (isNaN(dias_de_cosecha) || dias_de_cosecha <= 0) {
             res.status(400).json({ message: "Los días de cosecha deben ser un número positivo" });
             return;
         }
     }
 
-    if (mililitros_necesarios !== undefined) {
+    if (mililitros_necesarios !== undefined && mililitros_necesarios !== null) {
         if (isNaN(mililitros_necesarios) || mililitros_necesarios <= 0) {
             res.status(400).json({ message: "Los mililitros necesarios deben ser un número positivo" });
             return;
