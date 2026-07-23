@@ -29,13 +29,12 @@ CREATE TABLE detalle_parcela (
 
 CREATE TABLE tareas (
     id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
+    parcela_id INT NOT NULL REFERENCES parcelas, 
     tarea VARCHAR(255) NOT NULL,
     prioridad VARCHAR(20) NOT NULL DEFAULT 'Media'
         CHECK (prioridad IN ('Baja', 'Media', 'Alta', 'Urgente')),
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente'
         CHECK (estado IN ('pendiente', 'en_progreso', 'completada')),
-    fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     fecha_limite DATE
 );
 
