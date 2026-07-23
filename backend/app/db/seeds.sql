@@ -1,6 +1,6 @@
-INSERT INTO parcelas (nombre, latitud, longitud, hectareas) VALUES
-  ('Lote Norte', -34.603722, -58.381592, 100.0),
-  ('Lote Sur',   -33.118333, -64.349722, 150.0);
+INSERT INTO parcelas (nombre, latitud, longitud, hectareas, imagen) VALUES
+  ('Lote Norte', -34.603722, -58.381592, 100.0, '1784726887251.jpg'),
+  ('Lote Sur',   -33.118333, -64.349722, 150.0, '1784727610190.jpg');
 
 -- cultivos
 INSERT INTO cultivos (nombre_cultivo, parcela_id, tipo, temperatura_optima, dias_de_cosecha, mililitros_necesarios) VALUES
