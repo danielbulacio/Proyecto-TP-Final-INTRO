@@ -12,7 +12,7 @@ CREATE TABLE parcelas (
 CREATE TABLE cultivos (
     id SERIAL PRIMARY KEY,
     nombre_cultivo VARCHAR(100) NOT NULL,
-    parcela_id INT REFERENCES parcelas,
+    parcela_id INT NOT NULL REFERENCES parcelas,
     tipo VARCHAR(50),
     temperatura_optima INT,
     dias_de_cosecha INT,

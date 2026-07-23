@@ -226,7 +226,7 @@ async function editCultivo(cultivo) {
   
   titleElem.innerHTML = `
     <span class="icon mr-2 has-text-info"><i class="material-icons">edit</i></span>
-    <span class="has-text-grey-dark">Editar Cultivo ID: ${cultivo.id}</span>
+    <span class="has-text-dark">Editar Cultivo ID: ${cultivo.id}</span>
   `;
   
   document.getElementById("btn-submit").className = "button is-info is-fullwidth";
@@ -245,7 +245,7 @@ function resetForm() {
   
   document.getElementById("form-title").innerHTML = `
     <span class="icon mr-2 has-text-success"><i class="material-icons">add_box</i></span>
-    <span>Registrar Cultivo</span>
+    <span class="has-text-dark">Registrar Cultivo</span>
   `;
   
   document.getElementById("btn-submit").className = "button is-success is-fullwidth";

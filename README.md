@@ -7,21 +7,23 @@ Main-Docker-Tareas: Ezequiel
 ## ESQUEMA PARTES
 [\[a\](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)
 
-# COMO LEVANTAR PROYECTO
+## COMO LEVANTAR PROYECTO
 1. TENER docker destop abierto
-2. cd Proyecto-TP-Final-INTRO/backend/
-3. Levantar los contenedores: 1era vez - docker compose up --build (demas veces) docker compose up
+2. cd Proyecto-TP-Final-INTRO
+3. Levantar los contenedores: make run
 4. Verificar que anda : curl http://localhost:8000/health  
 
-## Parcela:
+## Tablas
+
+### Parcela:
 id
-cultivo_id 
-clima_id
 nombre
 latitud
 longitud
+hectareas
+imagen
 
-## Cultivo: (opciones predefinidas)
+### Cultivo:
 id
 nombre_cultivo
 id_parcela
@@ -30,73 +32,50 @@ temperatura_optima
 dias_de_cosecha
 mililitros_necesarios
 
-## detalle parcela:
+### Detalle parcela:
 id
-id_parcela
-temperatura_actual
-precipitacion_actual
+parcela_id
+fecha
+temperatura
+precipitacion
 humedad_suelo
 evapotranspiracion
 
+### Tareas:
 Tareas:
 id
-id_parcela
+parcela_id
 tarea
-hecho
-...
-CREATE TABLE parcelas (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    latitud DECIMAL(9,6),
-    longitud DECIMAL(9,6)
-);
+prioridad
+estado
+fecha_limite
 
-CREATE TABLE cultivos (
-    id SERIAL PRIMARY KEY,
-    nombre_cultivo VARCHAR(100) NOT NULL,
-    parcela_id INT REFERENCES parcelas,
-    tipo VARCHAR(50),
-    temperatura_optima INT,
-    dias_de_cosecha INT,
-    mililitros_necesarios INT
-);
+# Funcionamiento
 
-CREATE TABLE detalle_parcela (
-    id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
-    temperatura_actual DECIMAL(5,2),
-    precipitacion_actual DECIMAL(5,2),
-    humedad_suelo DECIMAL(5,2),
-    evapotranspiracion DECIMAL(5,2)
-);
+## Cultivos
 
-CREATE TABLE tareas (
-    id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
-    tarea VARCHAR(255) NOT NULL,
-    hecho BOOLEAN NOT NULL DEFAULT FALSE
-);
+Dentro de la pagina principal de cultivos es posible observar las principales caracteristicas de cada cultivo, tales como nombre, parcela, temperatura optima, dias de cosecha y mililitros necesarios.
+Ademas es posible presionar en editar datos del cultivo para editar directamente un cultivo en especifico o hacer click en gestionar cultivos para elegir claramente entre todos los cultivos o crear uno nuevo
 
-Estructuración:
-Directorios:
-#node_modules: contiene todas las dependencas 
-~Frontend:
-#public: archivos estaticos que se acceden directamente del navegador(pagina principal)
-#styles: Hoja de estilo del CSS
-#Pages: representa las rutas web para acceder a la/s paginas/s
-~Backend
-#Routes: Formas o caminos en el que el cliente ingresa sus datos
-#Controllers: Resuelve e implementa la logica de negocios
-#Models: capa de datos
-El contolador actua de intermediario, la ruta envia los datos al controlador y el controlador los envia al modelo, y viceversa.
-#Config: Son variables y ajustes que definen cómo se comporta la API en diferentes entornos
-#Helpers: Funciones de utilidad que se repiten a lo largo del proyecto(su objetivo es evitar funciones duplicadas)
-Carpetas: 
-#.gitignore
-#package.json: archivo que define todo el proyecto
-#package-log.json: guarda las versiones de las dependencias instaladas(Se genera automaticamente)
-#Next.config.js:(podria ir dentro de config) como se comporta o interactua el usuario con la pagina
-#Index.js / app.js: Crea la aplicacion y define las rutas de interaccion con los datos
-#.env: solo para definir el puerto
-#.eslintrc.json: lo podriamos usar para evitar errores y mantener una misma logica en el uso de variables(osea asignacion de nombres a variables, como estructurar las funciones,etc)
-#README.md: documentacion del proyecto
+<p align="center">
+  <img src="./backend/app/uploads/principal_cultivos.png" width="600">
+</p>
+
+Dentro de la pagina de gestion de cultivos se encuentra por la derecha un apartado en el cual se muestran todos los datos de cada cultivo ingresado en la base de datos y la posibilidad de eliminar un cultivo presionando en el icono rojo o la posibilidad de hacer los cambios que quieras presionando el boton azul de edicion
+
+<p align="center">
+  <img src="./backend/app/uploads/acciones_cultivos.png" width="600">
+</p>
+
+Por otro lado para crear un nuevo cultivo existe un bloque a la izquierda que permite rellenar cada campo. Completar nombre y parcela es obligatorio, el resto de campos son opcionales.
+Para finalizar la creacion del cultivo se debe presionar en guardar cultivo
+
+<p align="center">
+  <img src="./backend/app/uploads/registrar_cultivos.png" width="400">
+</p>
+
+Finalmente, en caso de seleccionar la opcion de edicion los campos del cultivo seleccionado se rellenaran solos y sera posible editarlos para luego guardar los cambios
+
+<p align="center">
+  <img src="./backend/app/uploads/editar_cultivos.png" width="400">
+</p>
