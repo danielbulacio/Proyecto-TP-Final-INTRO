@@ -1,7 +1,7 @@
 import { db } from "./pool.js";
 
 export async function getAllTareas() {
-    const resultado = await db.query("SELECT * FROM tareas ORDER BY fecha_creacion DESC");
+    const resultado = await db.query("SELECT * FROM tareas ORDER BY id DESC");
     return resultado.rows;
 }
 
@@ -64,12 +64,10 @@ export async function reassignTarea(id, nuevaParcelaId, parcelaAnteriorId) {
     return true;
 }
 
-export async function changeStateTarea(id, estado, estadoAnterior) {
-    const fechaCompletada = estado === "completada" ? new Date().toISOString() : null;
-
+export async function changeStateTarea(id, estado) {
     const resultado = await db.query(
-        "UPDATE tareas SET estado = $1, fecha_completada = $2 WHERE id = $3",
-        [estado, fechaCompletada, id]
+        "UPDATE tareas SET estado = $1 WHERE id = $2",
+        [estado, id]
     );
 
     if (resultado.rowCount === 0) return false;
