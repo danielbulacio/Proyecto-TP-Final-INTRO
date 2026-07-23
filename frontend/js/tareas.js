@@ -135,9 +135,9 @@ function tarjetaTareaHTML(t) {
           ${parcelaNombre}${t.fecha_limite ? " · Vence " + formatFecha(t.fecha_limite) : ""}
         </p>
 
-        <div class="dropdown is-hoverable mb-2">
+        <div class="dropdown mb-2">
           <div class="dropdown-trigger">
-            <button class="button is-small is-fullwidth has-text-white" aria-haspopup="true">
+            <button class="button is-small is-fullwidth has-text-white" aria-haspopup="true" data-accion="toggle-estado">
               <span>Cambiar estado</span>
             </button>
           </div>
@@ -302,17 +302,28 @@ async function confirmarEliminacion() {
 //  aca basicamente si toca alguno de los 3 botones de la tarea le redeirigfmoas hacia
 // la funcion que esta seleccionando
 document.addEventListener("click", function (evento) {
-  // Buscamos si el clic fue sobre un elemento con data-accion 
+  // Buscamos si el clic fue sobre un elemento con data-accion
   const objetivo = evento.target.closest("[data-accion]");
 
-  // si el clic no fue sobre nada con data-accion, no hacemos nada
+  const accion = objetivo ? objetivo.dataset.accion : null;
+
+  // Cerramos los dropdown abiertos, salvo el que acabamos de tocar para abrir
+  document.querySelectorAll(".dropdown.is-active").forEach((d) => {
+    if (accion === "toggle-estado" && d.contains(objetivo)) return;
+    d.classList.remove("is-active");
+  });
+
+  // si el clic no fue sobre nada con data-accion, no hacemos nada mas
   if (!objetivo) {
     return;
   }
 
-  // si se cliqkeo vemos de que tarea es y de que accion correpsonde
-  const accion = objetivo.dataset.accion;
   const id = objetivo.dataset.id;
+
+  // abre/cierra el menu de "cambiar estado" con un click
+  if (accion === "toggle-estado") {
+    objetivo.closest(".dropdown").classList.toggle("is-active");
+  }
 
   if (accion === "editar") {
     abrirModalEditar(id);
