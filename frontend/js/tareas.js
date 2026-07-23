@@ -164,6 +164,7 @@ function abrirModalNueva() {
   if (errores) errores.classList.add("is-hidden");
   
   document.getElementById("input-prioridad").value = "Media";
+  document.getElementById("input-tipo").value = "";
   abrirModal("modal-tarea");
 }
 
@@ -188,6 +189,7 @@ function abrirModalEditar(id) {
   if (errores) errores.classList.add("is-hidden");
   
   document.getElementById("input-prioridad").value = tarea.prioridad;
+  document.getElementById("input-tipo").value = tarea.tipo || "";
 
   abrirModal("modal-tarea");
 }
@@ -213,6 +215,7 @@ async function guardarTarea() {
     parcela_id: Number(document.getElementById("input-parcela").value),
     tarea: document.getElementById("input-tarea").value,
     prioridad: document.getElementById("input-prioridad").value,
+    tipo: document.getElementById("input-tipo").value || undefined,
     fecha_limite: document.getElementById("input-fecha-limite").value || undefined
   };
 
