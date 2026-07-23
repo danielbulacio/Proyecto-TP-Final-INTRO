@@ -15,12 +15,12 @@ export async function getParcela(id) {
     return resultado.rows[0];
 }
 
-export async function createTarea(parcela_id, tarea, prioridad, fecha_limite) {
+export async function createTarea(parcela_id, tarea, prioridad, fecha_limite, tipo) {
     const resultado = await db.query(
-        `INSERT INTO tareas (parcela_id, tarea, prioridad, fecha_limite)
-         VALUES ($1, $2, COALESCE($3, 'Media'), $4)
+        `INSERT INTO tareas (parcela_id, tarea, prioridad, fecha_limite, tipo)
+         VALUES ($1, $2, COALESCE($3, 'Media'), $4, $5)
          RETURNING id`,
-        [parcela_id, tarea, prioridad || null, fecha_limite || null]
+        [parcela_id, tarea, prioridad || null, fecha_limite || null, tipo || null]
     );
 
     const nuevaTarea = resultado.rows[0];
@@ -29,15 +29,16 @@ export async function createTarea(parcela_id, tarea, prioridad, fecha_limite) {
     return true;
 }
 
-export async function updateTarea(id, parcela_id, tarea, prioridad, fecha_limite) {
+export async function updateTarea(id, parcela_id, tarea, prioridad, fecha_limite, tipo) {
     const resultado = await db.query(
         `UPDATE tareas SET
            parcela_id = COALESCE($1, parcela_id),
            tarea = COALESCE($2, tarea),
            prioridad = COALESCE($3, prioridad),
-           fecha_limite = COALESCE($4, fecha_limite)
-         WHERE id = $5`,
-        [parcela_id ?? null, tarea ?? null, prioridad ?? null, fecha_limite ?? null, id]
+           fecha_limite = COALESCE($4, fecha_limite),
+           tipo = COALESCE($5, tipo)
+         WHERE id = $6`,
+        [parcela_id ?? null, tarea ?? null, prioridad ?? null, fecha_limite ?? null, tipo ?? null, id]
     );
 
     if (resultado.rowCount === 0) return false;
