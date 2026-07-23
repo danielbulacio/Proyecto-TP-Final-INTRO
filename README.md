@@ -56,15 +56,64 @@ A continuación explicamos brevemente la arquitectura creada.
 
 ## Capturas de pantalla del funcionamiento
 ### Parcelas
+Esta es la pantalla principal de la pagina de parcelas.html
 <p align="center">
-  <img src="./backend/app/uploads/parcelas inicio.png" width="170">
+  <img src="./backend/app/uploads/parcelas inicio.png" width="1000">
 </p>
+
+En ella podemos por un lado crear una parcela. En la que podemos rellenar los siguiente datos:
+1. Nombre de la parcela
+2. Latitud, longitud
+3. Hecareas y subir una imagen
+
+Alterntavimente podemos seleccionar en el mapa la ubicacion de la parcela y el programa automcompleta automaticamente el resto de datos
+
 <p align="center">
-  <img src="./backend/app/uploads/Actualizar parcela.png" width="170">
+  <img src="./backend/app/uploads/Crear parcelaa.png" width="1000">
 </p>
+
 <p align="center">
-  <img src="./backend/app/uploads/Crear parcelaa.png" width="170">
+  <img src="./backend/app/uploads/Actualizar parcela.png" width="1000">
 </p>
+
 ### Cultivos
 ### Detalle de parcelas
+Al entrar a una parcela se ve su detalle: datos actuales del clima, el cultivo asignado y los scores de salud (índice general, aptitud térmica y estado hídrico).
+<p align="center">
+  <img src="./backend/app/uploads/detalle/detalles_parcela.png" width="1000">
+</p>
+
+Cada dato y cada score tiene un botón de info que explica qué significa y cómo se calcula.
+<p align="center">
+  <img src="./backend/app/uploads/detalle/infobox.png" width="1000">
+</p>
+
+Debajo se grafica la evolución histórica del clima (temperatura, precipitación, humedad, etc.).
+<p align="center">
+  <img src="./backend/app/uploads/detalle/grafico.png" width="1000">
+</p>
+
+<p align="center">
+  <img src="./backend/app/uploads/detalle/otrosgraficos.png" width="1000">
+</p>
+
 ### Tareas
+En `tareas.html` se gestionan las tareas de trabajo de cada parcela. Se pueden crear nuevas indicando parcela, descripción, prioridad y fecha límite.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/creartarea.png" width="1000">
+</p>
+
+Cada tarea se puede editar.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/editartarea.png" width="1000">
+</p>
+
+También se puede cambiar su estado (pendiente, en progreso, completada) desde un menú.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/cambiarestadotarea.png" width="1000">
+</p>
+
+Y eliminarla, con una confirmación previa.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/eliminartarea1.png" width="1000">
+</p>
