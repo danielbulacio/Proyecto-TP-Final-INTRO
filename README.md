@@ -28,11 +28,6 @@ En las **siguientes secciones** desarollamos mas profundamente con ejemplos visu
 
 ## Índice
 - [Cómo levantar el proyecto](#cómo-levantar-el-proyecto)
-- [Arquitectura](#arquitectura)
-  - [Parcelas](#parcelas)
-  - [Cultivos](#cultivos)
-  - [Detalle de parcelas](#detalle-de-parcelas)
-  - [Tareas](#tareas)
 - [Explicación de plataforma con ejemplos visuales](#explicación-de-plataforma-con-ejemplos-visuales)
   - [Parcelas](#parcelas-1)
   - [Cultivos](#cultivos-1)
@@ -47,7 +42,7 @@ Alternativamente:
 1. cd Proyecto-TP-Final-INTRO/backend/
 2. docker compose up --build
 
-## Capturas de pantalla del funcionamiento
+## Explicacación de plataforma con ejemplos visuales
 En primer lugar destacamos la página principal del proyecto.
 <p align="center">
   <img src="./backend/app/uploads/main.png" width="1000">
