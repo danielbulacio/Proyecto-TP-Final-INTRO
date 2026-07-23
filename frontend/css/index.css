@@ -51,7 +51,7 @@ background-color: var(--bg-pure-white) !important;
 border: 1px solid var(--border-soft) !important;
 border-radius: 16px !important;
 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -2px rgba(0, 0, 0, 0.02) !important;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+transition: 0.15s;
 height: 100%;
 display: flex;
 flex-direction: column;
@@ -59,9 +59,8 @@ overflow: hidden;
 }
 
 .crop-card:hover {
-transform: translateY(-6px);
-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03) !important;
-border-color: #e2e8f0 !important;
+transform: translateY(-1px);
+box-shadow: 0 4px 7px rgba(0, 0, 0, 0.038);
 }
 
 /* Cabeceras de tarjetas optimizadas */
@@ -77,19 +76,19 @@ align-items: center;
 /* Badges/Etiquetas con opacidades suaves para evitar saturación de color */
 .tag-cultivos {
 background-color: #ecfdf5 !important;
-color: #065f46 !important;
+color: #11998e !important;
 font-weight: 600;
 }
 
 .tag-parcelas {
-background-color: #fffbeb !important;
-color: #92400e !important;
+background-color: #fbf0e8 !important;
+color: #a54910 !important;
 font-weight: 600;
 }
 
 .tag-tareas {
 background-color: #eff6ff !important;
-color: #1e40af !important;
+color: #3b82f6 !important;
 font-weight: 600;
 }
 
@@ -133,30 +132,30 @@ transition: all 0.2s ease;
 }
 
 .link-cultivos {
-color: #059669;
-background-color: #f0fdf4;
+color: #fff;
+background-color: #11998e;
 }
 .link-cultivos:hover {
-background-color: #dcfce7;
-color: #047857;
+background-color: #0e7f76;
+color: #fff;
 }
 
 .link-parcelas {
-color: #d97706;
-background-color: #fffbeb;
+color: #fff;
+background-color: #a54910;
 }
 .link-parcelas:hover {
-background-color: #fef3c7;
-color: #b45309;
+background-color: #612807;
+color: #fff;
 }
 
 .link-tareas {
-color: #2563eb;
-background-color: #eff6ff;
+color: #fff;
+background-color: #3b82f6;
 }
 .link-tareas:hover {
-background-color: #dbeafe;
-color: #1d4ed8;
+background-color: #1e40af;
+color: #fff;
 }
 
 /* ===== Hero (cabecera de bienvenida) ===== */

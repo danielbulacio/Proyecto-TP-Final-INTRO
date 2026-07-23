@@ -1,13 +1,23 @@
+/* Hover de las tarjetas de parcela */
+#tarjetas-parcelas .card {
+    transition: 0.15s;
+}
+#tarjetas-parcelas .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.038);
+}
+
 .tag-parcelas {
-    background: linear-gradient(135deg, #9a640d, #92400e) !important;
-    color: #fffbeb !important;
+    background: white !important;
+    color: #000000 !important;
     font-weight: 600;
+    border: 1px solid #eee;
 }
 
 /* Forzamos a que el título dentro de esta tarjeta también cambie de color */
 .tag-parcelas .title, 
 .tag-parcelas .content strong {
-    color: #fffbeb !important;
+    color: #000000 !important;
 }
 dialog#modal-confirmacion {
     border: none;
@@ -44,6 +54,11 @@ button[type="submit"] {
 
     color: #7f858e !important; 
 }
+.boton-blanco {
+  background-color: rgb(254, 254, 254) !important;
+  border: 0px;
+}
+
 .crop-hero {
 background: linear-gradient(135deg, #a54910, #612807);
 color: white;
@@ -79,6 +94,12 @@ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   font-size: 0.85rem;
   user-select: none;
   white-space: nowrap;
+}
+
+.button{
+  color: rgb(0, 0, 0) !important;
+  background-color: #f9f9f9!important;
+  border-color: rgba(0, 0, 0, 0.131)!important;
 }
 
 .custom-file-btn:hover {
