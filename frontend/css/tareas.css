@@ -1,5 +1,13 @@
+.crop-hero {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  padding: 2.5rem;
+}
+
 :root {
-  --verde-cultivo: #2f6f4e;
+  --verde-cultivo: #10b981;
   --verde-oscuro: #1f4d36;
   --tierra: #6b4a34;
   --trigo: #c9a227;
@@ -7,6 +15,8 @@
   --texto: #1f2a24;
   --gris-suave: #6b7d6f;
   --linea: #dfe6df;
+  --azul: #3b82f6;
+  --azul-oscuro: #1e40af;
  
   --prioridad-baja: #7a9e7a;
   --prioridad-media: #c9a227;
@@ -16,14 +26,13 @@
  
 body {
   font-family: "Inter", sans-serif;
-  background-color: var(--fondo);
   color: var(--texto);
 }
  
 .titulo-seccion {
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--verde-oscuro);
+  color: var(--azul);
 }
  
 .subtitulo-seccion {
@@ -47,12 +56,11 @@ textarea:focus-visible {
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition: 0.4s;
 }
  
 .tarjeta-tarea:hover {
-  box-shadow: 0 6px 18px rgba(31, 77, 54, 0.12);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
  
 .tarjeta-tarea.esta-vencida {
@@ -133,9 +141,9 @@ textarea:focus-visible {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background-color: var(--verde-cultivo);
+  background-color: var(--azul-oscuro);
   border: 2px solid #fff;
-  box-shadow: 0 0 0 1px var(--verde-cultivo);
+  box-shadow: 0 0 0 1px var(--azul-oscuro);
 }
  
 .linea-tiempo .fecha-evento {
@@ -143,18 +151,26 @@ textarea:focus-visible {
   font-size: 0.8rem;
 }
  
-/* Estado vacio */
 .estado-vacio {
   text-align: center;
   padding: 3.5rem 1rem;
   color: var(--gris-suave);
 }
  
-/* Botones primarios con el verde de marca */
+.button-tarea{
+  background-color: rgb(254, 254, 254) !important;
+}
 .button.is-primary {
   background-color: var(--verde-cultivo);
 }
  
-.button.is-primary:hover {
-  background-color: var(--verde-oscuro);
+.button.btn-primario-azul {
+  background-color: var(--azul) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.button.btn-primario-azul:hover {
+  background-color: var(--azul-oscuro) !important;
+  color: #ffffff !important;
 }
