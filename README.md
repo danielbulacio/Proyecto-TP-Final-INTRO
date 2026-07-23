@@ -60,6 +60,9 @@ A continuación explicamos brevemente la arquitectura creada.
 <p align="center">
   <img src="./backend/app/uploads/Actualizar parcela.png" width="170">
 </p>
+<p align="center">
+  <img src="./backend/app/uploads/Crear parcelaa.png" width="170">
+</p>
 ### Cultivos
 ### Detalle de parcelas
 ### Tareas
