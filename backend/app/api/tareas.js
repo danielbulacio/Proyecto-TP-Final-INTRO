@@ -37,7 +37,8 @@ endpointsTareas.get("/:id", async (req, res) => {
 // edita una tarea
 endpointsTareas.put("/:id", async (req, res) => {
     let id = req.params.id;
-    const { parcela_id, tarea, prioridad, fecha_limite } = req.body;
+    // esto de abajo sirve para sacar valors de un objeto
+    const { parcela_id, tarea, prioridad, fecha_limite, tipo } = req.body;
 
     // la tarea tiene que existir
     const tareaExistente = await getOneTarea(id);
@@ -56,7 +57,7 @@ endpointsTareas.put("/:id", async (req, res) => {
     }
 
     // actualizamos
-    const updated = await updateTarea(id, parcela_id, tarea, prioridad, fecha_limite);
+    const updated = await updateTarea(id, parcela_id, tarea, prioridad, fecha_limite, tipo);
 
     if (!updated) {
         res.status(500).json({ message: "Error al actualizar la tarea" });
@@ -68,8 +69,8 @@ endpointsTareas.put("/:id", async (req, res) => {
 
 // crea una tarea
 endpointsTareas.post("/", async (req, res) => {
-
-    const { parcela_id, tarea, prioridad, fecha_limite } = req.body;
+    // esto de abajo sirve para sacar valors de un objeto
+    const { parcela_id, tarea, prioridad, fecha_limite, tipo } = req.body;
 
     // parcela y descripcion son obligatorias
     if (!parcela_id || !tarea) {
@@ -89,7 +90,8 @@ endpointsTareas.post("/", async (req, res) => {
         parcela_id,
         tarea,
         prioridad || null,
-        fecha_limite !== undefined ? fecha_limite : null
+        fecha_limite !== undefined ? fecha_limite : null,
+        tipo || null
     );
 
     if (!created) {
