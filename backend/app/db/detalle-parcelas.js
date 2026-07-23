@@ -95,45 +95,47 @@ export async function actualizarClima(parcelaId) {
 export async function calcularscores(parcelaId) {
   const parcela = await getDatosParcela(parcelaId);
 
-  // El query suma la suma de precipitaciones, evapo y humedad.
+  // El query suma la lluvia y promedia la humedad.
   const res = await db.query(
     `SELECT SUM(precipitacion) AS lluvia,
-            SUM(evapotranspiracion) AS evapo,
             AVG(humedad_suelo) AS humedad
      FROM detalle_parcela WHERE parcela_id = $1`,
     [parcelaId],
   );
 
+  // datos que usan los scores
   const lluvia = Number(res.rows[0].lluvia);
-  const evapo = Number(res.rows[0].evapo);
   const humedad = Number(res.rows[0].humedad);
+  const aguaNecesaria = Number(parcela.mililitros_necesarios);
 
-  // SCORE TEMPERATURA
-  // Mido cuantos grados de diferencia hay con la temperatura ideal del cultivo.
-  // Cada grado de diferencia resta 4 puntos. Nunca baja de 0.
+
+  // APTITUD TERMICA
+  // diferencia de grados con la temperatura optima del cultivo
   const diferenciaGrados = Math.abs(Number(parcela.temperatura) - parcela.temperatura_optima);
+  // cada grado de diferencia resta 4 puntos, arrancando de 100
   let scoreTemperatura = 100 - diferenciaGrados * 4;
+  // no puede bajar de 0
   if (scoreTemperatura < 0) scoreTemperatura = 0;
 
+
   // ESTADO HIDRICO
-  // Parte 1: que porcentaje de lo que se evaporo lo repuso la lluvia.
-  //   lluvia igual a evapo -> 100 (equilibrio perfecto)
-  //   lluvia la mitad de evapo -> 50
+  // parte 1: cuanto del agua que el cultivo necesita cubrio la lluvia (tope 100)
   let scoreLluvia = 100;
-  if (evapo > 0) {
-    scoreLluvia = (lluvia / evapo) * 100;
+  if (aguaNecesaria > 0) {
+    scoreLluvia = (lluvia / aguaNecesaria) * 100;
     if (scoreLluvia > 100) scoreLluvia = 100;
   }
 
-  // Consideramos la humedad del suelo
+  // parte 2: la humedad del suelo pasada a escala 0-100 (tope 100)
   let scoreHumedad = humedad * 100;
   if (scoreHumedad > 100) scoreHumedad = 100;
 
-  // El score de agua es el promedio de las dos partes.
+  // el score de agua es el promedio de las dos partes
   const scoreAgua = (scoreLluvia + scoreHumedad) / 2;
 
-  // SCORE GENERAL
-  // Promedio entre temperatura y agua.
+
+  // INDICE GENERAL DE SALLUD
+  // promedio entre temperatura y agua
   const scoreGeneral = (scoreTemperatura + scoreAgua) / 2;
 
   return {

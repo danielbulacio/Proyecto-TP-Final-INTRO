@@ -87,9 +87,9 @@
       <div class="row-superior">
         <div class="scores-container">
           <div class="score-card health-index">
-            <div class="card-header" data-titulo="Ínidice general de salud (IGS)" data-formula="(aptitud_termica + estado_hidrico) / 2" data-desc="Índice general de 0 a 100 que promedia la aptitud térmica y el estado hídrico. Resume qué tan favorables son las condiciones actuales para el cultivo."><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="card-header" data-titulo="Índice general de salud (IGS)" data-formula="(aptitud_termica + estado_hidrico) / 2" data-desc="Índice general de 0 a 100 que promedia la aptitud térmica y el estado hídrico. Resume qué tan favorables son las condiciones actuales para el cultivo."><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
-              <span class="score-label label-health-index">Ínidice general de salud (IGS)</span>
+              <span class="score-label label-health-index">Índice general de salud (IGS)</span>
              
             </div>
             <p class="score-value score-health-index" id="score-general">--</p>
@@ -98,7 +98,7 @@
           </div>
 
           <div class="score-card">
-            <div class="card-header" data-titulo="Aptitud térmica" data-formula="max(0, 100 - |temp_actual - temp_optima| * 5)" data-desc="Mide qué tan cerca está la temperatura actual de la óptima del cultivo. Cae a medida que la diferencia de grados aumenta."><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="card-header" data-titulo="Aptitud térmica" data-formula="max(0, 100 - |temp_actual - temp_optima| * 4)" data-desc="1. Calcula la diferencia de grados entre la temperatura actual y la óptima del cultivo&lt;br&gt;2. Cada grado de diferencia resta 4 puntos, arrancando de 100&lt;br&gt;3. Si da menos de 0, queda en 0"><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
               <span class="score-label">Aptitud térmica (AT)</span>
               
@@ -109,7 +109,7 @@
           </div>
 
           <div class="score-card">
-            <div class="card-header" data-titulo="Estado hídrico" data-formula="(balance_hidrico + humedad_suelo * 100) / 2" data-desc="Combina el balance hídrico (precipitación menos evapotranspiración) con la humedad del suelo, frente al agua que el cultivo necesita."><span class="material-symbols-outlined card-info">info</span></div>
+            <div class="card-header" data-titulo="Estado hídrico (EH)" data-formula="(min(100, precipitacion / agua_necesaria * 100) + min(100, humedad_suelo * 100)) / 2" data-desc="1. Suma toda la lluvia de la parcela&lt;br&gt;2. Promedia la humedad del suelo&lt;br&gt;3. Score de lluvia: (lluvia / agua necesaria) × 100, máximo 100&lt;br&gt;4. Score de humedad: humedad × 100, máximo 100&lt;br&gt;5. Estado hídrico: promedio de los dos scores"><span class="material-symbols-outlined card-info">info</span></div>
             <div class="score-header">
               <span class="score-label">Estado hídrico (EH)</span>
              
@@ -237,11 +237,7 @@
                   <h2>Clima Histórico</h2>
                 </div>
                 <div class="header-right">
-                  <div class="time-buttons">
-                    <button class="time-btn">1D</button>
-                    <button class="time-btn">1S</button>
-                    <button class="time-btn">1M</button>
-                  </div>
+                  <p>Ultimos 30 días</p>
                 </div>
               </div>
               
