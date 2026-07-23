@@ -220,9 +220,13 @@ async function editCultivo(cultivo) {
   document.getElementById("form-header").classList.remove("has-background-light");
   document.getElementById("form-header").style.backgroundColor = "#e8f4fd";
   
-  document.getElementById("form-title").innerHTML = `
+  const titleElem = document.getElementById("form-title");
+
+  titleElem.classList.remove("has-text-info", "has-text-success");
+  
+  titleElem.innerHTML = `
     <span class="icon mr-2 has-text-info"><i class="material-icons">edit</i></span>
-    <span>Editar Cultivo ID: ${cultivo.id}</span>
+    <span class="has-text-grey-dark">Editar Cultivo ID: ${cultivo.id}</span>
   `;
   
   document.getElementById("btn-submit").className = "button is-info is-fullwidth";
