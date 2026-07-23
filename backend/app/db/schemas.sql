@@ -36,8 +36,7 @@ CREATE TABLE tareas (
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente'
         CHECK (estado IN ('pendiente', 'en_progreso', 'completada')),
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
-    fecha_limite DATE,
-    fecha_completada TIMESTAMP
+    fecha_limite DATE
 );
 
 
