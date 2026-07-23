@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tareas · LOGO AGRO</title>
+    <title>AgroMonitor - Tareas</title>
+    <link rel="icon" type="image/png" href="./logo.png">
     <!-- Esto es para que funcione Bulma -->
     <link
       rel="stylesheet"
@@ -72,31 +73,6 @@
           </div>
         </div>
 
-        <!-- FILTROS -->
-        <div class="field is-grouped is-grouped-multiline">
-          <div class="control">
-            <div class="select">
-              <select id="filtro-estado">
-                <option value="">Todos los estados</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="en_progreso">En progreso</option>
-                <option value="completada">Completada</option>
-                <option value="cancelada">Cancelada</option>
-              </select>
-            </div>
-          </div>
-          <div class="control">
-            <div class="select">
-              <select id="filtro-prioridad">
-                <option value="">Toda importancia</option>
-                <option value="Baja">Baja</option>
-                <option value="Media">Media</option>
-                <option value="Alta">Alta</option>
-                <option value="Urgente">Urgente</option>
-              </select>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -153,13 +129,14 @@
             <div class="field">
               <label class="label">Importancia</label>
               <div class="control">
-                <div class="selector-prioridad" id="selector-prioridad">
-                  <div class="opcion-prioridad" data-valor="Baja">Baja</div>
-                  <div class="opcion-prioridad" data-valor="Media">Media</div>
-                  <div class="opcion-prioridad" data-valor="Alta">Alta</div>
-                  <div class="opcion-prioridad" data-valor="Urgente">Urgente</div>
+                <div class="select is-fullwidth">
+                  <select id="input-prioridad">
+                    <option value="Baja">Baja</option>
+                    <option value="Media" selected>Media</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Urgente">Urgente</option>
+                  </select>
                 </div>
-                <input type="hidden" id="input-prioridad" value="Media" />
               </div>
             </div>
 
