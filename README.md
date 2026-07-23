@@ -47,13 +47,6 @@ Alternativamente:
 1. cd Proyecto-TP-Final-INTRO/backend/
 2. docker compose up --build
 
-## Arquitectura
-A continuación explicamos brevemente la arquitectura creada.
-### Parcelas
-### Cultivos
-### Detalle de parcelas
-### Tareas
-
 ## Capturas de pantalla del funcionamiento
 En primer lugar destacamos la página principal del proyecto.
 <p align="center">
