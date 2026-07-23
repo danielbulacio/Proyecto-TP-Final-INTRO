@@ -2,9 +2,7 @@
   <img src="https://campus.fi.uba.ar/img/fiuba-footer-logo.png" width="400">
 </p>
 
-<p align="center">
-  <img src="./frontend/logo.png" width="170">
-</p>
+
 
 <h1 align="center">AgroMonitor</h1>
 <h3 align="center">El EQUIPO 1</h4>
@@ -56,6 +54,12 @@ A continuación explicamos brevemente la arquitectura creada.
 
 ## Capturas de pantalla del funcionamiento
 ### Parcelas
+<p align="center">
+  <img src="./backend/app/uploads/parcelas inicio.png" width="170">
+</p>
+<p align="center">
+  <img src="./backend/app/uploads/Actualizar parcela.png" width="170">
+</p>
 ### Cultivos
 ### Detalle de parcelas
 ### Tareas
