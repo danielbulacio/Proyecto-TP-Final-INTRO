@@ -1,7 +1,9 @@
 <p align="center">
   <img src="https://campus.fi.uba.ar/img/fiuba-footer-logo.png" width="400">
 </p>
-
+<p align="center">
+  <img src="./frontend/logo.png" width="170">
+</p>
 
 
 <h1 align="center">AgroMonitor</h1>
