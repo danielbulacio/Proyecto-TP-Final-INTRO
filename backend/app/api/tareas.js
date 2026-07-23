@@ -7,8 +7,7 @@ import {
     updateTarea,
     deleteTarea,
     reassignTarea,
-    changeStateTarea,
-    getHistorialTarea
+    changeStateTarea
 } from "../db/tareas.js";
 
 export const endpointsTareas = Router();
@@ -231,22 +230,4 @@ endpointsTareas.patch("/:id/estado", async (req, res) => {
         return;
     }
     res.status(200).json({ message: "Estado actualizado con éxito" });
-});
-
-endpointsTareas.get("/:id/historial", async (req, res) => {
-    let id = req.params.id;
-
-    if (isNaN(id)) {
-        res.status(400).json({ message: "El ID debe ser un número válido" });
-        return;
-    }
-
-    const tarea = await getOneTarea(id);
-    if (!tarea) {
-        res.status(404).json({ message: "Tarea no encontrada" });
-        return;
-    }
-
-    const historial = await getHistorialTarea(id);
-    res.json(historial);
 });
