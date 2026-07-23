@@ -122,41 +122,6 @@ textarea:focus-visible {
 .opcion-prioridad[data-valor="Alta"] { background-color: var(--prioridad-alta); }
 .opcion-prioridad[data-valor="Urgente"] { background-color: var(--prioridad-urgente); }
  
-/* Linea de tiempo del historial */
-.linea-tiempo {
-  position: relative;
-  padding-left: 1.75rem;
-  border-left: 2px solid var(--linea);
-  margin-left: 0.4rem;
-}
- 
-.linea-tiempo .evento {
-  position: relative;
-  padding-bottom: 1.35rem;
-}
- 
-.linea-tiempo .evento:last-child {
-  padding-bottom: 0;
-}
- 
-.linea-tiempo .evento::before {
-  content: "";
-  position: absolute;
-  left: -2.11rem;
-  top: 0.25rem;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background-color: var(--azul-oscuro);
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px var(--azul-oscuro);
-}
- 
-.linea-tiempo .fecha-evento {
-  color: var(--gris-suave);
-  font-size: 0.8rem;
-}
- 
 .estado-vacio {
   text-align: center;
   padding: 3.5rem 1rem;
