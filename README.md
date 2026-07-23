@@ -55,6 +55,12 @@ A continuación explicamos brevemente la arquitectura creada.
 ### Tareas
 
 ## Capturas de pantalla del funcionamiento
+En primer lugar destacamos la página principal del proyecto.
+<p align="center">
+  <img src="./backend/app/uploads/main.png" width="1000">
+</p>
+
+A continuación un detalle del todo el resto de las páginas
 ### Parcelas
 Esta es la pantalla principal de la pagina de parcelas.html
 <p align="center">
@@ -72,23 +78,27 @@ Alterntavimente podemos seleccionar en el mapa la ubicacion de la parcela y el p
   <img src="./backend/app/uploads/Crear parcelaa.png" width="1000">
 </p>
 
+Actualizar la parcela, funciona de la misma manera que crearla.
 <p align="center">
   <img src="./backend/app/uploads/Actualizar parcela.png" width="1000">
 </p>
 
 ### Cultivos
 ### Detalle de parcelas
-Al entrar a una parcela se ve su detalle: datos actuales del clima, el cultivo asignado y los scores de salud (índice general, aptitud térmica y estado hídrico).
+Al entrar a una parcela se ve su detalle. El detalle basicamente contiene 3 componentes
+
+El score, Datos actuales de la temperatura y por ultimo un grafico historico con los datos reales (traidas por una api) de los últimos 30 días.
+
 <p align="center">
   <img src="./backend/app/uploads/detalle/detalles_parcela.png" width="1000">
 </p>
 
-Cada dato y cada score tiene un botón de info que explica qué significa y cómo se calcula.
+Cada dato y cada score tiene un botón de información que explica qué significa y/o cómo se calcula en el caso de los scores.
 <p align="center">
   <img src="./backend/app/uploads/detalle/infobox.png" width="1000">
 </p>
 
-Debajo se grafica la evolución histórica del clima (temperatura, precipitación, humedad, etc.).
+Debajo se grafica la evolución histórica del clima (temperatura, precipitación, humedad, y evapotranspiración).
 <p align="center">
   <img src="./backend/app/uploads/detalle/grafico.png" width="1000">
 </p>
@@ -98,7 +108,7 @@ Debajo se grafica la evolución histórica del clima (temperatura, precipitació
 </p>
 
 ### Tareas
-En `tareas.html` se gestionan las tareas de trabajo de cada parcela. Se pueden crear nuevas indicando parcela, descripción, prioridad y fecha límite.
+En tareas.html se gestionan las tareas de trabajo de cada parcela. Se pueden crear nuevas indicando parcela, descripción, prioridad y fecha límite.
 <p align="center">
   <img src="./backend/app/uploads/tarea/creartarea.png" width="1000">
 </p>
@@ -117,3 +127,10 @@ Y eliminarla, con una confirmación previa.
 <p align="center">
   <img src="./backend/app/uploads/tarea/eliminartarea1.png" width="1000">
 </p>
+
+### Ayuda
+Por último mencionamos la exitencia de esta página que el usuario accede tocando arriba a la derecha.
+<p align="center">
+  <img src="./backend/app/uploads/ayuda.png" width="1000">
+</p>
+
