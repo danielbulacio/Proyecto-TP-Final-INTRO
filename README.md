@@ -1,102 +1,154 @@
+<p align="center">
+  <img src="https://campus.fi.uba.ar/img/fiuba-footer-logo.png" width="400">
+</p>
+<p align="center">
+  <img src="./frontend/logo.png" width="170">
+</p>
 
-División: Parcela: Rodri
-Detalle de parcela: Marcos
-Cultivos: Tomi
-Main-Docker-Tareas: Ezequiel
 
-## ESQUEMA PARTES
-[\[a\](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)](https://excalidraw.com/#room=1e171603359db08b33fe,HzJasG4emjEsQicvmKIE9w)
+<h1 align="center">AgroMonitor</h1>
+<h3 align="center">El EQUIPO 1</h4>
 
-# COMO LEVANTAR PROYECTO
-1. TENER docker destop abierto
-2. cd Proyecto-TP-Final-INTRO/backend/
-3. Levantar los contenedores: 1era vez - docker compose up --build (demas veces) docker compose up
-4. Verificar que anda : curl http://localhost:8000/health  
+<p align="center">
+    <strong>Autores</strong><br>
+    Rodrigo Berón 115754<br>
+    Tomás Perez 115643<br>
+    Marcos Fortunato 115038
+</p>
+AgroMonitor es una plataforma  gestión y monitoreo de campos agrícolas. La idea central es que el productor agrícola pueda tener, en un solo lugar, toda la información de sus terrenos cruzando por un lado el cultivo que tiene su terreno y por otro las condiciones meteorológicas reales en esa ubicación. Permitiéndole tomar mejores decisiones. 
 
-## Parcela:
-id
-cultivo_id 
-clima_id
-nombre
-latitud
-longitud
+Concretamente:
+1. Registrar sus terrenos.
+2. Aignar cultivos a tus terrenos
+3. Conocer las condiciones metereológicas actuales y de los últimos 30 días.
+4. Evaluar la salud del cultivo mediante un sistema de puntuación (score).
+5. Registrar y planificar tareas.
 
-## Cultivo: (opciones predefinidas)
-id
-nombre_cultivo
-id_parcela
-tipo
-temperatura_optima
-dias_de_cosecha
-mililitros_necesarios
+En las **siguientes secciones** desarollamos mas profundamente con ejemplos visuales, cada uno de estos puntos.
 
-## detalle parcela:
-id
-id_parcela
-temperatura_actual
-precipitacion_actual
-humedad_suelo
-evapotranspiracion
+## Índice
+- [Cómo levantar el proyecto](#cómo-levantar-el-proyecto)
+- [Explicación de plataforma con ejemplos visuales](#explicación-de-plataforma-con-ejemplos-visuales)
+  - [Parcelas](#parcelas-1)
+  - [Cultivos](#cultivos-1)
+  - [Detalle de parcelas](#detalle-de-parcelas-1)
+  - [Tareas](#tareas-1)
 
-Tareas:
-id
-id_parcela
-tarea
-hecho
-...
-CREATE TABLE parcelas (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    latitud DECIMAL(9,6),
-    longitud DECIMAL(9,6)
-);
+## Cómo levantar el proyecto
+1.  cd Proyecto-TP-Final-INTRO
+2.  make run (en realidad el make run no builde. cheqeuar esto
 
-CREATE TABLE cultivos (
-    id SERIAL PRIMARY KEY,
-    nombre_cultivo VARCHAR(100) NOT NULL,
-    parcela_id INT REFERENCES parcelas,
-    tipo VARCHAR(50),
-    temperatura_optima INT,
-    dias_de_cosecha INT,
-    mililitros_necesarios INT
-);
+Alternativamente:
+1. cd Proyecto-TP-Final-INTRO/backend/
+2. docker compose up --build
 
-CREATE TABLE detalle_parcela (
-    id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
-    temperatura_actual DECIMAL(5,2),
-    precipitacion_actual DECIMAL(5,2),
-    humedad_suelo DECIMAL(5,2),
-    evapotranspiracion DECIMAL(5,2)
-);
+## Explicacación de plataforma con ejemplos visuales
+En primer lugar destacamos la página principal del proyecto.
+<p align="center">
+  <img src="./backend/app/uploads/main.png" width="1000">
+</p>
 
-CREATE TABLE tareas (
-    id SERIAL PRIMARY KEY,
-    parcela_id INT NOT NULL REFERENCES parcelas,
-    tarea VARCHAR(255) NOT NULL,
-    hecho BOOLEAN NOT NULL DEFAULT FALSE
-);
+A continuación un detalle del todo el resto de las páginas
+### Parcelas
+Esta es la pantalla principal de la pagina de parcelas.html
+<p align="center">
+  <img src="./backend/app/uploads/parcelas inicio.png" width="1000">
+</p>
 
-Estructuración:
-Directorios:
-#node_modules: contiene todas las dependencas 
-~Frontend:
-#public: archivos estaticos que se acceden directamente del navegador(pagina principal)
-#styles: Hoja de estilo del CSS
-#Pages: representa las rutas web para acceder a la/s paginas/s
-~Backend
-#Routes: Formas o caminos en el que el cliente ingresa sus datos
-#Controllers: Resuelve e implementa la logica de negocios
-#Models: capa de datos
-El contolador actua de intermediario, la ruta envia los datos al controlador y el controlador los envia al modelo, y viceversa.
-#Config: Son variables y ajustes que definen cómo se comporta la API en diferentes entornos
-#Helpers: Funciones de utilidad que se repiten a lo largo del proyecto(su objetivo es evitar funciones duplicadas)
-Carpetas: 
-#.gitignore
-#package.json: archivo que define todo el proyecto
-#package-log.json: guarda las versiones de las dependencias instaladas(Se genera automaticamente)
-#Next.config.js:(podria ir dentro de config) como se comporta o interactua el usuario con la pagina
-#Index.js / app.js: Crea la aplicacion y define las rutas de interaccion con los datos
-#.env: solo para definir el puerto
-#.eslintrc.json: lo podriamos usar para evitar errores y mantener una misma logica en el uso de variables(osea asignacion de nombres a variables, como estructurar las funciones,etc)
-#README.md: documentacion del proyecto
+En ella podemos por un lado crear una parcela. En la que podemos rellenar los siguiente datos:
+1. Nombre de la parcela
+2. Latitud, longitud
+3. Hecareas y subir una imagen
+
+Alterntavimente podemos seleccionar en el mapa la ubicacion de la parcela y el programa automcompleta automaticamente el resto de datos
+
+<p align="center">
+  <img src="./backend/app/uploads/Crear parcelaa.png" width="1000">
+</p>
+
+Actualizar la parcela, funciona de la misma manera que crearla.
+<p align="center">
+  <img src="./backend/app/uploads/Actualizar parcela.png" width="1000">
+</p>
+
+### Cultivos
+
+Dentro de la pagina principal de cultivos es posible observar las principales caracteristicas de cada cultivo, tales como nombre, parcela, temperatura optima, dias de cosecha y mililitros necesarios.
+
+Ademas es posible presionar en editar datos del cultivo para editar directamente un cultivo en especifico o hacer click en gestionar cultivos para elegir claramente entre todos los cultivos o crear uno nuevo
+
+<p align="center">
+  <img src="./backend/app/uploads/principal_cultivos.png" width="600">
+</p>
+
+Dentro de la pagina de gestion de cultivos se encuentra por la derecha un apartado en el cual se muestran todos los datos de cada cultivo ingresado en la base de datos y la posibilidad de eliminar un cultivo presionando en el icono rojo o la posibilidad de hacer los cambios que quieras presionando el boton azul de edicion
+
+<p align="center">
+  <img src="./backend/app/uploads/acciones_cultivos.png" width="600">
+</p>
+
+Por otro lado para crear un nuevo cultivo existe un bloque a la izquierda que permite rellenar cada campo. Completar nombre y parcela es obligatorio, el resto de campos son opcionales.
+Para finalizar la creacion del cultivo se debe presionar en guardar cultivo
+
+<p align="center">
+  <img src="./backend/app/uploads/registrar_cultivos.png" width="400">
+</p>
+
+Finalmente, en caso de seleccionar la opcion de edicion los campos del cultivo seleccionado se rellenaran solos y sera posible editarlos para luego guardar los cambios
+
+<p align="center">
+  <img src="./backend/app/uploads/editar_cultivos.png" width="400">
+</p>
+
+
+### Detalle de parcelas
+Al entrar a una parcela se ve su detalle. El detalle basicamente contiene 3 componentes
+
+El score, Datos actuales de la temperatura y por ultimo un grafico historico con los datos reales (traidas por una api) de los últimos 30 días.
+
+<p align="center">
+  <img src="./backend/app/uploads/detalle/detalles_parcela.png" width="1000">
+</p>
+
+Cada dato y cada score tiene un botón de información que explica qué significa y/o cómo se calcula en el caso de los scores.
+<p align="center">
+  <img src="./backend/app/uploads/detalle/infobox.png" width="1000">
+</p>
+
+Debajo se grafica la evolución histórica del clima (temperatura, precipitación, humedad, y evapotranspiración).
+<p align="center">
+  <img src="./backend/app/uploads/detalle/grafico.png" width="1000">
+</p>
+
+<p align="center">
+  <img src="./backend/app/uploads/detalle/otrosgraficos.png" width="1000">
+</p>
+
+### Tareas
+En tareas.html se gestionan las tareas cada parcela. Se pueden crear nuevas indicando la parcela a la que pertece, descripción, prioridad y fecha límite.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/creartarea.png" width="1000">
+</p>
+
+Cada tarea se puede editar.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/editartarea.png" width="1000">
+</p>
+
+También se puede cambiar su estado (pendiente, en progreso, completada) desde un menú.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/cambiarestadotarea.png" width="1000">
+</p>
+
+Y eliminarla, con una confirmación previa.
+<p align="center">
+  <img src="./backend/app/uploads/tarea/eliminartarea1.png" width="1000">
+</p>
+
+### Ayuda
+Por último mencionamos la exitencia de esta página que el usuario accede tocando arriba a la derecha.
+<p align="center">
+  <img src="./backend/app/uploads/ayuda.png" width="1000">
+</p>
+
+

@@ -1,0 +1,128 @@
+.crop-hero {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  padding: 2.5rem;
+}
+.section{
+  padding-bottom: 0px !important;
+}
+:root {
+  --verde-cultivo: #10b981;
+  --verde-oscuro: #1f4d36;
+  --tierra: #6b4a34;
+  --trigo: #c9a227;
+  --fondo: #f7faf7;
+  --texto: #1f2a24;
+  --gris-suave: #6b7d6f;
+  --linea: #dfe6df;
+  --azul: #3b82f6;
+  --azul-oscuro: #1e40af;
+ 
+  --prioridad-baja: #7a9e7a;
+  --prioridad-media: #c9a227;
+  --prioridad-alta: #d9622b;
+  --prioridad-urgente: #b23a2e;
+}
+ 
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--texto);
+}
+ 
+.titulo-seccion {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--azul);
+}
+ 
+.subtitulo-seccion {
+  color: var(--gris-suave);
+}
+ 
+/* Accesibilidad: foco visible */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--trigo);
+  outline-offset: 2px;
+}
+ 
+/* Tarjetas de tarea */
+.tarjeta-tarea {
+  border-radius: 12px;
+  border: 1px solid #eee;
+  background: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: 0.15s;
+}
+
+.tarjeta-tarea:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.038);
+}
+ 
+.tarjeta-tarea .descripcion-tarea {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2c3e50;
+  letter-spacing: -0.025em;
+}
+ 
+.tarjeta-tarea .buttons {
+  margin-top: auto;
+}
+ 
+/* Tags de prioridad  */
+.tag-prioridad-Baja { background-color: var(--prioridad-baja); color: #fff; }
+.tag-prioridad-Media { background-color: var(--prioridad-media); color: #fff; }
+.tag-prioridad-Alta { background-color: var(--prioridad-alta); color: #fff; }
+.tag-prioridad-Urgente { background-color: var(--prioridad-urgente); color: #fff; }
+ 
+.estado-vacio {
+  text-align: center;
+  padding: 3.5rem 1rem;
+  color: var(--gris-suave);
+}
+ 
+.boton-blanco {
+  background-color: rgb(254, 254, 254) !important;
+  border: 0px;
+}
+.button.is-primary {
+  background-color: var(--verde-cultivo) !important;
+}
+ 
+.button.btn-primario-azul {
+  background-color: var(--azul) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.button.btn-primario-azul:hover {
+  background-color: var(--azul-oscuro) !important;
+  color: #ffffff !important;
+}
+
+/* Modales: fondo blanco y texto negro */
+.modal-card-head,
+.modal-card-body,
+.modal-card-foot .button{
+  background-color: #ffffff;
+  color: #000000;
+}
+.modal-background{
+  opacity: 0.5;
+}
+.modal-card-title {
+  color: #000000;
+}
+.modal-card-body .label {
+  color: #000000;
+}

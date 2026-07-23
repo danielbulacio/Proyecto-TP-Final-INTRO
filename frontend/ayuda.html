@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroMonitor - FAQ</title>
+    <link rel="icon" type="image/png" href="./logo.png">
+    <!-- Bulma CSS Framework -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+
+    <!-- CSS del navbar original -->
+    <link rel="stylesheet" href="./css/navbar.css" />
+
+    <!-- Estilos adicionales limpios para pulir la interfaz -->
+    <link rel="stylesheet" href="./css/ayuda.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+
+    <!-- Iconografía Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    
+  </head>
+  <body>
+
+      <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="index.html">
+          <img src="./logo.png">
+          <h1 style="font-weight: 800; font-size: 24PX;">AgroMonitor</h1>
+          </a>
+        </div>
+        <!-- LINKS DEL NAVBAR -->
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+            <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+            <a class="navbar-item" href="tareas.html"> Tareas </a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <p class="control">
+                <a
+                  class="button is-primary"
+                  href="ayuda.html"
+                >
+                  <span>Ayuda</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><!-- FIN DEL NAVBAR -->
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section">
+      <div class="container">
+        
+        <!-- Cabecera / Hero -->
+        <div class="crop-hero">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h1 class="title is-2 has-text-white mb-2" style="font-weight: 800; letter-spacing: -0.03em;">Centro de Ayuda y FAQ</h1>
+              <h2 class="subtitle is-5 has-text-white mb-0" style="opacity: 0.9; font-weight: 400;">
+                Resuelve las dudas que tengas
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-8">
+
+
+            <!-- LISTA DE PREGUNTAS (ACORDEÓN) -->
+            <div id="faqContainer">
+              
+              <!-- Pregunta 1 (Parcelas) -->
+              <div class="faq-card" data-category="parcelas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #fffbeb;">
+                      <span class="material-icons" style="color: var(--accent-amber);">add_location</span>
+                    </div>
+                    <span>¿Cómo doy de alta una nueva parcela y qué datos requiere?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Para registrar una parcela tenes que acceder a la pestaña de Parcelas e ingresar un nombre descriptivo junto con su y seleccionar en el mapa la ubicacion que queres poner. Luego rellena el resto de datos</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 2 (Parcelas) -->
+              <div class="faq-card" data-category="parcelas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #fffbeb;">
+                      <span class="material-icons" style="color: var(--accent-amber);">cloud_queue</span>
+                    </div>
+                    <span>¿Cómo se actualizan los datos de clima?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>La aplicación utiliza las coordenadas geográficas de la parcela (latitud y longitud) para hacer una peticion externa a la API de <strong class="has-text-black">OpenMeteo</strong>.</p>
+                    <p class="mt-2">Rellenando los datos de tu parcela con informacion historica del clima. Concretamente los utlimos 30 dias</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="faq-card" data-category="parcelas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #fffbeb;">
+                      <span class="material-icons" style="color: var(--accent-amber);">water_drop</span>
+                    </div>
+                    <span>¿Qué es el índice de Evapotranspiración registrado en los detalles?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Pérdida total de humedad de una superficie hacia la atmosfera, es resulatdo de 2 procesos: La evaporación y la transpiración de las plantas (agua que absorben las plantas y liberan al aire en forma de vapor).Es util para mejorar el rendimiento de las plantas, evitando poner agua de mas o de menos. Pero principalmente de más. Su unidad de medida es la suma acumulada de perdida de la hora anterior en milímetros (mm). Se puede considerar que este numero representa la pérdida de agua real proyectada para esa ubicación.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 4 (Cultivos) -->
+              <div class="faq-card" data-category="cultivos">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder">
+                      <span class="material-icons" style="color: var(--accent-emerald);">grass</span>
+                    </div>
+                    <span>¿Cómo asocio un nuevo cultivo a una parcela que ya creé?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Desde la sección <strong class="has-text-black">Cultivos</strong>, podes añadir una plantación especificando su parcela mediante un selector. </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 5 (Cultivos) -->
+              <div class="faq-card" data-category="cultivos">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #ecfdf5;">
+                      <span class="material-icons" style="color: var(--accent-emerald);">thermostat</span>
+                    </div>
+                    <span>¿Para qué sirve configurar la "Temperatura Óptima" o "Mililitros"?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>Al registrar a mano parámetros como la <strong class="has-text-black">temperatura óptima</strong> o los <strong class="has-text-black">mililitros de agua diarios requeridos</strong> el sistema calcula los mediante los scores si la las condicinoes climaticas son adecuadas para ese tipo de cultivo</p>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pregunta 6 (Tareas) -->
+              <div class="faq-card" data-category="tareas">
+                <div class="faq-trigger" onclick="toggleFaq(this)">
+                  <div class="faq-question">
+                    <div class="faq-icon-holder" style="background-color: #eff6ff;">
+                      <span class="material-icons" style="color: var(--accent-blue);">assignment_turned_in</span>
+                    </div>
+                    <span>¿Cómo llevo el control de tareas y su estado actual?</span>
+                  </div>
+                  <span class="material-icons chevron">expand_more</span>
+                </div>
+                <div class="faq-content">
+                  <div class="faq-body">
+                    <p>En el módulo <strong class="has-text-black">Tareas</strong>, puedes crear labores específicas como riego, abono o poda para cada parcela. Al marcar la casilla "Completado" u las cualquier otra opcion en la interfaz, el estado se actualiza.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="footer-brand-top">
+              <img src="./logo.png" class="footer-logo" />
+              <span class="footer-brand-name">AgroMonitor</span>
+            </div>
+            <p class="footer-desc">
+              AgroMonitor es una plataforma de gestión y monitoreo de campos
+              agrícolas que cruza el clima real con las necesidades de cada
+              cultivo para evaluar sus condiciones.
+            </p>
+          </div>
+
+          <div class="footer-creditos">
+            <p class="footer-titulo">Autores del proyecto</p>
+            <ul>
+              <li>Tomás Perez, 115643</li>
+              <li>Rodrigo Beron, 115754</li>
+              <li>Marcos Fortunato, 115038</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="footer-copy">
+          AgroMonitor - Proyecto final para Introducción al desarrollo de Software
+        </p>
+        <p class="footer-titulo" style="text-align: center; margin-top: 20PX;">EQUIPO 1</p>
+      </div>
+    </footer>
+
+    <script src="./js/ayuda.js"> </script>
+  </body>
+</html>

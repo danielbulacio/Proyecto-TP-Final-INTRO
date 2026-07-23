@@ -1,0 +1,122 @@
+/* Hover de las tarjetas de parcela */
+#tarjetas-parcelas .card {
+    transition: 0.15s;
+}
+#tarjetas-parcelas .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.038);
+}
+
+.tag-parcelas {
+    background: white !important;
+    color: #000000 !important;
+    font-weight: 600;
+    border: 1px solid #eee;
+}
+
+/* Forzamos a que el título dentro de esta tarjeta también cambie de color */
+.tag-parcelas .title, 
+.tag-parcelas .content strong {
+    color: #000000 !important;
+}
+dialog#modal-confirmacion {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto; /* Lo centra perfectamente en la pantalla */
+}
+
+/* Estilos para el fondo que cubre la pantalla cuando se abre */
+dialog#modal-confirmacion::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px); /* Difumina un poco el fondo */
+}
+.modal-redondo {
+  border-radius: 25px;
+  overflow: hidden; /* Asegura que el contenido no se salga de las esquinas */
+}
+/* 1. Forzar el texto blanco en el botón de guardar */
+button[type="submit"] {
+    color: #ffffff !important;
+    background-color: #421d07 !important; /* Mantiene el fondo oscuro que ya tienes */
+    border:solid #421d07 !important; /* Elimina cualquier borde predeterminado */; /* Elimina cualquier sombra predeterminada */
+}
+
+/* 2. OPCIONAL PERO RECOMENDADO: Texto blanco al escribir en los inputs oscuros */
+.input {
+    background-color: #ffff !important; 
+    color: #421d07 !important; /* Hace que lo que el usuario escriba sea blanco */
+}
+
+/* Cambia el color del texto falso (placeholder) para que sea un gris clarito y se lea bien */
+.input::placeholder {
+
+    color: #7f858e !important; 
+}
+.boton-blanco {
+  background-color: rgb(254, 254, 254) !important;
+  border: 0px;
+}
+
+.crop-hero {
+background: linear-gradient(135deg, #a54910, #612807);
+color: white;
+border-radius: 12px;
+margin-bottom: 2rem;
+padding: 2.5rem;
+}
+.crop-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.custom-file-box {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 4px;
+  height: 2.5em;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+/* Botón 'Elegir archivo' interior */
+.custom-file-btn {
+  background-color: #e6e6e6;
+  color: #612807;
+  font-weight: 600;
+  padding: 0 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.button{
+  color: rgb(0, 0, 0) !important;
+  border-color: rgba(0, 0, 0, 0.131)!important;
+}
+
+.custom-file-btn:hover {
+  background-color: #d8d8d8;
+}
+
+/* Nombre del archivo subido */
+.custom-file-text {
+  color: #4a4a4a;
+  font-size: 0.9rem;
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+/* Input nativo oculto */
+.is-hidden-input {
+  display: none !important;
+}

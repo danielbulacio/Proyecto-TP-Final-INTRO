@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroMonitor - Actualizar Parcela</title>
+    <link rel="icon" type="image/png" href="./logo.png">
+    <!-- Esto es para que funcione Bulma -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+
+    />
+    <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/var-globales.css" />
+    <link rel="stylesheet" href="./css/parcela.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar is-white">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="index.html">
+          <img src="./logo.png">
+          <h1 style="font-weight: 800; font-size: 24PX;">AgroMonitor</h1>
+          </a>
+        </div>
+        <!-- LINKS DEL NAVBAR -->
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="parcelas.html"> Parcelas </a>
+            <a class="navbar-item" href="cultivos.html"> Cultivos </a>
+            <a class="navbar-item" href="tareas.html"> Tareas </a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <p class="control">
+                <a
+                  class="button is-primary"
+                  href="ayuda.html"
+                >
+                  <span>Ayuda</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><!-- FIN DEL NAVBAR -->
+
+
+<section class="section">
+  <!-- El contenedor principal -->
+  <div class="container">
+    
+    <!-- Agregamos el margen superior aquí para que afecte a todo el bloque por igual -->
+    <div class="columns is-desktop is-vcentered" style="margin-top: 2rem;">
+      
+      <!-- Columna Izquierda: FORMULARIO (Se quitó el is-8-tablet para que sea 50/50 exacto) -->
+      <div class="column is-half-desktop">
+        
+        <!-- Le quitamos el margin-top a la caja para que no se desalinee -->
+        <div class="box" style="background: linear-gradient(135deg, #a54910, #612807);">
+          <h1 class="title has-text-white">Actualizar Parcela</h1>
+          
+          <!-- Formulario -->
+          <form id="form-editar-parcela" class="form">
+            <div class="field">
+                <label class="label has-text-white">Nombre de la Parcela</label>
+                <div class="control">
+                    <input class="input" type="text" id="input-nombre" required>
+                </div>
+            </div>
+            
+            <div class="field">
+             <label class="label has-text-white">Latitud</label>
+                <div class="control">
+                    <input class="input" type="text" id="input-latitud" required>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label class="label has-text-white">Longitud</label>
+                <div class="control">
+                    <input class="input" type="text" id="input-longitud" required>
+                </div>
+            </div> 
+            
+            <div class="field">
+                <label class="label has-text-white">Hectáreas</label>
+                <div class="control">
+                    <input class="input" type="text" id="input-hectareas" required>
+                </div>
+            </div>
+            
+            <div class="field">
+              <label class="label has-text-white">Imagen (Opcional)</label>
+              <div class="control">
+                <!-- Contenedor personalizado para el input de imagen -->
+                <div class="custom-file-box">
+                  <label for="input-imagen" class="custom-file-btn">
+                    Elegir archivo 📁
+                  </label>
+                  <span id="nombre-archivo" class="custom-file-text">Sin archivo seleccionado</span>
+                  <input type="file" id="input-imagen" accept="image/*" class="is-hidden-input" />
+                </div>
+              </div>
+            </div>
+
+            <p class="help is-danger" id="mensaje-error"></p>
+            
+            <div class="control" style="margin-top: 1.5rem;">
+                <button type="submit" class="button is-top">Actualizar Parcela</button>
+                <!-- Botón para cancelar y volver atrás -->
+                <a href="parcelas.html" class="button is-light" style="border: solid white !important; box-shadow: none !important;">Cancelar</a> 
+            </div>
+         </form>
+        </div>
+      </div> <!-- Fin columna izquierda -->
+
+      <!-- MAPA -->
+      <div class="column is-half-desktop">
+        <div id="mapa-parcela" style="height: 550px; width: 100%; border-radius: 8px; border: 4px solid #a54910; box-shadow: 0 4px 10px rgba(0,0,0,0.3);"></div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+    <!-- rutas de scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./js/update_parcela.js"></script>
+  </body>
+</html>

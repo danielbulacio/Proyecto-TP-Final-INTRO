@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>AgroMonitor - Tareas</title>
+    <link rel="icon" type="image/png" href="./logo.png">
     <!-- Esto es para que funcione Bulma -->
     <link
       rel="stylesheet"
@@ -11,25 +12,25 @@
     />
     <!-- Para que lea el css del navbar (que es una sobreescritura de bumla) -->
     <link rel="stylesheet" href="./css/navbar.css" />
+    <!-- Estilos propios de la pagina de tareas -->
+    <link rel="stylesheet" href="./css/tareas.css" />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     
   </head>
   <body>
     <!-- NAVBAR -->
     <nav class="navbar is-white">
+    <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-        <h1 style="font-weight: 800; font-size: 24PX;">LOGO AGRO </h1>
+        <a class="navbar-item" href="index.html">
+        <img src="./logo.png">
+        <h1 style="font-weight: 800; font-size: 24PX;">AgroMonitor</h1>
         </a>
-        <div
-          class="navbar-burger js-burger"
-          data-target="navbarExampleTransparentExample"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
       <!-- LINKS DEL NAVBAR -->
       <div id="navbarExampleTransparentExample" class="navbar-menu">
@@ -40,28 +41,158 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            
-              <p class="control">
-                <a
-                  class="button is-primary"
-                  href="https://github.com/jgthms/bulma/releases/download/1.0.4/bulma-1.0.4.zip"
-                >
-
-                  <span>Boton</span>
-                </a>
-              </p>
-            </div>
+            <p class="control">
+              <a
+                class="button is-primary"
+                href="ayuda.html"
+              >
+                <span>Ayuda</span>
+              </a>
+            </p>
           </div>
         </div>
       </div>
-    </nav><!-- FIN DEL NAVBAR -->
+    </div>
+  </nav><!-- FIN DEL NAVBAR -->
     
-    
-    <!--
-    SEGUIR ACA
-    -->
+    <!-- ENCABEZADO DE LA SECCION -->
+    <section class="section">
+      <div class="container">
+        <div class="crop-hero shadow-sm">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h1 class="title is-3 has-text-white">Gestor de Tareas</h1>
+              <h2 class="subtitle is-6 has-text-white-ter ">Registro de tareas y su nivel de importancia</h2>
+            </div>
+            <div class="column is-narrow">
+              <button id="btn-nueva-tarea" class="boton-blanco button">
+                <span class="icon"><strong>+</strong></span>
+                <span>Nueva tarea</span>
+              </button>
+            </div>
+          </div>
+        </div>
 
+      </div>
+    </section>
 
+    <!-- NOTIFICACION GLOBAL (exito / error) -->
+    <div class="container">
+      <div id="notificacion-global" class="notification is-hidden mx-5"></div>
+    </div>
 
+    <!-- LISTADO DE TAREAS -->
+    <section class="section pt-3">
+      <div class="container">
+        <div id="lista-tareas" class="columns is-multiline">
+          <div class="column is-full">
+            <p class="has-text-grey has-text-centered">Cargando tareas…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL: CREAR / EDITAR TAREA -->
+    <div id="modal-tarea" class="modal">
+      <div class="modal-background" data-cerrar="modal-tarea"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title" id="modal-tarea-titulo">Nueva tarea</p>
+          <button class="delete" aria-label="close" data-cerrar="modal-tarea"></button>
+        </header>
+        <section class="modal-card-body">
+          <form id="form-tarea">
+            <input type="hidden" id="tarea-id" />
+
+            <div class="field">
+              <label class="label" for="input-parcela">Parcela</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="input-parcela" required></select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="input-tarea">Descripción de la tarea</label>
+              <div class="control">
+                <textarea
+                  id="input-tarea"
+                  class="textarea"
+                  maxlength="255"
+                  required
+                  placeholder="Ej: Revisar sistema de riego por goteo"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Importancia</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="input-prioridad">
+                    <option value="Baja">Baja</option>
+                    <option value="Media" selected>Media</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Urgente">Urgente</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Tipo de tarea (opcional)</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="input-tipo">
+                    <option value="">Elegir tipo de tarea</option>
+                    <option value="riego">Riego</option>
+                    <option value="fertilizacion">Fertilización</option>
+                    <option value="poda">Poda</option>
+                    <option value="control_plagas">Control de plagas</option>
+                    <option value="cosecha">Cosecha</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="input-fecha-limite">Fecha límite (opcional)</label>
+              <div class="control">
+                <input type="date" id="input-fecha-limite" class="input" />
+              </div>
+            </div>
+
+            <div id="errores-form-tarea" class="notification is-danger is-light is-hidden"></div>
+          </form>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-primary" id="guardar-tarea">Guardar tarea</button>
+          <button class="button" data-cerrar="modal-tarea">Cancelar</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- MODAL: CONFIRMAR ELIMINACION -->
+    <div id="modal-confirmar-eliminar" class="modal">
+      <div class="modal-background" data-cerrar="modal-confirmar-eliminar"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Eliminar tarea</p>
+          <button class="delete" aria-label="close" data-cerrar="modal-confirmar-eliminar"></button>
+        </header>
+        <section class="modal-card-body">
+          <p>Esta acción no se puede deshacer. ¿Confirmás que querés eliminar esta tarea?</p>
+          <input type="hidden" id="eliminar-tarea-id" />
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-danger" id="confirmar-eliminar">Sí, eliminar</button>
+          <button class="button" data-cerrar="modal-confirmar-eliminar">Cancelar</button>
+        </footer>
+      </div>
+    </div>
+
+    <script src="./js/tareas.js"></script>
   </body>
 </html>
