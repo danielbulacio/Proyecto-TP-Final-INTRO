@@ -14,7 +14,7 @@ endpointsDetalleParcela.get("/:id", async (req, res) => {
     const id = req.params.id;
     const parcela = await getDatosParcela(id);
 
-    // Si no existe la parcela, aviso con un 404
+    // si no existe la parcela, aviso con un 404
     if (parcela === undefined) {
       res.status(404).json({ error: "No se encontro la parcela" });
       return;
@@ -22,7 +22,6 @@ endpointsDetalleParcela.get("/:id", async (req, res) => {
 
     res.json(parcela);
   } catch (error) {
-    // Si algo falla (por ejemplo la base de datos) devuelvo un 500
     console.error("Error al traer la parcela:", error);
     res.status(500).json({ error: "Error al traer los datos de la parcela" });
   }

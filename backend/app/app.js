@@ -9,14 +9,15 @@ import { endpointsDetalleParcela } from "./api/detalle_parcela.js";
 const app = express();
 
 const corsOptions = {
-  origin: '*', // Replace with your domain
+  origin: '*', 
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
-};
+};O
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 app.use(cors(corsOptions));
+
 app.use("/api/v1/cultivos", endpointsCultivos);
 app.use("/api/v1/parcelas", endpointsParcelas);
 app.use("/api/v1/tareas", endpointsTareas);
@@ -24,9 +25,8 @@ app.use("/api/v1/parcelas/detalle", endpointsDetalleParcela);
 
 const port = 8000;
 
-
 app.get("/health", (req, res) => res.send("OK"));
 
 app.listen(port, () => {
-  console.log(`todo ok`);
+  console.log(`Se levanto todo ok`);
 });
