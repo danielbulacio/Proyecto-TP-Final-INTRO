@@ -5,7 +5,9 @@
   margin-bottom: 2rem;
   padding: 2.5rem;
 }
-
+.section{
+  padding-bottom: 0px !important;
+}
 :root {
   --verde-cultivo: #10b981;
   --verde-oscuro: #1f4d36;
@@ -94,7 +96,7 @@ textarea:focus-visible {
   border: 0px;
 }
 .button.is-primary {
-  background-color: var(--verde-cultivo);
+  background-color: var(--verde-cultivo) !important;
 }
  
 .button.btn-primario-azul {
@@ -106,4 +108,21 @@ textarea:focus-visible {
 .button.btn-primario-azul:hover {
   background-color: var(--azul-oscuro) !important;
   color: #ffffff !important;
+}
+
+/* Modales: fondo blanco y texto negro */
+.modal-card-head,
+.modal-card-body,
+.modal-card-foot .button{
+  background-color: #ffffff;
+  color: #000000;
+}
+.modal-background{
+  opacity: 0.5;
+}
+.modal-card-title {
+  color: #000000;
+}
+.modal-card-body .label {
+  color: #000000;
 }

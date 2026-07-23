@@ -1,7 +1,7 @@
 import { db } from "./pool.js";
 
 export async function getAllTareas() {
-    const resultado = await db.query("SELECT * FROM tareas ORDER BY id DESC");
+    const resultado = await db.query("SELECT * FROM tareas ORDER BY id ASC");
     return resultado.rows;
 }
 
