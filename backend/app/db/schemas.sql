@@ -34,7 +34,7 @@ CREATE TABLE tareas (
     prioridad VARCHAR(20) NOT NULL DEFAULT 'Media'
         CHECK (prioridad IN ('Baja', 'Media', 'Alta', 'Urgente')),
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente'
-        CHECK (estado IN ('pendiente', 'en_progreso', 'completada', 'cancelada')),
+        CHECK (estado IN ('pendiente', 'en_progreso', 'completada'),
     fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
     fecha_limite DATE,
     fecha_completada TIMESTAMP

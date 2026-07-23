@@ -13,7 +13,7 @@ import {
 export const endpointsTareas = Router();
 
 const PRIORIDADES = ["Baja", "Media", "Alta", "Urgente"];
-const ESTADOS = ["pendiente", "en_progreso", "completada", "cancelada"];
+const ESTADOS = ["pendiente", "en_progreso", "completada"];
 
 endpointsTareas.get("/", async (req, res) => {
     const tareas = await getAllTareas();

@@ -7,7 +7,6 @@ const ETIQUETAS_ESTADO = {
   pendiente: "Pendiente",
   en_progreso: "En progreso",
   completada: "Completada",
-  cancelada: "Cancelada"
 };
 
 // cuando seleccionamos la fecha, nos devuelve una fecha muy larga algo asi026-07-20T00:00:00.000Z . Esto lo formateea en formato legible
@@ -147,7 +146,7 @@ function tarjetaTareaHTML(t) {
               <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="pendiente">Pendiente</a>
               <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="en_progreso">En progreso</a>
               <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="completada">Completada</a>
-              <a href="#" class="dropdown-item" data-accion="estado" data-id="${tId}" data-estado="cancelada">Cancelada</a>
+
             </div>
           </div>
         </div>
