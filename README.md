@@ -13,7 +13,6 @@
     <strong>Autores</strong><br>
     Rodrigo Berón 115754<br>
     Tomás Perez 115643<br>
-    Daniel Ezequiel Bulacios 115863<br>
     Marcos Fortunato 115038
 </p>
 AgroMonitor es una plataforma  gestión y monitoreo de campos agrícolas. La idea central es que el productor agrícola pueda tener, en un solo lugar, toda la información de sus terrenos cruzando por un lado el cultivo que tiene su terreno y por otro las condiciones meteorológicas reales en esa ubicación. Permitiéndole tomar mejores decisiones. 
