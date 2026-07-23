@@ -55,8 +55,8 @@ INSERT INTO detalle_parcela (parcela_id, fecha, temperatura, precipitacion, hume
   (2, '2026-06-15', 14.1, 1.0, 60.0, 2.6);
 
 --tareas
-INSERT INTO tareas (parcela_id, tarea, prioridad, estado) VALUES
-  (1, 'Regar sector A',         'Alta', 'pendiente'),
-  (1, 'Revisar plaga en hojas', 'Urgente', 'pendiente');
+INSERT INTO tareas (parcela_id, tarea, prioridad, estado, tipo) VALUES
+  (1, 'Regar sector A',         'Alta', 'pendiente', 'riego'),
+  (1, 'Revisar plaga en hojas', 'Urgente', 'pendiente', 'control_plagas');
   
 
